@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Évaluation Croisée Anonyme — Pairs</title>
 <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ms-purple: #6264A7; --ms-purple-light: #E8E8F4; --ms-purple-dark: #464775;
@@ -12,13 +13,173 @@
     --ms-text: #242424; --ms-sub: #616161; --ms-input-border: #8A8A8A;
     --ms-error: #C4314B; --ms-success: #107C10; --ms-teal: #237B4B;
     --radius: 4px;
+    /* ── Joe J. nav ── */
+    --bg-nav:      #0c0c0e;
+    --surface:     #141418;
+    --surface2:    #1c1c22;
+    --border-nav:  rgba(255,255,255,.07);
+    --text-nav:    #e8e4dc;
+    --muted-nav:   #7a7672;
+    --accent:      #d4a853;
+    --accent-dim:  #7a5e28;
+    --serif:       'Cormorant Garamond', Georgia, serif;
+    --sans:        'Outfit', sans-serif;
+    --nav-h:       68px;
+    --drawer-w:    320px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--ms-bg); min-height: 100vh; color: var(--ms-text); }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--ms-bg); min-height: 100vh; color: var(--ms-text); padding-top: var(--nav-h); }
+
+  /* ═══════════════════════════════════════
+     NAVIGATION JOE J.
+  ════════════════════════════════════════ */
+  .joej-nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: rgba(12,12,14,.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-nav);
+    display: flex; align-items: center;
+    padding: 0 clamp(1.2rem, 5vw, 3rem);
+    z-index: 500;
+    gap: 1rem;
+    font-family: var(--sans);
+  }
+  .joej-brand {
+    font-family: var(--serif);
+    font-size: 1.5rem; font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--text-nav); text-decoration: none;
+    margin-right: auto; white-space: nowrap;
+  }
+  .joej-brand span { color: var(--accent); }
+
+  .joej-links { display: flex; gap: .2rem; list-style: none; }
+  .joej-links a {
+    display: block; padding: .4rem .9rem;
+    font-size: .78rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; color: var(--muted-nav);
+    border-radius: 6px; border: 1px solid transparent;
+    transition: color .2s, border-color .2s, background .2s;
+    white-space: nowrap;
+  }
+  .joej-links a:hover { color: var(--text-nav); background: rgba(255,255,255,.04); }
+  .joej-links a.active {
+    color: var(--accent); border-color: var(--accent-dim);
+    background: rgba(212,168,83,.07);
+  }
+
+  /* Hamburger */
+  .joej-hamburger {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px;
+    border-radius: 8px; border: 1px solid var(--border-nav);
+    background: transparent; cursor: pointer; flex-shrink: 0;
+    transition: border-color .2s, background .2s;
+  }
+  .joej-hamburger:hover { border-color: rgba(212,168,83,.3); background: rgba(212,168,83,.06); }
+  .joej-hamburger span {
+    display: block; width: 18px; height: 1.5px;
+    background: var(--text-nav); border-radius: 2px;
+    transition: transform .35s cubic-bezier(.22,1,.36,1), opacity .25s;
+    transform-origin: center;
+  }
+  .joej-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .joej-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .joej-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Drawer overlay */
+  .joej-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .35s; z-index: 600;
+  }
+  .joej-overlay.visible { opacity: 1; pointer-events: all; }
+
+  /* Drawer panel */
+  .joej-drawer {
+    position: fixed; top: 0; right: 0;
+    width: min(var(--drawer-w), 85vw); height: 100%;
+    background: var(--surface); border-left: 1px solid var(--border-nav);
+    z-index: 700; display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+    overflow: hidden; font-family: var(--sans);
+  }
+  .joej-drawer.open { transform: translateX(0); }
+
+  .joej-drawer-header {
+    height: var(--nav-h); display: flex; align-items: center;
+    justify-content: space-between; padding: 0 1.6rem;
+    border-bottom: 1px solid var(--border-nav); flex-shrink: 0;
+  }
+  .joej-drawer-title {
+    font-size: .72rem; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--muted-nav);
+  }
+  .joej-drawer-close {
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; border: 1px solid var(--border-nav);
+    background: transparent; color: var(--muted-nav); cursor: pointer;
+    font-size: 1rem; transition: color .2s, border-color .2s, background .2s;
+  }
+  .joej-drawer-close:hover { color: var(--text-nav); border-color: rgba(255,255,255,.15); background: rgba(255,255,255,.04); }
+
+  .joej-drawer-body {
+    flex: 1; overflow-y: auto;
+    padding: 1.4rem 1rem; display: flex; flex-direction: column; gap: .4rem;
+  }
+  .joej-drawer-body::-webkit-scrollbar { width: 4px; }
+  .joej-drawer-body::-webkit-scrollbar-track { background: transparent; }
+  .joej-drawer-body::-webkit-scrollbar-thumb { background: var(--border-nav); border-radius: 2px; }
+
+  .joej-drawer-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: .85rem 1rem; border-radius: 8px;
+    text-decoration: none; color: var(--text-nav);
+    border: 1px solid transparent;
+    transition: background .2s, border-color .2s;
+  }
+  .joej-drawer-item:hover { background: var(--surface2); border-color: var(--border-nav); }
+  .joej-drawer-item.current { background: rgba(212,168,83,.07); border-color: var(--accent-dim); }
+
+  .joej-drawer-icon {
+    width: 34px; height: 34px; border-radius: 7px;
+    background: rgba(212,168,83,.1); border: 1px solid rgba(212,168,83,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .joej-drawer-item.current .joej-drawer-icon { background: rgba(212,168,83,.18); border-color: var(--accent-dim); }
+
+  .joej-drawer-info { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+  .joej-drawer-name { font-size: .9rem; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .joej-drawer-item.current .joej-drawer-name { color: var(--accent); }
+  .joej-drawer-file { font-size: .7rem; color: var(--muted-nav); font-family: 'Courier New', monospace; }
+
+  .joej-drawer-badge {
+    margin-left: auto; font-size: .62rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .2rem .55rem; border-radius: 20px;
+    background: rgba(212,168,83,.15); color: var(--accent); flex-shrink: 0;
+  }
+  .joej-drawer-sep {
+    font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted-nav); padding: .8rem .6rem .4rem; opacity: .7;
+  }
+  .joej-drawer-footer {
+    padding: 1rem 1.6rem; border-top: 1px solid var(--border-nav);
+    font-size: .72rem; color: var(--muted-nav); letter-spacing: .06em; flex-shrink: 0;
+    font-family: var(--sans);
+  }
 
   .topbar {
     background: var(--ms-purple); height: 48px; display: flex; align-items: center;
-    padding: 0 24px; gap: 12px; position: sticky; top: 0; z-index: 100;
+    padding: 0 24px; gap: 12px; position: sticky; top: var(--nav-h); z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
   }
   .topbar svg { width: 24px; height: 24px; }
@@ -186,6 +347,58 @@
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════
+     NAVIGATION JOE J.
+════════════════════════════════════════ -->
+<div class="joej-overlay" id="joejOverlay"></div>
+<aside class="joej-drawer" id="joejDrawer" role="dialog" aria-label="Navigation">
+  <div class="joej-drawer-header">
+    <span class="joej-drawer-title">Toutes les pages</span>
+    <button class="joej-drawer-close" id="joejDrawerClose" aria-label="Fermer">✕</button>
+  </div>
+  <div class="joej-drawer-body">
+    <span class="joej-drawer-sep">Principal</span>
+    <a class="joej-drawer-item" href="index.html">
+      <div class="joej-drawer-icon">🏠</div>
+      <div class="joej-drawer-info">
+        <span class="joej-drawer-name">Accueil</span>
+        <span class="joej-drawer-file">index.html</span>
+      </div>
+    </a>
+    <span class="joej-drawer-sep">Mes pages</span>
+    <a class="joej-drawer-item current" href="evaluation.html">
+      <div class="joej-drawer-icon">⚖️</div>
+      <div class="joej-drawer-info">
+        <span class="joej-drawer-name">Évaluation croisée</span>
+        <span class="joej-drawer-file">evaluation.html</span>
+      </div>
+      <span class="joej-drawer-badge">Actif</span>
+    </a>
+    <!--
+      AJOUTER UNE PAGE :
+      <a class="joej-drawer-item" href="ma-page.html">
+        <div class="joej-drawer-icon">📄</div>
+        <div class="joej-drawer-info">
+          <span class="joej-drawer-name">Ma Page</span>
+          <span class="joej-drawer-file">ma-page.html</span>
+        </div>
+      </a>
+    -->
+  </div>
+  <div class="joej-drawer-footer">Joe J. — Inventaire personnel</div>
+</aside>
+
+<nav class="joej-nav">
+  <a class="joej-brand" href="index.html">Joe<span>.</span> J<span>.</span></a>
+  <ul class="joej-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="evaluation.html" class="active">Évaluation</a></li>
+  </ul>
+  <button class="joej-hamburger" id="joejHamburger" aria-label="Ouvrir le menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
 <!-- Sending overlay -->
 <div class="sending-overlay" id="sendingOverlay">
@@ -536,6 +749,36 @@ function clearForm(){
 }
 
 updateProgress();
+
+// ═══════════════════════════════════════
+// Navigation Joe J. — Hamburger / Drawer
+// ═══════════════════════════════════════
+(function(){
+  const hamburger = document.getElementById('joejHamburger');
+  const drawer    = document.getElementById('joejDrawer');
+  const overlay   = document.getElementById('joejOverlay');
+  const btnClose  = document.getElementById('joejDrawerClose');
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    overlay.classList.add('visible');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    overlay.classList.remove('visible');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () =>
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer()
+  );
+  btnClose.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+})();
 </script>
 </body>
 </html>
