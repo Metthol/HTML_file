@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joe J.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0c0e;
+      --surface:   #141418;
+      --border:    rgba(255,255,255,.07);
+      --text:      #e8e4dc;
+      --muted:     #7a7672;
+      --accent:    #d4a853;
+      --accent-dim:#7a5e28;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'Outfit', sans-serif;
+      --nav-h:     68px;
+      --r:         10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRAIN OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: .025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── AMBIENT GLOW ─── */
+    .glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,.09) 0%, transparent 70%);
+      top: -150px; right: -150px;
+      pointer-events: none;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(-60px, 80px); }
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(12,12,14,.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 clamp(1.2rem, 5vw, 3rem);
+      z-index: 100;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--text);
+      text-decoration: none;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    .nav-brand span { color: var(--accent); }
+
+    .nav-links {
+      display: flex; gap: .2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: .4rem .9rem;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: color .2s, border-color .2s, background .2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: rgba(212,168,83,.07);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 3rem) clamp(1.2rem, 5vw, 5rem) 4rem;
+      max-width: 1100px;
+      animation: rise .9s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero h1 .line2 {
+      display: block;
+      padding-left: clamp(2rem, 8vw, 8rem);
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat { display: flex; flex-direction: column; gap: .25rem; }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-num span { color: var(--accent); font-size: 1.4rem; }
+
+    .stat-label {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── DIVIDER ─── */
+    .section-divider {
+      padding: 0 clamp(1.2rem, 5vw, 5rem);
+      max-width: 1100px;
+    }
+
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── CATALOGUE ─── */
+    #catalogue {
+      padding: 5rem clamp(1.2rem, 5vw, 5rem);
+      max-width: 1100px;
+    }
+
+    .section-header {
+      display: flex; align-items: baseline; gap: 1.2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+    }
+
+    .section-count {
+      font-size: .75rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .3rem .8rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    /* ─── GRID ─── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.6rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column; gap: .8rem;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(212,168,83,.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.45);
+    }
+
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      background: rgba(212,168,83,.1);
+      border: 1px solid rgba(212,168,83,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .card-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-link {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: .4rem;
+      margin-top: .4rem;
+    }
+
+    .card-link::after { content: '→'; transition: transform .2s; }
+    .card:hover .card-link::after { transform: translateX(4px); }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-card {
+      background: transparent;
+      border: 1px dashed rgba(255,255,255,.1);
+      border-radius: var(--r);
+      padding: 2.5rem 1.6rem;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      gap: .8rem;
+      color: var(--muted);
+      min-height: 160px;
+      grid-column: 1 / -1;
+    }
+
+    .empty-card .empty-icon { font-size: 1.8rem; opacity: .4; }
+
+    .empty-card p {
+      font-size: .83rem;
+      line-height: 1.65;
+      max-width: 240px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      margin-top: 4rem;
+      padding: 2rem clamp(1.2rem, 5vw, 3rem);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      font-size: .75rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 3px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .hero h1 .line2 { padding-left: 1.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+       Pour ajouter un onglet, décommentez
+       la ligne <li> modèle et adaptez-la.
+  ════════════════════════════════════════════ -->
+  <nav>
+    <a class="nav-brand" href="index.html">Joe<span>.</span> J<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <!-- <li><a href="page.html">Titre</a></li> -->
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero">
+      <p class="hero-tag">Inventaire personnel</p>
+      <h1>
+        Toutes mes<br>
+        <em class="line2">créations</em>
+      </h1>
+      <p class="hero-desc">
+        Un espace centralisé pour retrouver toutes les pages web
+        générées à la demande — organisées, accessibles, prêtes à l'emploi.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="page-count">0<span>+</span></span>
+          <span class="stat-label">Pages disponibles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Projets à venir</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"><hr></div>
+
+    <!-- ═══════════════ CATALOGUE ═══════════════
+         Pour ajouter une carte :
+         1. Copiez le bloc <a class="card"> d'exemple
+         2. Renseignez href, l'emoji, le titre et la description
+         3. Supprimez ou masquez l'empty-card si besoin
+    ════════════════════════════════════════════ -->
+    <section id="catalogue">
+      <div class="section-header">
+        <h2 class="section-title">Catalogue</h2>
+        <span class="section-count" id="catalogue-count">0 page</span>
+      </div>
+
+      <div class="cards-grid" id="cards-grid">
+
+        <!-- ── Modèle de carte (décommentez & adaptez) ──
+        <a class="card" href="ma-page.html">
+          <div class="card-icon">🗂️</div>
+          <div class="card-title">Nom de la page</div>
+          <p class="card-desc">Brève description du contenu de cette page.</p>
+          <span class="card-link">Voir la page</span>
+        </a>
+        -->
+
+        <!-- État vide — masqué automatiquement dès qu'une carte existe -->
+        <div class="empty-card" id="empty-state">
+          <span class="empty-icon">📂</span>
+          <p>Les pages apparaîtront ici au fil de vos demandes.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <span class="footer-brand">Joe J.</span>
+    <span class="footer-note">© 2026 — Tous droits réservés</span>
+  </footer>
+
+  <script>
+    // Compteur automatique : lit le nombre de .card dans la grille
+    const grid   = document.getElementById('cards-grid');
+    const count  = document.getElementById('catalogue-count');
+    const pcount = document.getElementById('page-count');
+    const empty  = document.getElementById('empty-state');
+    const cards  = grid.querySelectorAll('.card').length;
+
+    if (cards > 0) {
+      empty.remove();
+      count.textContent        = cards + (cards > 1 ? ' pages' : ' page');
+      pcount.innerHTML         = cards + '<span>+</span>';
+    }
+  </script>
+
+</body>
+</html>
