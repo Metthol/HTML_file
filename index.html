@@ -12,6 +12,7 @@
     :root {
       --bg:        #0c0c0e;
       --surface:   #141418;
+      --surface2:  #1c1c22;
       --border:    rgba(255,255,255,.07);
       --text:      #e8e4dc;
       --muted:     #7a7672;
@@ -21,6 +22,7 @@
       --sans:      'Outfit', sans-serif;
       --nav-h:     68px;
       --r:         10px;
+      --drawer-w:  320px;
     }
 
     html { scroll-behavior: smooth; }
@@ -35,7 +37,7 @@
       overflow-x: hidden;
     }
 
-    /* ─── GRAIN OVERLAY ─── */
+    /* ─── GRAIN ─── */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -45,7 +47,7 @@
       z-index: 9999;
     }
 
-    /* ─── AMBIENT GLOW ─── */
+    /* ─── GLOW ─── */
     .glow {
       position: fixed;
       width: 600px; height: 600px;
@@ -55,13 +57,14 @@
       pointer-events: none;
       animation: drift 12s ease-in-out infinite alternate;
     }
-
     @keyframes drift {
       from { transform: translate(0,0); }
-      to   { transform: translate(-60px, 80px); }
+      to   { transform: translate(-60px,80px); }
     }
 
-    /* ─── NAV ─── */
+    /* ═══════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -71,7 +74,7 @@
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center;
       padding: 0 clamp(1.2rem, 5vw, 3rem);
-      z-index: 100;
+      z-index: 200;
       gap: 1rem;
     }
 
@@ -85,13 +88,11 @@
       margin-right: auto;
       white-space: nowrap;
     }
-
     .nav-brand span { color: var(--accent); }
 
     .nav-links {
       display: flex; gap: .2rem;
       list-style: none;
-      flex-wrap: wrap;
     }
 
     .nav-links a {
@@ -108,19 +109,211 @@
       transition: color .2s, border-color .2s, background .2s;
       white-space: nowrap;
     }
-
-    .nav-links a:hover {
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-    }
-
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.04); }
     .nav-links a.active {
       color: var(--accent);
       border-color: var(--accent-dim);
       background: rgba(212,168,83,.07);
     }
 
-    /* ─── HERO ─── */
+    /* ─── BOUTON HAMBURGER ─── */
+    .hamburger {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      gap: 5px;
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color .2s, background .2s;
+    }
+    .hamburger:hover {
+      border-color: rgba(212,168,83,.3);
+      background: rgba(212,168,83,.06);
+    }
+    .hamburger span {
+      display: block;
+      width: 18px; height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform .35s cubic-bezier(.22,1,.36,1),
+                  opacity .25s;
+      transform-origin: center;
+    }
+    /* Croix quand ouvert */
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════
+       DRAWER (panneau latéral)
+    ════════════════════════════════════════ */
+    /* Fond semi-transparent derrière le drawer */
+    .drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+      z-index: 300;
+    }
+    .drawer-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(var(--drawer-w), 85vw);
+      height: 100%;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 400;
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.22,1,.36,1);
+      overflow: hidden;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    /* Barre haute du drawer */
+    .drawer-header {
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 1.6rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .drawer-title {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .drawer-close {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .drawer-close:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Contenu scrollable */
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.4rem 1rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .drawer-body::-webkit-scrollbar { width: 4px; }
+    .drawer-body::-webkit-scrollbar-track { background: transparent; }
+    .drawer-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ─── Ligne de page dans le drawer ─── */
+    .drawer-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .85rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid transparent;
+      transition: background .2s, border-color .2s;
+      position: relative;
+    }
+    .drawer-item:hover {
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+    .drawer-item.current {
+      background: rgba(212,168,83,.07);
+      border-color: var(--accent-dim);
+    }
+    .drawer-item-icon {
+      width: 34px; height: 34px;
+      border-radius: 7px;
+      background: rgba(212,168,83,.1);
+      border: 1px solid rgba(212,168,83,.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .drawer-item.current .drawer-item-icon {
+      background: rgba(212,168,83,.18);
+      border-color: var(--accent-dim);
+    }
+    .drawer-item-info { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+    .drawer-item-name {
+      font-size: .9rem;
+      font-weight: 400;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .drawer-item.current .drawer-item-name { color: var(--accent); }
+    .drawer-item-file {
+      font-size: .7rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+    }
+    .drawer-badge {
+      margin-left: auto;
+      font-size: .62rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      background: rgba(212,168,83,.15);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Séparateur de section dans le drawer */
+    .drawer-sep {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .8rem .6rem .4rem;
+      opacity: .7;
+    }
+
+    .drawer-empty {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .7rem;
+      padding: 3rem 1rem;
+      text-align: center;
+      color: var(--muted);
+    }
+    .drawer-empty span { font-size: 1.8rem; opacity: .35; }
+    .drawer-empty p { font-size: .8rem; line-height: 1.65; max-width: 180px; }
+
+    .drawer-footer {
+      padding: 1rem 1.6rem;
+      border-top: 1px solid var(--border);
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
@@ -129,7 +322,6 @@
       max-width: 1100px;
       animation: rise .9s cubic-bezier(.22,1,.36,1) both;
     }
-
     @keyframes rise {
       from { opacity: 0; transform: translateY(36px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -137,84 +329,51 @@
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: .5rem;
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 2rem;
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 2rem;
     }
-
     .hero-tag::before {
-      content: '';
-      display: block;
-      width: 28px; height: 1px;
-      background: var(--accent);
+      content: ''; display: block;
+      width: 28px; height: 1px; background: var(--accent);
     }
 
     .hero h1 {
       font-family: var(--serif);
       font-size: clamp(3rem, 9vw, 7rem);
-      font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -.01em;
-      margin-bottom: 2rem;
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -.01em; margin-bottom: 2rem;
     }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
+    .hero h1 em { font-style: italic; color: var(--accent); }
     .hero h1 .line2 {
       display: block;
       padding-left: clamp(2rem, 8vw, 8rem);
     }
 
     .hero-desc {
-      max-width: 480px;
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 3rem;
+      max-width: 480px; font-size: 1rem;
+      color: var(--muted); line-height: 1.8; margin-bottom: 3rem;
     }
 
-    .hero-stats {
-      display: flex; gap: 2.5rem;
-      flex-wrap: wrap;
-    }
-
+    .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
     .stat { display: flex; flex-direction: column; gap: .25rem; }
-
     .stat-num {
-      font-family: var(--serif);
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: var(--text);
-      line-height: 1;
+      font-family: var(--serif); font-size: 2.2rem;
+      font-weight: 300; color: var(--text); line-height: 1;
     }
-
     .stat-num span { color: var(--accent); font-size: 1.4rem; }
-
     .stat-label {
-      font-size: .7rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: .7rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
     }
 
     /* ─── DIVIDER ─── */
-    .section-divider {
-      padding: 0 clamp(1.2rem, 5vw, 5rem);
-      max-width: 1100px;
-    }
+    .section-divider { padding: 0 clamp(1.2rem, 5vw, 5rem); max-width: 1100px; }
+    .section-divider hr { border: none; border-top: 1px solid var(--border); }
 
-    .section-divider hr {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ─── CATALOGUE ─── */
+    /* ═══════════════════════════════════════
+       CATALOGUE
+    ════════════════════════════════════════ */
     #catalogue {
       padding: 5rem clamp(1.2rem, 5vw, 5rem);
       max-width: 1100px;
@@ -222,27 +381,18 @@
 
     .section-header {
       display: flex; align-items: baseline; gap: 1.2rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
+      margin-bottom: 2.5rem; flex-wrap: wrap;
     }
-
     .section-title {
       font-family: var(--serif);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 300;
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 300;
     }
-
     .section-count {
-      font-size: .75rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: .3rem .8rem;
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      font-size: .75rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+      padding: .3rem .8rem; border: 1px solid var(--border); border-radius: 20px;
     }
 
-    /* ─── GRID ─── */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
@@ -251,118 +401,64 @@
 
     /* ─── CARD ─── */
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 1.6rem;
-      text-decoration: none;
-      color: inherit;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.6rem;
+      text-decoration: none; color: inherit;
       display: flex; flex-direction: column; gap: .8rem;
       transition: border-color .25s, transform .25s, box-shadow .25s;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-
     .card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(90deg, var(--accent-dim), var(--accent));
-      transform: scaleX(0);
-      transform-origin: left;
+      transform: scaleX(0); transform-origin: left;
       transition: transform .3s ease;
     }
-
     .card:hover {
       border-color: rgba(212,168,83,.3);
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(0,0,0,.45);
     }
-
     .card:hover::before { transform: scaleX(1); }
 
     .card-icon {
-      width: 40px; height: 40px;
-      border-radius: 8px;
-      background: rgba(212,168,83,.1);
-      border: 1px solid rgba(212,168,83,.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.15rem;
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(212,168,83,.1); border: 1px solid rgba(212,168,83,.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
     }
-
-    .card-title {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: var(--text);
-    }
-
-    .card-desc {
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.65;
-      flex: 1;
-    }
-
+    .card-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--text); }
+    .card-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; flex: 1; }
     .card-link {
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      display: flex; align-items: center; gap: .4rem;
-      margin-top: .4rem;
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); display: flex; align-items: center; gap: .4rem; margin-top: .4rem;
     }
-
     .card-link::after { content: '→'; transition: transform .2s; }
     .card:hover .card-link::after { transform: translateX(4px); }
 
     /* ─── EMPTY STATE ─── */
     .empty-card {
-      background: transparent;
-      border: 1px dashed rgba(255,255,255,.1);
-      border-radius: var(--r);
-      padding: 2.5rem 1.6rem;
+      background: transparent; border: 1px dashed rgba(255,255,255,.1);
+      border-radius: var(--r); padding: 2.5rem 1.6rem;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center;
-      gap: .8rem;
-      color: var(--muted);
-      min-height: 160px;
+      text-align: center; gap: .8rem;
+      color: var(--muted); min-height: 160px;
       grid-column: 1 / -1;
     }
-
     .empty-card .empty-icon { font-size: 1.8rem; opacity: .4; }
-
-    .empty-card p {
-      font-size: .83rem;
-      line-height: 1.65;
-      max-width: 240px;
-    }
+    .empty-card p { font-size: .83rem; line-height: 1.65; max-width: 240px; }
 
     /* ─── FOOTER ─── */
     footer {
-      margin-top: 4rem;
-      padding: 2rem clamp(1.2rem, 5vw, 3rem);
+      margin-top: 4rem; padding: 2rem clamp(1.2rem, 5vw, 3rem);
       border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
     }
-
-    .footer-brand {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      color: var(--muted);
-    }
-
-    .footer-note {
-      font-size: .75rem;
-      color: var(--muted);
-      letter-spacing: .06em;
-    }
+    .footer-brand { font-family: var(--serif); font-size: 1.1rem; color: var(--muted); }
+    .footer-note { font-size: .75rem; color: var(--muted); letter-spacing: .06em; }
 
     /* ─── SCROLLBAR ─── */
     ::-webkit-scrollbar { width: 6px; }
@@ -381,22 +477,95 @@
 
   <div class="glow"></div>
 
+  <!-- ════════════════════════════════════════
+       DRAWER — Panneau de navigation complet
+       ════════════════════════════════════════
+       Pour AJOUTER une page dans le drawer :
+       Copiez un bloc <a class="drawer-item">
+       et adaptez href, l'emoji, le nom et
+       le nom de fichier.
+  ═══════════════════════════════════════════ -->
+  <div class="drawer-overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-label="Navigation">
+    <div class="drawer-header">
+      <span class="drawer-title">Toutes les pages</span>
+      <button class="drawer-close" id="drawer-close" aria-label="Fermer">✕</button>
+    </div>
+
+    <div class="drawer-body" id="drawer-body">
+
+      <span class="drawer-sep">Principal</span>
+
+      <a class="drawer-item current" href="index.html">
+        <div class="drawer-item-icon">🏠</div>
+        <div class="drawer-item-info">
+          <span class="drawer-item-name">Accueil</span>
+          <span class="drawer-item-file">index.html</span>
+        </div>
+        <span class="drawer-badge">Actif</span>
+      </a>
+
+      <!--
+        ══════════════════════════════════════
+        AJOUTER UNE PAGE DANS LE DRAWER
+        ══════════════════════════════════════
+        1. Supprimez ou gardez la section <span class="drawer-sep">
+           pour regrouper vos pages par catégorie.
+        2. Copiez-collez un bloc <a class="drawer-item"> ci-dessous.
+        3. Adaptez : href="votre-page.html"
+                     l'emoji dans .drawer-item-icon
+                     .drawer-item-name  → nom affiché
+                     .drawer-item-file  → nom du fichier
+        4. Sur la PAGE DE DESTINATION, mettez
+           class="drawer-item current" sur son propre lien
+           et retirez "current" de l'entrée Accueil.
+
+        Exemple :
+        <span class="drawer-sep">Mes pages</span>
+
+        <a class="drawer-item" href="ma-page.html">
+          <div class="drawer-item-icon">📄</div>
+          <div class="drawer-item-info">
+            <span class="drawer-item-name">Ma Page</span>
+            <span class="drawer-item-file">ma-page.html</span>
+          </div>
+        </a>
+        ══════════════════════════════════════
+      -->
+
+      <!-- État vide si aucune autre page n'existe encore -->
+      <div class="drawer-empty" id="drawer-empty">
+        <span>📭</span>
+        <p>Aucune autre page pour l'instant.<br>Elles apparaîtront ici.</p>
+      </div>
+
+    </div>
+
+    <div class="drawer-footer">Joe J. — Inventaire personnel</div>
+  </aside>
+
   <!-- ═══════════════════════════════════════
-       NAVIGATION
-       Pour ajouter un onglet, décommentez
-       la ligne <li> modèle et adaptez-la.
-  ════════════════════════════════════════════ -->
+       NAV
+  ════════════════════════════════════════ -->
   <nav>
     <a class="nav-brand" href="index.html">Joe<span>.</span> J<span>.</span></a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Accueil</a></li>
-      <!-- <li><a href="page.html">Titre</a></li> -->
+      <!--
+        AJOUTER UN ONGLET NAV :
+        <li><a href="page.html">Titre</a></li>
+      -->
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <main>
 
-    <!-- ═══════════════ HERO ═══════════════ -->
+    <!-- ─── HERO ─── -->
     <section class="hero">
       <p class="hero-tag">Inventaire personnel</p>
       <h1>
@@ -421,12 +590,13 @@
 
     <div class="section-divider"><hr></div>
 
-    <!-- ═══════════════ CATALOGUE ═══════════════
+    <!-- ════════════════════════════════════
+         CATALOGUE
          Pour ajouter une carte :
-         1. Copiez le bloc <a class="card"> d'exemple
-         2. Renseignez href, l'emoji, le titre et la description
-         3. Supprimez ou masquez l'empty-card si besoin
-    ════════════════════════════════════════════ -->
+         Copiez le bloc <a class="card">,
+         adaptez href, l'emoji, le titre
+         et la description.
+    ═════════════════════════════════════════ -->
     <section id="catalogue">
       <div class="section-header">
         <h2 class="section-title">Catalogue</h2>
@@ -435,16 +605,17 @@
 
       <div class="cards-grid" id="cards-grid">
 
-        <!-- ── Modèle de carte (décommentez & adaptez) ──
-        <a class="card" href="ma-page.html">
-          <div class="card-icon">🗂️</div>
-          <div class="card-title">Nom de la page</div>
-          <p class="card-desc">Brève description du contenu de cette page.</p>
-          <span class="card-link">Voir la page</span>
-        </a>
+        <!--
+          Modèle de carte (décommentez & adaptez) :
+
+          <a class="card" href="ma-page.html">
+            <div class="card-icon">🗂️</div>
+            <div class="card-title">Nom de la page</div>
+            <p class="card-desc">Brève description du contenu.</p>
+            <span class="card-link">Voir la page</span>
+          </a>
         -->
 
-        <!-- État vide — masqué automatiquement dès qu'une carte existe -->
         <div class="empty-card" id="empty-state">
           <span class="empty-icon">📂</span>
           <p>Les pages apparaîtront ici au fil de vos demandes.</p>
@@ -455,14 +626,44 @@
 
   </main>
 
-  <!-- ═══════════════ FOOTER ═══════════════ -->
   <footer>
     <span class="footer-brand">Joe J.</span>
     <span class="footer-note">© 2026 — Tous droits réservés</span>
   </footer>
 
   <script>
-    // Compteur automatique : lit le nombre de .card dans la grille
+    /* ── Hamburger / Drawer ── */
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('drawer');
+    const overlay   = document.getElementById('overlay');
+    const btnClose  = document.getElementById('drawer-close');
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      overlay.classList.add('visible');
+      hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('visible');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () =>
+      drawer.classList.contains('open') ? closeDrawer() : openDrawer()
+    );
+    btnClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+    /* ── Masque l'état vide du drawer s'il y a d'autres items ── */
+    const drawerItems  = document.querySelectorAll('.drawer-item:not(.current)').length;
+    const drawerEmpty  = document.getElementById('drawer-empty');
+    if (drawerItems > 0 && drawerEmpty) drawerEmpty.remove();
+
+    /* ── Compteur catalogue ── */
     const grid   = document.getElementById('cards-grid');
     const count  = document.getElementById('catalogue-count');
     const pcount = document.getElementById('page-count');
@@ -471,8 +672,8 @@
 
     if (cards > 0) {
       empty.remove();
-      count.textContent        = cards + (cards > 1 ? ' pages' : ' page');
-      pcount.innerHTML         = cards + '<span>+</span>';
+      count.textContent = cards + (cards > 1 ? ' pages' : ' page');
+      pcount.innerHTML  = cards + '<span>+</span>';
     }
   </script>
 
