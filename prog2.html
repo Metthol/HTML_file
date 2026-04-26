@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Programme 2 · Vignobles, Cathares & Camargue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #6b2d8b;
+    --accent2: #c05621;
+    --bg: #f8f5f2;
+    --bg2: #ede8e3;
+    --surface: #ffffff;
+    --text: #1c1a17;
+    --text2: #5a5650;
+    --text3: #9a958e;
+    --border: #ddd8d0;
+    --check: #6b2d8b;
+    --done-bg: #f4eef9;
+    --done-text: #9b72b8;
+    --meal-bg: #fff8f2;
+    --meal-border: #c05621;
+    --warn-bg: #fef9ec;
+    --warn-border: #d4a017;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --tab-h: 56px;
+    --header-h: 64px;
+    --radius: 14px;
+    --transition: 0.25s ease;
+  }
+  .dark {
+    --bg: #130f15;
+    --bg2: #1c1820;
+    --surface: #221e28;
+    --text: #f0ece4;
+    --text2: #b0a99e;
+    --text3: #6b6560;
+    --border: #38303f;
+    --done-bg: #1e1628;
+    --done-text: #b08cd0;
+    --meal-bg: #1e1812;
+    --warn-bg: #1e1c10;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background var(--transition),color var(--transition); }
+
+  header {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--header-h);
+    background:var(--accent);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 16px;
+    box-shadow:0 2px 16px rgba(107,45,139,0.4);
+  }
+  .header-left { display:flex; flex-direction:column; }
+  .header-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+  .header-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#fff; line-height:1.2; }
+  .header-actions { display:flex; gap:8px; }
+  .btn-icon { width:38px; height:38px; border-radius:50%; border:none; cursor:pointer; background:rgba(255,255,255,0.18); color:#fff; font-size:17px; display:flex; align-items:center; justify-content:center; transition:background var(--transition); }
+  .btn-icon:active { background:rgba(255,255,255,0.3); }
+
+  .tabs-wrap { position:fixed; top:var(--header-h); left:0; right:0; z-index:99; background:var(--surface); border-bottom:1px solid var(--border); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .tabs { display:flex; overflow-x:auto; scrollbar-width:none; padding:0 8px; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { flex:1; min-width:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 4px; border:none; background:transparent; cursor:pointer; color:var(--text3); font-family:'DM Sans',sans-serif; border-bottom:2.5px solid transparent; transition:all var(--transition); white-space:nowrap; gap:2px; }
+  .tab .tab-num { font-size:13px; font-weight:600; }
+  .tab .tab-label { font-size:9px; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab .tab-progress { width:6px; height:6px; border-radius:50%; background:var(--border); margin-top:1px; }
+  .tab.has-progress .tab-progress { background:var(--accent); }
+
+  .content { padding-top:calc(var(--header-h) + var(--tab-h) + 8px); padding-bottom:32px; }
+  .day-panel { display:none; animation:fadeIn 0.2s ease; }
+  .day-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  .day-header { margin:12px 14px 16px; padding:16px 18px; background:var(--surface); border-radius:var(--radius); border-left:4px solid var(--accent); box-shadow:var(--shadow); }
+  .day-date { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
+  .day-title { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:var(--text); line-height:1.2; }
+  .day-subtitle { font-size:13px; color:var(--text2); margin-top:4px; }
+
+  .progress-wrap { margin:0 14px 14px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:11px; color:var(--text3); margin-bottom:5px; }
+  .progress-bar { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.4s ease; }
+
+  .section-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text3); padding:0 16px; margin:18px 0 10px; }
+
+  .timeline { padding:0 14px; position:relative; }
+  .timeline::before { content:''; position:absolute; left:35px; top:0; bottom:0; width:1.5px; background:var(--border); border-radius:1px; }
+  .step { display:flex; gap:12px; margin-bottom:10px; position:relative; }
+  .step-time { flex-shrink:0; width:44px; padding-top:14px; font-size:11px; font-weight:600; color:var(--text3); text-align:right; line-height:1; }
+  .step-dot { flex-shrink:0; width:11px; height:11px; border-radius:50%; background:var(--border); border:2px solid var(--surface); margin-top:18px; position:relative; z-index:1; transition:background var(--transition); box-shadow:0 0 0 2px var(--border); }
+  .step.checked .step-dot { background:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+  .step-card { flex:1; background:var(--surface); border-radius:12px; padding:13px 14px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all var(--transition); cursor:pointer; user-select:none; }
+  .step.checked .step-card { background:var(--done-bg); border-color:transparent; box-shadow:none; }
+  .step-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .step-name { font-size:14px; font-weight:600; line-height:1.3; flex:1; }
+  .step.checked .step-name { color:var(--done-text); text-decoration:line-through; text-decoration-color:var(--done-text); }
+  .step-icons { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .step-check { width:24px; height:24px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:12px; transition:all var(--transition); background:transparent; flex-shrink:0; }
+  .step.checked .step-check { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .gps-btn { width:28px; height:28px; border-radius:8px; background:var(--bg2); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; text-decoration:none; flex-shrink:0; transition:background var(--transition); }
+  .gps-btn:active { background:var(--border); }
+  .step-desc { font-size:12.5px; color:var(--text2); line-height:1.55; margin-top:6px; display:none; }
+  .step-desc.visible { display:block; }
+  .step.checked .step-desc { color:var(--done-text); }
+  .step-star { font-size:11px; color:var(--accent2); margin-top:4px; }
+  .expand-arrow { font-size:11px; color:var(--text3); transition:transform 0.2s; }
+  .step-card.expanded .expand-arrow { transform:rotate(180deg); }
+
+  .meals { padding:0 14px; display:flex; flex-direction:column; gap:10px; }
+  .meal-card { background:var(--meal-bg); border:1px solid var(--border); border-left:4px solid var(--meal-border); border-radius:12px; padding:14px; box-shadow:var(--shadow); }
+  .meal-type { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+  .meal-name { font-size:15px; font-weight:600; color:var(--text); }
+  .meal-address { font-size:12px; color:var(--text2); margin-top:3px; }
+  .meal-price { font-size:12px; font-weight:600; color:var(--accent); margin-top:6px; }
+  .meal-note { font-size:11.5px; color:var(--text3); margin-top:4px; font-style:italic; }
+  .meal-footer { display:flex; justify-content:flex-end; margin-top:10px; }
+  .meal-gps { display:inline-flex; align-items:center; gap:5px; background:var(--accent); color:#fff; text-decoration:none; font-size:12px; font-weight:600; padding:7px 14px; border-radius:20px; transition:opacity var(--transition); }
+  .meal-gps:active { opacity:0.8; }
+
+  .warn-box { margin:0 14px 14px; padding:12px 14px; background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:12px; font-size:12.5px; color:var(--text2); line-height:1.5; }
+  .warn-box strong { color:var(--text); display:block; margin-bottom:2px; }
+
+  .tips { padding:0 14px; }
+  .tip-item { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--text2); line-height:1.5; }
+  .tip-item:last-child { border-bottom:none; }
+  .tip-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+
+  .bottom-safe { height:env(safe-area-inset-bottom, 16px); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="header-badge">Programme 2</span>
+    <span class="header-title">Vignobles, Cathares & Camargue</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" id="darkBtn" onclick="toggleDark()">🌙</button>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showDay(0)" id="tab0"><span class="tab-num">J1</span><span class="tab-label">Arrivée</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(1)" id="tab1"><span class="tab-num">J2</span><span class="tab-label">Narbonne</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(2)" id="tab2"><span class="tab-num">J3</span><span class="tab-label">Carcassonne</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(3)" id="tab3"><span class="tab-num">J4</span><span class="tab-label">Camargue</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(4)" id="tab4"><span class="tab-num">J5</span><span class="tab-label">Retour</span><span class="tab-progress"></span></button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ========== JOUR 1 ========== -->
+<div class="day-panel active" id="panel0">
+  <div class="day-header">
+    <div class="day-date">Lundi 4 mai 2026</div>
+    <div class="day-title">Arrivée & Montpellier</div>
+    <div class="day-subtitle">Découverte du cœur historique de la ville</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog0-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog0" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="0" data-idx="0">
+      <div class="step-time">10h57</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Arrivée — Gare Montpellier Sud-de-France</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Récupération voiture de location dans la gare. Garez au Parking Antigone.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="1">
+      <div class="step-time">11h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Promenade du Peyrou & Arc de Triomphe ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Esplanade royale avec aqueduc et vues panoramiques. Parfait pour se dégourdir les jambes après le train.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="2">
+      <div class="step-time">13h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🍽 Déjeuner — Le Petit Jardin</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">20 rue Jean-Jacques Rousseau. Cuisine du marché dans un jardin secret. ~25€/pers. Réservez : +33 4 67 60 78 78</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="3">
+      <div class="step-time">14h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Quartier de l'Écusson</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Ecusson+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Cathédrale Saint-Pierre, Place de la Canourgue, Hôtel de Varenne. Quartier Antigone en chemin vers le logement.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="4">
+      <div class="step-time">17h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Check-in au logement</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">101 Place du Parnasse, Montpellier. Accessible à partir de 17h.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Dîner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Jardin des Sens</div>
+      <div class="meal-address">Place de la Canourgue, Montpellier</div>
+      <div class="meal-price">~60-80 € / pers</div>
+      <div class="meal-note">Table gastronomique étoilée en plein cœur de l'Écusson. Réservez : +33 4 99 66 18 18</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Jardin+des+Sens+Montpellier" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 2 ========== -->
+<div class="day-panel" id="panel1">
+  <div class="day-header">
+    <div class="day-date">Mardi 5 mai 2026</div>
+    <div class="day-title">Pézenas, Narbonne & Fontfroide</div>
+    <div class="day-subtitle">Route des vins et patrimoine cistercien</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog1-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="1" data-idx="0">
+      <div class="step-time">09h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~45 min vers Pézenas via A75.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="1">
+      <div class="step-time">09h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Pézenas ★ — La ville de Molière</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Pezenas+centre+historique+Herault" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Cité royale du XVIIe siècle, ancienne capitale culturelle du Languedoc. Hôtels particuliers, ruelles du Baron d'Alfonce, boutiques d'artisans. Très accessible et pittoresque.</div>
+        <div class="step-star">⭐ Gratuit — flânerie libre</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="2">
+      <div class="step-time">10h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Dégustation — Prieuré de Saint-Jean-de-Bébian</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Prieure+Saint-Jean-de-Bebian+Pezenas" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Grand domaine viticole dans une bastide historique à 5 min de Pézenas. Vins d'exception du Languedoc. Ouvert lun-ven 9h-17h.</div>
+        <div class="step-star">⭐ Dégustation sur place</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="3">
+      <div class="step-time">14h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Narbonne — Palais des Archevêques & Cathédrale</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Palais+des+Archeveques+Narbonne" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Ensemble architectural unique : cathédrale gothique (XIIIe s., inachevée mais grandiose), musée des Archevêques, donjon de Gilles Aycelin. ~6€/adulte.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="4">
+      <div class="step-time">15h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Abbaye de Fontfroide ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Abbaye+de+Fontfroide+Narbonne" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">15 min de Narbonne. Abbaye cistercienne fondée en 1093, au cœur d'un vallon secret. Jardins de roses, cloîtres provençaux, caves viticoles. ~14€/adulte. ⚠️ Réservez : +33 4 68 45 11 08</div>
+        <div class="step-star">⭐⭐ fontfroide.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Repas</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Brasserie du Centre — Narbonne</div>
+      <div class="meal-address">Place Roger Salengro / Canal de la Robine</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Plusieurs bonnes tables autour du canal. Cuisine languedocienne.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Canal+de+la+Robine+Narbonne" target="_blank">📍 Itinéraire</a></div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Cellier Morel ou Le Bistro Urbain</div>
+      <div class="meal-address">Montpellier centre</div>
+      <div class="meal-price">~35-55 € / pers</div>
+      <div class="meal-note">Au choix selon budget. Cellier Morel (gastronomique, cave XIIIe s.) ou Bistro Urbain (bistronomique).</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Cellier+Morel+Montpellier" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 3 ========== -->
+<div class="day-panel" id="panel2">
+  <div class="day-header">
+    <div class="day-date">Mercredi 6 mai 2026</div>
+    <div class="day-title">Carcassonne — La Cité Médiévale</div>
+    <div class="day-subtitle">1h10 depuis Montpellier (~100 km) · Partez tôt !</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog2-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="2" data-idx="0">
+      <div class="step-time">08h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier (tôt !)</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~1h10 via A9 direction Narbonne puis A61 direction Carcassonne. Partez avant 9h.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="1">
+      <div class="step-time">09h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Carcassonne — La Cité ★★★ (UNESCO)</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Cite+de+Carcassonne" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">La forteresse médiévale la plus impressionnante de France. Remparts gratuits (52 tours, 3 km). Château comtal ~10€ (réservez en ligne). Arrivez tôt pour éviter les cars de touristes !</div>
+        <div class="step-star">⭐⭐⭐ UNESCO — carcassonne.monuments-nationaux.fr</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="2">
+      <div class="step-time">14h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Basilique Saint-Nazaire</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Basilique+Saint-Nazaire+Carcassonne" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Joyau gothique à l'intérieur de la Cité. Vitraux du XIVe siècle superbes. Entrée libre.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="3">
+      <div class="step-time">14h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Les Lices & remparts — Meilleures photos</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Les+lices+Cite+Carcassonne" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Les rues entre les deux enceintes offrent les meilleures photographies. Boutiques artisanales de qualité dans la cité haute.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="4">
+      <div class="step-time">17h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Retour Montpellier (1h10)</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Retour via A61 puis A9.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Repas</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">L'Ostal ou Au Comte Roger</div>
+      <div class="meal-address">Dans la Cité de Carcassonne</div>
+      <div class="meal-price">~25-35 € / pers</div>
+      <div class="meal-note">Cuisine du Languedoc : cassoulet, agneau, produits locaux. Au Comte Roger est la référence gastronomique de la Cité.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Cite+de+Carcassonne" target="_blank">📍 Itinéraire</a></div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Bistro Urbain</div>
+      <div class="meal-address">5 rue Alexandre Cabanel, Montpellier</div>
+      <div class="meal-price">~35 € / pers</div>
+      <div class="meal-note">Bistronomique créatif, excellent rapport qualité/prix. Ouvert mercredi soir.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Bistro+Urbain+Montpellier" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 4 ========== -->
+<div class="day-panel" id="panel3">
+  <div class="day-header">
+    <div class="day-date">Jeudi 7 mai 2026</div>
+    <div class="day-title">Aigues-Mortes & Camargue</div>
+    <div class="day-subtitle">45 min depuis Montpellier (~50 km)</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog3-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog3" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="3" data-idx="0">
+      <div class="step-time">09h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~45 min vers Aigues-Mortes via A9 et D979.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="1">
+      <div class="step-time">09h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Aigues-Mortes ★★ — La Cité Royale</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Aigues-Mortes+cite+medievale" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Saint Louis fit construire cette cité en 1240. Remparts parfaitement conservés, Tour de Constance, rues en damier médiéval. Montez sur les remparts : vue sur étangs et salins (~10€/adulte).</div>
+        <div class="step-star">⭐⭐ Remparts gratuits — Tour de Constance ~10€</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="2">
+      <div class="step-time">11h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Salins d'Aigues-Mortes & Flamants roses ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Salins+Aigues-Mortes+flamants+roses" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Les salins roses de Camargue parmi les plus beaux d'Europe. Visite en petit train (~15€/adulte) avec découverte de la production de sel et des flamants roses. selsdecamargue.com</div>
+        <div class="step-star">⭐ ~15€/adulte — selsdecamargue.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="3">
+      <div class="step-time">14h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Plage de l'Espiguette ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Plage+de+l+Espiguette+Le+Grau+du+Roi" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">10 min d'Aigues-Mortes. La plus sauvage des plages du Languedoc : immenses dunes, eau turquoise, aucun bâtiment. Parking gratuit. ⚠️ Aucun bar ni restaurant — apportez eau et encas !</div>
+        <div class="step-star">⭐⭐ Gratuit — Nature préservée</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="4">
+      <div class="step-time">20h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🍽 Dîner — La Réserve Rimbaud ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=La+Reserve+Rimbaud+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Restaurant étoilé Michelin, terrasse au bord du Lez. ~65-90€/pers. ⚠️ RÉSERVATION INDISPENSABLE : +33 4 67 72 52 53</div>
+        <div class="step-star">⭐⭐ Michelin — reserve-rimbaud.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">La Salicorne ou Le Mas de la Camargue</div>
+      <div class="meal-address">Place Saint-Louis, Aigues-Mortes</div>
+      <div class="meal-price">~25-35 € / pers</div>
+      <div class="meal-note">Spécialités camarguaises : toro (taureau), tellines, riz de Camargue. Cadre unique dans la cité médiévale.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Place+Saint-Louis+Aigues-Mortes" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 5 ========== -->
+<div class="day-panel" id="panel4">
+  <div class="day-header">
+    <div class="day-date">Vendredi 8 mai 2026 · Jour férié 🇫🇷</div>
+    <div class="day-title">Plage & Retour à Paris</div>
+    <div class="day-subtitle">Check-out avant 11h · Train 18h50</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog4-label">0 / 4</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog4" style="width:0%"></div></div>
+  </div>
+  <div class="warn-box"><strong>⚠️ 8 mai = Jour Férié</strong>Certains commerces seront fermés. Les sites balnéaires et restaurants de plage restent ouverts.</div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="4" data-idx="0">
+      <div class="step-time">09h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Derniers achats & balade</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Vins du Languedoc, Picpoul de Pinet, Faugères, Saint-Chinian, fleur de sel...</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="1">
+      <div class="step-time">10h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">⚠️ Check-out — AVANT 11h</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Libérez le logement avant 11h00 impérativement.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="2">
+      <div class="step-time">11h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Plage de Palavas-les-Flots</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Plage+Palavas-les-Flots" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">15 min depuis Montpellier. Dernier bain de soleil méditerranéen avant Paris !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="3">
+      <div class="step-time">17h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🚄 Direction Gare — Train 18h50</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Retour voiture de location (prévoir 30 min de marge). Taxi/Uber vers la gare ~15 min.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Phare ou La Méditerranée</div>
+      <div class="meal-address">Bord de mer, Palavas-les-Flots</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Poissons grillés, bourride, tellines. Ouverts le jour férié.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Palavas-les-Flots" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+</div>
+
+<script>
+const KEY = 'p2_';
+function showDay(n) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggleStep(card) {
+  const step = card.closest('.step');
+  const day = step.dataset.day, idx = step.dataset.idx;
+  const desc = card.querySelector('.step-desc');
+  if (!step.classList.contains('checked')) {
+    step.classList.add('checked');
+    card.classList.remove('expanded');
+    if (desc) desc.classList.remove('visible');
+    localStorage.setItem(KEY + 'd' + day + '_s' + idx, '1');
+  } else {
+    step.classList.remove('checked');
+    localStorage.removeItem(KEY + 'd' + day + '_s' + idx);
+  }
+  updateProgress(parseInt(day));
+}
+function updateProgress(day) {
+  const steps = document.querySelectorAll(`[data-day="${day}"]`);
+  const total = steps.length, done = document.querySelectorAll(`[data-day="${day}"].checked`).length;
+  const fill = document.getElementById('prog' + day), label = document.getElementById('prog' + day + '-label');
+  if (fill) fill.style.width = (total ? done/total*100 : 0) + '%';
+  if (label) label.textContent = done + ' / ' + total;
+  const tab = document.getElementById('tab' + day);
+  if (tab) tab.classList.toggle('has-progress', done > 0);
+}
+function loadState() {
+  document.querySelectorAll('.step').forEach(step => {
+    if (localStorage.getItem(KEY + 'd' + step.dataset.day + '_s' + step.dataset.idx))
+      step.classList.add('checked');
+  });
+  for (let d = 0; d < 5; d++) updateProgress(d);
+}
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem(KEY + 'dark', isDark ? '1' : '0');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem(KEY + 'dark') === '1') { document.body.classList.add('dark'); document.getElementById('darkBtn').textContent = '☀️'; }
+loadState();
+</script>
+</body>
+</html>

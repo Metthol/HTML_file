@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Programme 3 · Nature Sauvage & Côte Catalane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #1a6b45;
+    --accent2: #c05621;
+    --bg: #f5f7f4;
+    --bg2: #e8ede6;
+    --surface: #ffffff;
+    --text: #1a1c19;
+    --text2: #566052;
+    --text3: #94a090;
+    --border: #d4dbd1;
+    --done-bg: #edf5f0;
+    --done-text: #6a9c7f;
+    --meal-bg: #fdf9f5;
+    --meal-border: #c05621;
+    --warn-bg: #fef9ec;
+    --warn-border: #d4a017;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --tab-h: 56px;
+    --header-h: 64px;
+    --radius: 14px;
+    --transition: 0.25s ease;
+  }
+  .dark {
+    --bg: #0f1410;
+    --bg2: #171d17;
+    --surface: #1e261e;
+    --text: #edf2ea;
+    --text2: #a8b4a5;
+    --text3: #627060;
+    --border: #2e3a2e;
+    --done-bg: #162018;
+    --done-text: #7aaa8e;
+    --meal-bg: #1c1a14;
+    --warn-bg: #1c1c10;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background var(--transition),color var(--transition); }
+
+  header { position:fixed; top:0; left:0; right:0; z-index:100; height:var(--header-h); background:var(--accent); display:flex; align-items:center; justify-content:space-between; padding:0 16px; box-shadow:0 2px 16px rgba(26,107,69,0.4); }
+  .header-left { display:flex; flex-direction:column; }
+  .header-badge { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+  .header-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#fff; line-height:1.2; }
+  .header-actions { display:flex; gap:8px; }
+  .btn-icon { width:38px; height:38px; border-radius:50%; border:none; cursor:pointer; background:rgba(255,255,255,0.18); color:#fff; font-size:17px; display:flex; align-items:center; justify-content:center; transition:background var(--transition); }
+  .btn-icon:active { background:rgba(255,255,255,0.3); }
+
+  .tabs-wrap { position:fixed; top:var(--header-h); left:0; right:0; z-index:99; background:var(--surface); border-bottom:1px solid var(--border); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .tabs { display:flex; overflow-x:auto; scrollbar-width:none; padding:0 8px; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { flex:1; min-width:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 4px; border:none; background:transparent; cursor:pointer; color:var(--text3); font-family:'DM Sans',sans-serif; border-bottom:2.5px solid transparent; transition:all var(--transition); white-space:nowrap; gap:2px; }
+  .tab .tab-num { font-size:13px; font-weight:600; }
+  .tab .tab-label { font-size:9px; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab .tab-progress { width:6px; height:6px; border-radius:50%; background:var(--border); margin-top:1px; }
+  .tab.has-progress .tab-progress { background:var(--accent); }
+
+  .content { padding-top:calc(var(--header-h) + var(--tab-h) + 8px); padding-bottom:32px; }
+  .day-panel { display:none; animation:fadeIn 0.2s ease; }
+  .day-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  .day-header { margin:12px 14px 16px; padding:16px 18px; background:var(--surface); border-radius:var(--radius); border-left:4px solid var(--accent); box-shadow:var(--shadow); }
+  .day-date { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
+  .day-title { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:var(--text); line-height:1.2; }
+  .day-subtitle { font-size:13px; color:var(--text2); margin-top:4px; }
+
+  .progress-wrap { margin:0 14px 14px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:11px; color:var(--text3); margin-bottom:5px; }
+  .progress-bar { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.4s ease; }
+
+  .section-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text3); padding:0 16px; margin:18px 0 10px; }
+
+  .timeline { padding:0 14px; position:relative; }
+  .timeline::before { content:''; position:absolute; left:35px; top:0; bottom:0; width:1.5px; background:var(--border); border-radius:1px; }
+  .step { display:flex; gap:12px; margin-bottom:10px; position:relative; }
+  .step-time { flex-shrink:0; width:44px; padding-top:14px; font-size:11px; font-weight:600; color:var(--text3); text-align:right; line-height:1; }
+  .step-dot { flex-shrink:0; width:11px; height:11px; border-radius:50%; background:var(--border); border:2px solid var(--surface); margin-top:18px; position:relative; z-index:1; transition:background var(--transition); box-shadow:0 0 0 2px var(--border); }
+  .step.checked .step-dot { background:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+  .step-card { flex:1; background:var(--surface); border-radius:12px; padding:13px 14px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all var(--transition); cursor:pointer; user-select:none; }
+  .step.checked .step-card { background:var(--done-bg); border-color:transparent; box-shadow:none; }
+  .step-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .step-name { font-size:14px; font-weight:600; line-height:1.3; flex:1; }
+  .step.checked .step-name { color:var(--done-text); text-decoration:line-through; text-decoration-color:var(--done-text); }
+  .step-icons { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .step-check { width:24px; height:24px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:12px; transition:all var(--transition); background:transparent; flex-shrink:0; }
+  .step.checked .step-check { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .gps-btn { width:28px; height:28px; border-radius:8px; background:var(--bg2); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; text-decoration:none; flex-shrink:0; transition:background var(--transition); }
+  .gps-btn:active { background:var(--border); }
+  .step-desc { font-size:12.5px; color:var(--text2); line-height:1.55; margin-top:6px; display:none; }
+  .step-desc.visible { display:block; }
+  .step.checked .step-desc { color:var(--done-text); }
+  .step-star { font-size:11px; color:var(--accent2); margin-top:4px; }
+  .expand-arrow { font-size:11px; color:var(--text3); transition:transform 0.2s; }
+  .step-card.expanded .expand-arrow { transform:rotate(180deg); }
+
+  .meals { padding:0 14px; display:flex; flex-direction:column; gap:10px; }
+  .meal-card { background:var(--meal-bg); border:1px solid var(--border); border-left:4px solid var(--meal-border); border-radius:12px; padding:14px; box-shadow:var(--shadow); }
+  .meal-type { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+  .meal-name { font-size:15px; font-weight:600; color:var(--text); }
+  .meal-address { font-size:12px; color:var(--text2); margin-top:3px; }
+  .meal-price { font-size:12px; font-weight:600; color:var(--accent); margin-top:6px; }
+  .meal-note { font-size:11.5px; color:var(--text3); margin-top:4px; font-style:italic; }
+  .meal-footer { display:flex; justify-content:flex-end; margin-top:10px; }
+  .meal-gps { display:inline-flex; align-items:center; gap:5px; background:var(--accent); color:#fff; text-decoration:none; font-size:12px; font-weight:600; padding:7px 14px; border-radius:20px; transition:opacity var(--transition); }
+  .meal-gps:active { opacity:0.8; }
+
+  .warn-box { margin:0 14px 14px; padding:12px 14px; background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:12px; font-size:12.5px; color:var(--text2); line-height:1.5; }
+  .warn-box strong { color:var(--text); display:block; margin-bottom:2px; }
+
+  .tips { padding:0 14px; }
+  .tip-item { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--text2); line-height:1.5; }
+  .tip-item:last-child { border-bottom:none; }
+  .tip-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+
+  .bottom-safe { height:env(safe-area-inset-bottom, 16px); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="header-badge">Programme 3</span>
+    <span class="header-title">Nature Sauvage & Côte Catalane</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" id="darkBtn" onclick="toggleDark()">🌙</button>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showDay(0)" id="tab0"><span class="tab-num">J1</span><span class="tab-label">Arrivée</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(1)" id="tab1"><span class="tab-num">J2</span><span class="tab-label">Pic S-L</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(2)" id="tab2"><span class="tab-num">J3</span><span class="tab-label">Millau</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(3)" id="tab3"><span class="tab-num">J4</span><span class="tab-label">Collioure</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(4)" id="tab4"><span class="tab-num">J5</span><span class="tab-label">Retour</span><span class="tab-progress"></span></button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ========== JOUR 1 ========== -->
+<div class="day-panel active" id="panel0">
+  <div class="day-header">
+    <div class="day-date">Lundi 4 mai 2026</div>
+    <div class="day-title">Arrivée & Montpellier</div>
+    <div class="day-subtitle">Découverte du cœur historique de la ville</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog0-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog0" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="0" data-idx="0">
+      <div class="step-time">10h57</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Arrivée — Gare Montpellier Sud-de-France</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Récupération voiture de location dans la gare. Garez au Parking Antigone.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="1">
+      <div class="step-time">11h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Promenade du Peyrou & Arc de Triomphe ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Esplanade royale avec aqueduc et panorama sur la ville. Première balade pour se dégourdir les jambes.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="2">
+      <div class="step-time">13h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🍽 Déjeuner — Le Petit Jardin</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">20 rue Jean-Jacques Rousseau. Jardin secret, cuisine du marché. ~25€/pers. Réservez : +33 4 67 60 78 78</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="3">
+      <div class="step-time">14h45</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Quartier de l'Écusson</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Ecusson+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Cathédrale Saint-Pierre, Place de la Canourgue, ruelles médiévales. Quartier Antigone en chemin vers le logement.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="0" data-idx="4">
+      <div class="step-time">17h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Check-in au logement</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">101 Place du Parnasse, Montpellier. Accessible à partir de 17h.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Dîner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Cena</div>
+      <div class="meal-address">2 Place Pétrarque, Montpellier</div>
+      <div class="meal-price">~55 € / pers</div>
+      <div class="meal-note">Menu dégustation surprise 6 plats. Beau cadre. +33 4 67 66 12 21</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Le+Cena+Montpellier+Place+Petrarque" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 2 ========== -->
+<div class="day-panel" id="panel1">
+  <div class="day-header">
+    <div class="day-date">Mardi 5 mai 2026</div>
+    <div class="day-title">Pic Saint-Loup & Prieuré de Maguelone</div>
+    <div class="day-subtitle">30 min depuis Montpellier · Randonnée & mer</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog1-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
+  </div>
+  <div class="warn-box"><strong>🥾 Équipement randonnée obligatoire</strong>Chaussures de marche impératives pour le Pic Saint-Loup. Emportez eau et encas.</div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="1" data-idx="0">
+      <div class="step-time">08h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier (tôt !)</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~30 min vers Cazevieille via D986 et D113E1. Démarrez avant 9h pour éviter la chaleur en altitude.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="1">
+      <div class="step-time">09h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Pic Saint-Loup ★★ — Randonnée</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Pic+Saint-Loup+Cazevieille+randonnee" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Ascension depuis le parking de Cazevieille. Aller-retour ~2h30, 5 km, +400m de dénivelé. Chemin bien balisé, praticable pour les 60 ans en bonne forme. Panorama à 658m : Montpellier, mer, Cévennes, Pyrénées.</div>
+        <div class="step-star">⭐⭐ Gratuit — Vue 360° exceptionnelle</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="2">
+      <div class="step-time">12h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🍽 Déjeuner à Saint-Martin-de-Londres</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=restaurants+Saint-Martin-de-Londres" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Village de pierres sèches à 10 min du Pic. Cuisine locale du terroir languedocien.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="3">
+      <div class="step-time">14h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Prieuré de Maguelone ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Prieure+de+Maguelone+Villeneuve-les-Maguelone" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Cathédrale romane du XIIe s. sur une presqu'île isolée entre étang et Méditerranée. Accessible à pied (2 km de piste). Très insolite et accessible. Entrée libre.</div>
+        <div class="step-star">⭐ Gratuit — Lieu hors du temps</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="1" data-idx="4">
+      <div class="step-time">16h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Baignade & Retour Montpellier</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Palavas+Carnon+plage" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Baignade à Palavas ou Carnon. Retour Montpellier ~20 min.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Dîner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Bistro Urbain</div>
+      <div class="meal-address">5 rue Alexandre Cabanel, Montpellier</div>
+      <div class="meal-price">~35 € / pers</div>
+      <div class="meal-note">Bistronomique créatif, ouvert mardi soir. Réservez : +33 6 60 94 96 16</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Bistro+Urbain+Montpellier" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 3 ========== -->
+<div class="day-panel" id="panel2">
+  <div class="day-header">
+    <div class="day-date">Mercredi 6 mai 2026</div>
+    <div class="day-title">Viaduc de Millau & Gorges du Tarn</div>
+    <div class="day-subtitle">1h15 depuis Montpellier (~115 km) · Vertige garanti</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog2-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="2" data-idx="0">
+      <div class="step-time">08h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier (tôt !)</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~1h15 via A75 direction Millau. Passez SOUS le viaduc depuis la D809 par Millau pour voir la structure depuis le bas — saisissant !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="1">
+      <div class="step-time">09h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Vue depuis dessous le Viaduc</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=viaduc+de+Millau+vue+dessous" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Prenez la sortie Millau-Ville avant le viaduc, suivez D809. La vue depuis en-dessous est encore plus impressionnante qu'au-dessus — 7 pylones de 343m !</div>
+        <div class="step-star">⭐⭐ Gratuit — Vue depuis le bas</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="2">
+      <div class="step-time">09h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Centre de découverte du Viaduc ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Viaduc+de+Millau+centre+decouverte" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Exposition gratuite sur la construction du pont le plus haut du monde. Maquettes, vidéos, panoramas. Très instructif et accessible pour tous.</div>
+        <div class="step-star">⭐⭐ Gratuit — viamillau.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="3">
+      <div class="step-time">10h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Belvédère de Millau — Panorama ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Point+de+vue+Millau+viaduc+panorama" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Route de la Cavalerie — 400m à pied depuis le parking. Vue sur la vallée du Tarn et les 7 pylônes. Le meilleur point de vue du viaduc.</div>
+        <div class="step-star">⭐⭐ Gratuit — Meilleure photo</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="2" data-idx="4">
+      <div class="step-time">14h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Gorges du Tarn — Belvédères ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Gorges+du+Tarn+belvedere" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">20 min de Millau. Gorges les plus spectaculaires du Massif Central. Plusieurs belvédères accessibles en voiture. Paysage grandiose de causses et falaises. Optionnel : descendre vers La Malène pour voir les gorges depuis le bas.</div>
+        <div class="step-star">⭐⭐ Gratuit — Paysage grandiose</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Repas</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Capion ou Brasserie du Commerce</div>
+      <div class="meal-address">Place du Mandarous, Millau</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Cuisine aveyronnaise : tripoux, aligot, fromages des Causses. Vieux Millau.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Place+du+Mandarous+Millau" target="_blank">📍 Itinéraire</a></div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Jardin des Sens</div>
+      <div class="meal-address">Place de la Canourgue, Montpellier</div>
+      <div class="meal-price">~60-80 € / pers</div>
+      <div class="meal-note">Table gastronomique étoilée Michelin. Réservez : +33 4 99 66 18 18</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=Jardin+des+Sens+Montpellier" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 4 ========== -->
+<div class="day-panel" id="panel3">
+  <div class="day-header">
+    <div class="day-date">Jeudi 7 mai 2026</div>
+    <div class="day-title">Collioure & Perpignan</div>
+    <div class="day-subtitle">1h20 depuis Montpellier (~115 km) · La Catalogne française</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog3-label">0 / 6</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog3" style="width:0%"></div></div>
+  </div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="3" data-idx="0">
+      <div class="step-time">08h15</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Départ de Montpellier</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Trajet ~1h20 via A9 direction Perpignan / Collioure (sortie Le Boulou). Garez-vous au parking ville haute — centre piéton.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="1">
+      <div class="step-time">09h35</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Collioure ★★ — Le village des peintres</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Collioure+port+village" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Port naturel de carte postale avec le Château Royal (XIIIe s.), le clocher-phare de Notre-Dame-des-Anges, les maisons colorées et les barques catalanes. Château ~6€.</div>
+        <div class="step-star">⭐⭐ Château ~6€ — Inoubliable</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="2">
+      <div class="step-time">11h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Chemin du Fauvisme ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Chemin+du+Fauvisme+Collioure" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Parcours en plein air sur les traces de Matisse et Derain (1905). 20 reproductions installées aux endroits exacts où les peintres ont travaillé. Gratuit, accessible, poétique.</div>
+        <div class="step-star">⭐ Gratuit — Art dans la rue</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="3">
+      <div class="step-time">14h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Perpignan — Palais des Rois de Majorque ★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Palais+des+Rois+de+Majorque+Perpignan" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Forteresse du XIIIe siècle, résidence des rois de Majorque. Vue panoramique sur la ville, les Pyrénées et la Méditerranée. ~5€/adulte.</div>
+        <div class="step-star">⭐ ~5€/adulte</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="4">
+      <div class="step-time">15h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Perpignan — Vieux Centre</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=centre+historique+Perpignan" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">La Loge de Mer (XIVe s.), Place de la République, le Castillet. Ambiance catalane authentique, cafés ombragés.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="3" data-idx="5">
+      <div class="step-time">20h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🍽 Dîner — La Réserve Rimbaud ★★</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=La+Reserve+Rimbaud+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Restaurant étoilé Michelin, terrasse au bord du Lez. ~65-90€/pers. ⚠️ RÉSERVATION INDISPENSABLE : +33 4 67 72 52 53</div>
+        <div class="step-star">⭐⭐ Michelin — reserve-rimbaud.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Neptune ou La Balette</div>
+      <div class="meal-address">Bord de port, Collioure</div>
+      <div class="meal-price">~30-45 € / pers</div>
+      <div class="meal-note">Fruits de mer, poissons grillés, anchois de Collioure. Vue sur le port et le château.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+port+Collioure" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="section-title">Souvenirs catalans à rapporter</div>
+  <div class="tips">
+    <div class="tip-item"><span class="tip-icon">🐟</span><span><strong>Anchois de Collioure</strong> — Les vrais, en feuilles de sel ou à l'huile</span></div>
+    <div class="tip-item"><span class="tip-icon">🍷</span><span><strong>Banyuls</strong> — Vin doux naturel, accord parfait avec chocolat</span></div>
+    <div class="tip-item"><span class="tip-icon">🍷</span><span><strong>Collioure rouge</strong> — AOC unique, puissant et fruité</span></div>
+    <div class="tip-item"><span class="tip-icon">🧤</span><span><strong>Gants de Millau</strong> — Cuir de tradition, boutiques dans le vieux Millau</span></div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 5 ========== -->
+<div class="day-panel" id="panel4">
+  <div class="day-header">
+    <div class="day-date">Vendredi 8 mai 2026 · Jour férié 🇫🇷</div>
+    <div class="day-title">Plage & Retour à Paris</div>
+    <div class="day-subtitle">Check-out avant 11h · Train 18h50</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog4-label">0 / 4</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog4" style="width:0%"></div></div>
+  </div>
+  <div class="warn-box"><strong>⚠️ 8 mai = Jour Férié</strong>Certains commerces seront fermés. Les sites balnéaires et restaurants de plage restent ouverts.</div>
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline">
+    <div class="step" data-day="4" data-idx="0">
+      <div class="step-time">09h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Derniers achats & balade</span><div class="step-icons"><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Anchois de Collioure si pas encore achetés, Banyuls, fleur de sel, Picpoul de Pinet...</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="1">
+      <div class="step-time">10h30</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">⚠️ Check-out — AVANT 11h</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Libérez le logement avant 11h00 impérativement. 101 Place du Parnasse.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="2">
+      <div class="step-time">11h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">Plage de Palavas-les-Flots</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Plage+Palavas-les-Flots" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">15 min depuis Montpellier. Dernier bain de soleil méditerranéen avant Paris !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+    <div class="step" data-day="4" data-idx="3">
+      <div class="step-time">17h00</div><div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header"><span class="step-name">🚄 Direction Gare — Train 18h50</span><div class="step-icons"><a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a><div class="step-check">✓</div></div></div>
+        <div class="step-desc">Retour voiture de location (prévoir 30 min de marge). Taxi/Uber vers la gare ~15 min. Bon retour !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Phare ou La Méditerranée</div>
+      <div class="meal-address">Bord de mer, Palavas-les-Flots</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Poissons grillés, fruits de mer. Ouverts le jour férié.</div>
+      <div class="meal-footer"><a class="meal-gps" href="https://maps.google.com/?q=restaurants+Palavas-les-Flots" target="_blank">📍 Itinéraire</a></div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+</div>
+
+<script>
+const KEY = 'p3_';
+function showDay(n) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggleStep(card) {
+  const step = card.closest('.step');
+  const day = step.dataset.day, idx = step.dataset.idx;
+  const desc = card.querySelector('.step-desc');
+  if (!step.classList.contains('checked')) {
+    step.classList.add('checked');
+    card.classList.remove('expanded');
+    if (desc) desc.classList.remove('visible');
+    localStorage.setItem(KEY + 'd' + day + '_s' + idx, '1');
+  } else {
+    step.classList.remove('checked');
+    localStorage.removeItem(KEY + 'd' + day + '_s' + idx);
+  }
+  updateProgress(parseInt(day));
+}
+function updateProgress(day) {
+  const steps = document.querySelectorAll(`[data-day="${day}"]`);
+  const total = steps.length, done = document.querySelectorAll(`[data-day="${day}"].checked`).length;
+  const fill = document.getElementById('prog' + day), label = document.getElementById('prog' + day + '-label');
+  if (fill) fill.style.width = (total ? done/total*100 : 0) + '%';
+  if (label) label.textContent = done + ' / ' + total;
+  const tab = document.getElementById('tab' + day);
+  if (tab) tab.classList.toggle('has-progress', done > 0);
+}
+function loadState() {
+  document.querySelectorAll('.step').forEach(step => {
+    if (localStorage.getItem(KEY + 'd' + step.dataset.day + '_s' + step.dataset.idx))
+      step.classList.add('checked');
+  });
+  for (let d = 0; d < 5; d++) updateProgress(d);
+}
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem(KEY + 'dark', isDark ? '1' : '0');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem(KEY + 'dark') === '1') { document.body.classList.add('dark'); document.getElementById('darkBtn').textContent = '☀️'; }
+loadState();
+</script>
+</body>
+</html>

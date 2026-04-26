@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Programme 1 · Classique Languedoc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #2563a8;
+    --accent2: #e07b39;
+    --bg: #f7f4ef;
+    --bg2: #eeeae3;
+    --surface: #ffffff;
+    --text: #1c1a17;
+    --text2: #5a5650;
+    --text3: #9a958e;
+    --border: #ddd8d0;
+    --check: #2563a8;
+    --done-bg: #eef4fd;
+    --done-text: #6b8fc2;
+    --meal-bg: #fff8f2;
+    --meal-border: #e07b39;
+    --warn-bg: #fef9ec;
+    --warn-border: #d4a017;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --tab-h: 56px;
+    --header-h: 64px;
+    --radius: 14px;
+    --transition: 0.25s ease;
+  }
+  .dark {
+    --bg: #14120f;
+    --bg2: #1e1b16;
+    --surface: #252219;
+    --text: #f0ece4;
+    --text2: #b0a99e;
+    --text3: #6b6560;
+    --border: #3a3630;
+    --done-bg: #1a2535;
+    --done-text: #7a9dc8;
+    --meal-bg: #211c14;
+    --warn-bg: #211d10;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background var(--transition),color var(--transition); }
+
+  /* HEADER */
+  header {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--header-h);
+    background:var(--accent);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 16px;
+    box-shadow:0 2px 16px rgba(37,99,168,0.4);
+  }
+  .header-left { display:flex; flex-direction:column; }
+  .header-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+  .header-title { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:#fff; line-height:1.2; }
+  .header-actions { display:flex; gap:8px; }
+  .btn-icon {
+    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(255,255,255,0.18); color:#fff; font-size:17px;
+    display:flex; align-items:center; justify-content:center;
+    transition:background var(--transition);
+  }
+  .btn-icon:active { background:rgba(255,255,255,0.3); }
+
+  /* TABS */
+  .tabs-wrap {
+    position:fixed; top:var(--header-h); left:0; right:0; z-index:99;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  }
+  .tabs {
+    display:flex; overflow-x:auto; scrollbar-width:none;
+    padding:0 8px;
+  }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab {
+    flex:1; min-width:56px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:10px 4px;
+    border:none; background:transparent; cursor:pointer;
+    color:var(--text3); font-family:'DM Sans',sans-serif;
+    border-bottom:2.5px solid transparent;
+    transition:all var(--transition); white-space:nowrap;
+    gap:2px;
+  }
+  .tab .tab-num { font-size:13px; font-weight:600; }
+  .tab .tab-label { font-size:9px; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab .tab-progress { width:6px; height:6px; border-radius:50%; background:var(--border); margin-top:1px; }
+  .tab.has-progress .tab-progress { background:var(--accent); }
+
+  /* CONTENT */
+  .content { padding-top:calc(var(--header-h) + var(--tab-h) + 8px); padding-bottom:32px; }
+  .day-panel { display:none; animation:fadeIn 0.2s ease; }
+  .day-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* DAY HEADER */
+  .day-header {
+    margin:12px 14px 16px;
+    padding:16px 18px;
+    background:var(--surface);
+    border-radius:var(--radius);
+    border-left:4px solid var(--accent);
+    box-shadow:var(--shadow);
+  }
+  .day-date { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
+  .day-title { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:var(--text); line-height:1.2; }
+  .day-subtitle { font-size:13px; color:var(--text2); margin-top:4px; }
+  .day-stats { display:flex; gap:12px; margin-top:10px; }
+  .stat { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--text3); }
+  .stat-dot { width:7px; height:7px; border-radius:50%; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { margin:0 14px 14px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:11px; color:var(--text3); margin-bottom:5px; }
+  .progress-bar { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.4s ease; }
+
+  /* SECTION */
+  .section-title {
+    font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text3); padding:0 16px; margin:18px 0 10px;
+  }
+
+  /* TIMELINE */
+  .timeline { padding:0 14px; position:relative; }
+  .timeline::before {
+    content:''; position:absolute; left:35px; top:0; bottom:0; width:1.5px;
+    background:var(--border); border-radius:1px;
+  }
+  .step {
+    display:flex; gap:12px; margin-bottom:10px; position:relative;
+  }
+  .step-time {
+    flex-shrink:0; width:44px; padding-top:14px;
+    font-size:11px; font-weight:600; color:var(--text3);
+    text-align:right; line-height:1;
+  }
+  .step-dot {
+    flex-shrink:0; width:11px; height:11px; border-radius:50%;
+    background:var(--border); border:2px solid var(--surface);
+    margin-top:18px; position:relative; z-index:1;
+    transition:background var(--transition);
+    box-shadow:0 0 0 2px var(--border);
+  }
+  .step.checked .step-dot { background:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+  .step-card {
+    flex:1;
+    background:var(--surface);
+    border-radius:12px;
+    padding:13px 14px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    transition:all var(--transition);
+    cursor:pointer;
+    user-select:none;
+  }
+  .step.checked .step-card {
+    background:var(--done-bg);
+    border-color:transparent;
+    box-shadow:none;
+  }
+  .step-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .step-name { font-size:14px; font-weight:600; line-height:1.3; flex:1; }
+  .step.checked .step-name { color:var(--done-text); text-decoration:line-through; text-decoration-color:var(--done-text); }
+  .step-icons { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .step-check {
+    width:24px; height:24px; border-radius:50%; border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; transition:all var(--transition);
+    background:transparent; flex-shrink:0;
+  }
+  .step.checked .step-check { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .gps-btn {
+    width:28px; height:28px; border-radius:8px;
+    background:var(--bg2); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; text-decoration:none; flex-shrink:0;
+    transition:background var(--transition);
+  }
+  .gps-btn:active { background:var(--border); }
+  .step-desc {
+    font-size:12.5px; color:var(--text2); line-height:1.55;
+    margin-top:6px; display:none;
+  }
+  .step-desc.visible { display:block; }
+  .step.checked .step-desc { color:var(--done-text); }
+  .step-star { font-size:11px; color:var(--accent2); margin-top:4px; }
+  .expand-arrow { font-size:11px; color:var(--text3); transition:transform 0.2s; }
+  .step-card.expanded .expand-arrow { transform:rotate(180deg); }
+
+  /* MEALS */
+  .meals { padding:0 14px; display:flex; flex-direction:column; gap:10px; }
+  .meal-card {
+    background:var(--meal-bg);
+    border:1px solid var(--border);
+    border-left:4px solid var(--meal-border);
+    border-radius:12px;
+    padding:14px;
+    box-shadow:var(--shadow);
+  }
+  .meal-type { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+  .meal-name { font-size:15px; font-weight:600; color:var(--text); }
+  .meal-address { font-size:12px; color:var(--text2); margin-top:3px; }
+  .meal-price { font-size:12px; font-weight:600; color:var(--accent); margin-top:6px; }
+  .meal-note { font-size:11.5px; color:var(--text3); margin-top:4px; font-style:italic; }
+  .meal-footer { display:flex; justify-content:flex-end; margin-top:10px; }
+  .meal-gps {
+    display:inline-flex; align-items:center; gap:5px;
+    background:var(--accent); color:#fff;
+    text-decoration:none; font-size:12px; font-weight:600;
+    padding:7px 14px; border-radius:20px;
+    transition:opacity var(--transition);
+  }
+  .meal-gps:active { opacity:0.8; }
+
+  /* WARNING BOX */
+  .warn-box {
+    margin:0 14px 14px;
+    padding:12px 14px;
+    background:var(--warn-bg);
+    border:1px solid var(--warn-border);
+    border-radius:12px;
+    font-size:12.5px;
+    color:var(--text2);
+    line-height:1.5;
+  }
+  .warn-box strong { color:var(--text); display:block; margin-bottom:2px; }
+
+  /* RESERVATIONS */
+  .resa-list { padding:0 14px; display:flex; flex-direction:column; gap:8px; }
+  .resa-item {
+    display:flex; align-items:flex-start; gap:10px;
+    background:var(--surface); border-radius:10px;
+    padding:11px 13px; border:1px solid var(--border);
+    box-shadow:var(--shadow);
+  }
+  .resa-badge {
+    flex-shrink:0; font-size:9px; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; padding:3px 7px; border-radius:20px;
+    margin-top:1px;
+  }
+  .resa-badge.urgent { background:#fde8e8; color:#c0392b; }
+  .resa-badge.important { background:#fef3e2; color:#c05621; }
+  .resa-badge.recommande { background:#e8f5ee; color:#1e6b3c; }
+  .resa-text { flex:1; }
+  .resa-name { font-size:13px; font-weight:600; color:var(--text); }
+  .resa-contact { font-size:11.5px; color:var(--text3); margin-top:2px; }
+  .resa-check {
+    width:22px; height:22px; border-radius:50%; border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; cursor:pointer; flex-shrink:0; margin-top:1px;
+    transition:all var(--transition);
+  }
+  .resa-check.done { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* TIPS */
+  .tips { padding:0 14px; }
+  .tip-item {
+    display:flex; gap:10px; align-items:flex-start;
+    padding:10px 0; border-bottom:1px solid var(--border);
+    font-size:13px; color:var(--text2); line-height:1.5;
+  }
+  .tip-item:last-child { border-bottom:none; }
+  .tip-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+
+  /* BOTTOM SAFE */
+  .bottom-safe { height:env(safe-area-inset-bottom, 16px); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="header-badge">Programme 1</span>
+    <span class="header-title">Classique Languedoc</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" id="darkBtn" onclick="toggleDark()" title="Mode sombre">🌙</button>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs" id="tabs">
+    <button class="tab active" onclick="showDay(0)" id="tab0"><span class="tab-num">J1</span><span class="tab-label">Arrivée</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(1)" id="tab1"><span class="tab-num">J2</span><span class="tab-label">Gorges</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(2)" id="tab2"><span class="tab-num">J3</span><span class="tab-label">Sète</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(3)" id="tab3"><span class="tab-num">J4</span><span class="tab-label">Nîmes</span><span class="tab-progress"></span></button>
+    <button class="tab" onclick="showDay(4)" id="tab4"><span class="tab-num">J5</span><span class="tab-label">Retour</span><span class="tab-progress"></span></button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ========== RÉSERVATIONS ========== -->
+<div class="day-panel active" id="day-resa">
+</div>
+
+<!-- ========== JOUR 1 ========== -->
+<div class="day-panel active" id="panel0">
+  <div class="day-header">
+    <div class="day-date">Lundi 4 mai 2026</div>
+    <div class="day-title">Arrivée & Montpellier</div>
+    <div class="day-subtitle">Découverte du coeur historique de la ville</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog0-label">0 / 6</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog0" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline" id="timeline0">
+
+    <div class="step" data-day="0" data-idx="0">
+      <div class="step-time">10h57</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Arrivée — Gare Montpellier Sud-de-France</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Récupérez vos bagages et dirigez-vous vers l'agence de location de voiture dans la gare.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="0" data-idx="1">
+      <div class="step-time">11h15</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Récupération voiture de location</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Parking+Antigone+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Garez la voiture au Parking Antigone (proche du logement). Vous ne la reprendrez que pour les excursions — explorez Montpellier à pied !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="0" data-idx="2">
+      <div class="step-time">11h45</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Promenade du Peyrou & Arc de Triomphe ★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Esplanade royale avec son aqueduc et vues panoramiques sur la ville et les Cévennes par temps clair. Le meilleur point de vue de Montpellier.</div>
+        <div class="step-star">⭐ Vue panoramique — gratuit</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="0" data-idx="3">
+      <div class="step-time">13h15</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">🍽 Déjeuner — Le Petit Jardin</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+20+rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">20 rue Jean-Jacques Rousseau. Cuisine du marché dans un jardin secret verdoyant en plein cœur de l'Écusson. ~25€/pers. Réservez : +33 4 67 60 78 78</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="0" data-idx="4">
+      <div class="step-time">14h45</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Quartier de l'Écusson</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Ecusson+Montpellier+centre+historique" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Le vieux Montpellier médiéval : ruelles pavées, Place de la Canourgue, Cathédrale Saint-Pierre, Hôtel de Varenne. Flânerie libre — très accessible.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="0" data-idx="5">
+      <div class="step-time">16h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Quartier Antigone + Check-in 17h</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Architecture néoclassique de Ricardo Bofill en chemin vers le logement. Check-in à partir de 17h00. 101 Place du Parnasse.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Dîner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Brasseries de la Place de la Comédie</div>
+      <div class="meal-address">Place de la Comédie, Montpellier</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Nombreuses options ouvertes le lundi. Ambiance animée garantie.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=Place+de+la+Comedie+Montpellier" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">À noter</div>
+  <div class="tips">
+    <div class="tip-item"><span class="tip-icon">⚠️</span><span>Le <strong>Musée Fabre</strong> est fermé le lundi — à visiter en fin de journée un autre soir (mar-dim, 11h-18h, ~9€/adulte).</span></div>
+    <div class="tip-item"><span class="tip-icon">🚗</span><span>Garez la voiture au <strong>Parking Antigone</strong> dès l'arrivée. Utilisez les trams / pieds pour tout le séjour en ville.</span></div>
+    <div class="tip-item"><span class="tip-icon">🚋</span><span>Le tramway de Montpellier couvre tout le centre, <strong>1 € le trajet</strong>.</span></div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 2 ========== -->
+<div class="day-panel" id="panel1">
+  <div class="day-header">
+    <div class="day-date">Mardi 5 mai 2026</div>
+    <div class="day-title">Gorges de l'Hérault & Saint-Guilhem</div>
+    <div class="day-subtitle">45 min depuis Montpellier (~40 km)</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog1-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline" id="timeline1">
+
+    <div class="step" data-day="1" data-idx="0">
+      <div class="step-time">09h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Départ de Montpellier</span>
+          <div class="step-icons"><div class="step-check">✓</div></div>
+        </div>
+        <div class="step-desc">Trajet ~45 min via A750 direction Montpellier-Lodève. Sortie Saint-Jean-de-la-Blaquière.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="1" data-idx="1">
+      <div class="step-time">09h45</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Grotte de Clamouse ★★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Grotte+de+Clamouse+Saint-Jean-de-Fos" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">L'une des plus belles grottes de France : cristaux d'aragonite blancs, stalagmites géantes. Visite guidée 1h15, ~16€/adulte. Température 16°C — prenez une veste ! ⚠️ RÉSERVEZ EN AVANCE : clamouse.com</div>
+        <div class="step-star">⭐⭐ Incontournable — Réservation obligatoire</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="1" data-idx="2">
+      <div class="step-time">11h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Pont du Diable & baignade ★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Pont+du+Diable+Saint-Jean-de-Fos+Herault" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Pont médiéval du XIe siècle classé UNESCO. Baignade dans l'Hérault (eau fraîche mais cristalline en mai). Location de canoës sur place.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="1" data-idx="3">
+      <div class="step-time">14h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Saint-Guilhem-le-Désert ★★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Saint-Guilhem-le-Desert+Abbaye" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Un des Plus Beaux Villages de France. Abbaye de Gellone (IXe s., fondée par un compagnon de Charlemagne), ruelles médiévales. Site UNESCO. Accessible pour tous les âges.</div>
+        <div class="step-star">⭐⭐ UNESCO — Gratuit (entrée abbaye ~5€)</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="1" data-idx="4">
+      <div class="step-time">16h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Retour Montpellier (45 min)</span>
+          <div class="step-icons"><div class="step-check">✓</div></div>
+        </div>
+        <div class="step-desc">Retour par la D4 et A750. Arrivée ~17h15.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Repas</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Restaurants de Saint-Guilhem</div>
+      <div class="meal-address">Place du village, Saint-Guilhem-le-Désert</div>
+      <div class="meal-price">~20-25 € / pers</div>
+      <div class="meal-note">Plusieurs terrasses sur la place. Cuisine locale du terroir languedocien.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=restaurants+Saint-Guilhem-le-Desert" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Le Bistro Urbain</div>
+      <div class="meal-address">5 rue Alexandre Cabanel, Montpellier</div>
+      <div class="meal-price">~35 € / pers</div>
+      <div class="meal-note">Bistronomique créatif, menus surprises. Ouvert mardi soir. Réservez : +33 6 60 94 96 16</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=Bistro+Urbain+5+rue+Alexandre+Cabanel+Montpellier" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 3 ========== -->
+<div class="day-panel" id="panel2">
+  <div class="day-header">
+    <div class="day-date">Mercredi 6 mai 2026</div>
+    <div class="day-title">Sète & Bouzigues</div>
+    <div class="day-subtitle">35 min depuis Montpellier (~30 km) · La Venise du Languedoc</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog2-label">0 / 5</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline" id="timeline2">
+
+    <div class="step" data-day="2" data-idx="0">
+      <div class="step-time">09h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Départ de Montpellier</span>
+          <div class="step-icons"><div class="step-check">✓</div></div>
+        </div>
+        <div class="step-desc">Trajet ~35 min via A709 direction Sète.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="2" data-idx="1">
+      <div class="step-time">09h35</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Mont Saint-Clair — Panorama ★★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Mont+Saint+Clair+Sete+panorama" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Vue à 360° depuis le sommet : Méditerranée d'un côté, Étang de Thau de l'autre, Pyrénées par temps clair. Montée en voiture, parking au sommet. Vue inoubliable.</div>
+        <div class="step-star">⭐⭐ Gratuit — Vue à couper le souffle</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="2" data-idx="2">
+      <div class="step-time">11h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Sète — Canaux & Vieux Port</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Vieux+Port+Sete+canal" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">L'île singulière et ses quais colorés, barques de joutes languedociennes, poissonneries authentiques. Atmosphère unique de port de pêche.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="2" data-idx="3">
+      <div class="step-time">15h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Maison Noilly Prat — Marseillan ★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Maison+Noilly+Prat+Marseillan" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Visite guidée 1h des caves du célèbre vermouth français (créé en 1813), dégustation incluse. ~10€/pers. Boutique superbe. ⚠️ Réservez : +33 4 67 77 20 15</div>
+        <div class="step-star">⭐ Réservation recommandée — noillyprat.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="2" data-idx="4">
+      <div class="step-time">17h15</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Retour Montpellier (45 min)</span>
+          <div class="step-icons"><div class="step-check">✓</div></div>
+        </div>
+        <div class="step-desc">Retour via A9. Repos avant le dîner gastronomique.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Repas</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner — À ne pas manquer !</div>
+      <div class="meal-name">Producteur ostréicole à Bouzigues</div>
+      <div class="meal-address">Bord de l'Étang de Thau, Bouzigues</div>
+      <div class="meal-price">~20-25 € / pers</div>
+      <div class="meal-note">Huîtres de Bouzigues, moules, tielles sétoises, Picpoul de Pinet glacé. Tables en plein air. Chez Lulu ou Chez Tonton.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=Bouzigues+restaurant+huitres+etang+de+Thau" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-type">🌙 Dîner</div>
+      <div class="meal-name">Cellier Morel</div>
+      <div class="meal-address">27 rue de l'Aiguillerie, Montpellier</div>
+      <div class="meal-price">~45-60 € / pers</div>
+      <div class="meal-note">Cave voûtée du XIIIe siècle. Gastronomique, belle carte des vins du Languedoc.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=Cellier+Morel+27+rue+Aiguillerie+Montpellier" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 4 ========== -->
+<div class="day-panel" id="panel3">
+  <div class="day-header">
+    <div class="day-date">Jeudi 7 mai 2026</div>
+    <div class="day-title">Pont du Gard & Nîmes Antique</div>
+    <div class="day-subtitle">55 min depuis Montpellier (~60 km) · Partez tôt !</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog3-label">0 / 6</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog3" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline" id="timeline3">
+
+    <div class="step" data-day="3" data-idx="0">
+      <div class="step-time">08h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Départ de Montpellier (tôt !)</span>
+          <div class="step-icons"><div class="step-check">✓</div></div>
+        </div>
+        <div class="step-desc">Partez avant 9h pour visiter le Pont du Gard avant l'arrivée des cars de touristes.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="3" data-idx="1">
+      <div class="step-time">09h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Pont du Gard ★★ (UNESCO)</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Pont+du+Gard+Vers-Pont-du-Gard" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">L'aqueduc romain à 3 niveaux le mieux conservé au monde (Ier siècle). Musée interactif, balade sur les berges du Gardon. ~9€/pers + parking. Impressionnant pour tous les âges.</div>
+        <div class="step-star">⭐⭐ UNESCO — pontdugard.fr</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="3" data-idx="2">
+      <div class="step-time">13h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Arènes de Nîmes ★★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Arenes+de+Nimes+amphitheatre" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">L'amphithéâtre romain le mieux conservé d'Europe (70 ap. J.-C.) — encore plus complet que le Colisée de Rome ! Audioguide inclus. ~10€/adulte.</div>
+        <div class="step-star">⭐⭐ arenes-nimes.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="3" data-idx="3">
+      <div class="step-time">15h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Maison Carrée (UNESCO 2023)</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Maison+Carree+Nimes+temple+romain" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Temple romain le mieux préservé au monde, classé UNESCO en 2023. Court métrage immersif (~6€). Court mais saisissant.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="3" data-idx="4">
+      <div class="step-time">16h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Tour Magne & Jardins de la Fontaine</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Jardins+de+la+Fontaine+Nimes+Tour+Magne" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Superbes jardins à la française du XVIIIe siècle avec la Tour Magne romaine au sommet. Vue panoramique sur Nîmes. Très accessible.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="3" data-idx="5">
+      <div class="step-time">20h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">🍽 Dîner — La Réserve Rimbaud ★★</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=La+Reserve+Rimbaud+820+avenue+Saint-Maur+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Restaurant étoilé Michelin, terrasse romantique au bord du Lez. ~65-90€/pers. ⚠️ RÉSERVATION INDISPENSABLE : +33 4 67 72 52 53</div>
+        <div class="step-star">⭐⭐ Michelin — reserve-rimbaud.com</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Marché / Brasserie de l'Esplanade</div>
+      <div class="meal-address">Place aux Herbes, Nîmes</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Cuisine sudiste, ambiance provençale.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=restaurants+Place+aux+Herbes+Nimes" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+<!-- ========== JOUR 5 ========== -->
+<div class="day-panel" id="panel4">
+  <div class="day-header">
+    <div class="day-date">Vendredi 8 mai 2026 · Jour férié 🇫🇷</div>
+    <div class="day-title">Plage & Retour à Paris</div>
+    <div class="day-subtitle">Check-out avant 11h · Train 18h50</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progression</span><span id="prog4-label">0 / 4</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog4" style="width:0%"></div></div>
+  </div>
+
+  <div class="warn-box"><strong>⚠️ 8 mai = Jour Férié</strong>Certains commerces seront fermés. Les sites balnéaires et restaurants de plage restent ouverts.</div>
+
+  <div class="section-title">Programme du jour</div>
+  <div class="timeline" id="timeline4">
+
+    <div class="step" data-day="4" data-idx="0">
+      <div class="step-time">09h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Derniers achats & balade</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Vins du Languedoc (Picpoul de Pinet, Faugères, Saint-Chinian), fleur de sel de Camargue, tapenade, Noilly Prat rapporté de Marseillan.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="4" data-idx="1">
+      <div class="step-time">10h30</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">⚠️ Check-out — AVANT 11h</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Libérez le logement avant 11h00 impérativement. 101 Place du Parnasse.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="4" data-idx="2">
+      <div class="step-time">11h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">Plage de Palavas-les-Flots</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Plage+Palavas-les-Flots" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">15 min depuis Montpellier. Longue plage de sable, mer Méditerranée. Tranquille en mai — dernier bain de soleil avant Paris !</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+    <div class="step" data-day="4" data-idx="3">
+      <div class="step-time">17h00</div>
+      <div class="step-dot"></div>
+      <div class="step-card" onclick="toggleStep(this)">
+        <div class="step-header">
+          <span class="step-name">🚄 Direction Gare — Train 18h50</span>
+          <div class="step-icons">
+            <a class="gps-btn" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="step-check">✓</div>
+          </div>
+        </div>
+        <div class="step-desc">Retour voiture de location (prévoir 30 min de marge). Taxi/Uber vers la gare ~15 min. Train retour Paris Gare de Lyon à 18h50.</div>
+        <div class="expand-arrow">▾</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Déjeuner</div>
+  <div class="meals">
+    <div class="meal-card">
+      <div class="meal-type">☀️ Déjeuner</div>
+      <div class="meal-name">Le Phare ou La Méditerranée</div>
+      <div class="meal-address">Bord de mer, Palavas-les-Flots</div>
+      <div class="meal-price">~20-30 € / pers</div>
+      <div class="meal-note">Poissons grillés, bourride, tellines. Ouverts le jour férié.</div>
+      <div class="meal-footer">
+        <a class="meal-gps" href="https://maps.google.com/?q=restaurants+Palavas-les-Flots+bord+de+mer" target="_blank">📍 Itinéraire</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Souvenirs à rapporter 🛍</div>
+  <div class="tips">
+    <div class="tip-item"><span class="tip-icon">🍷</span><span><strong>Picpoul de Pinet</strong> — blanc sec, accord parfait avec fruits de mer</span></div>
+    <div class="tip-item"><span class="tip-icon">🍷</span><span><strong>Faugères ou Saint-Chinian</strong> — grands rouges du Languedoc</span></div>
+    <div class="tip-item"><span class="tip-icon">🧂</span><span><strong>Fleur de sel de Camargue</strong> — disponible dans tous les marchés</span></div>
+    <div class="tip-item"><span class="tip-icon">🫙</span><span><strong>Tapenade et olives</strong> de la région</span></div>
+    <div class="tip-item"><span class="tip-icon">🥃</span><span><strong>Noilly Prat</strong> — bouteille rapportée de Marseillan</span></div>
+  </div>
+  <div class="bottom-safe"></div>
+</div>
+
+</div><!-- .content -->
+
+<script>
+const KEY = 'p1_';
+let currentDay = 0;
+
+function showDay(n) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+  currentDay = n;
+  window.scrollTo(0, 0);
+}
+
+function toggleStep(card) {
+  const step = card.closest('.step');
+  const day = step.dataset.day;
+  const idx = step.dataset.idx;
+  const desc = card.querySelector('.step-desc');
+  const isChecked = step.classList.contains('checked');
+
+  if (!isChecked) {
+    step.classList.add('checked');
+    card.classList.remove('expanded');
+    if (desc) desc.classList.remove('visible');
+    localStorage.setItem(KEY + 'd' + day + '_s' + idx, '1');
+  } else {
+    // Single tap on checked = uncheck; show desc on first tap if not checked
+    step.classList.remove('checked');
+    localStorage.removeItem(KEY + 'd' + day + '_s' + idx);
+  }
+  updateProgress(parseInt(day));
+}
+
+function toggleDesc(card) {
+  const desc = card.querySelector('.step-desc');
+  if (desc) {
+    desc.classList.toggle('visible');
+    card.classList.toggle('expanded');
+  }
+}
+
+function updateProgress(day) {
+  const steps = document.querySelectorAll(`[data-day="${day}"]`);
+  const total = steps.length;
+  const done = document.querySelectorAll(`[data-day="${day}"].checked`).length;
+  const pct = total ? (done / total * 100) : 0;
+  const fill = document.getElementById('prog' + day);
+  const label = document.getElementById('prog' + day + '-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total;
+  const tab = document.getElementById('tab' + day);
+  if (tab) tab.classList.toggle('has-progress', done > 0);
+}
+
+function loadState() {
+  document.querySelectorAll('.step').forEach(step => {
+    const d = step.dataset.day, i = step.dataset.idx;
+    if (localStorage.getItem(KEY + 'd' + d + '_s' + i)) {
+      step.classList.add('checked');
+    }
+  });
+  for (let d = 0; d < 5; d++) updateProgress(d);
+}
+
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem(KEY + 'dark', isDark ? '1' : '0');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+}
+
+// Init
+if (localStorage.getItem(KEY + 'dark') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('darkBtn').textContent = '☀️';
+}
+loadState();
+</script>
+</body>
+</html>
