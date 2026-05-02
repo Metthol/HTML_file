@@ -192,6 +192,29 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 .tip-ic{font-size:16px;flex-shrink:0;margin-top:1px;}
 
 .bsafe{height:env(safe-area-inset-bottom,20px);}
+
+/* ── PARKING BOX ── */
+.park-box{
+  display:flex;gap:9px;align-items:flex-start;
+  background:#eef2ff;border:1px solid #c5cef5;border-left:3px solid #3d5bd4;
+  border-radius:9px;padding:9px 11px;margin-top:9px;
+}
+.dark .park-box{background:#0e1428;border-color:#1c2850;border-left-color:#5070d8;}
+.park-icon{font-size:17px;flex-shrink:0;line-height:1.4;}
+.park-body{flex:1;}
+.park-title{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#3d5bd4;margin-bottom:3px;}
+.dark .park-title{color:#7090e0;}
+.park-text{font-size:12px;color:var(--t2);line-height:1.55;}
+.park-text strong{color:var(--text);}
+.park-link{
+  display:inline-flex;align-items:center;gap:4px;
+  margin-top:6px;text-decoration:none;
+  font-size:11.5px;font-weight:700;color:#3d5bd4;
+  background:#d8dfff;border-radius:20px;padding:4px 10px;
+  transition:background var(--tr);
+}
+.dark .park-link{color:#8aaaf5;background:#1a2448;}
+.park-link:active{background:#c0cbff;}
 </style>
 </head>
 <body>
@@ -466,9 +489,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           <span class="st-name">Départ depuis le logement</span>
           <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <p class="st-desc">Trajet ~45 min via A750 direction Lodève. Sortie Saint-Jean-de-la-Blaquière, puis D4 vers les gorges.</p>
-        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Grotte+de+Clamouse+Saint-Jean-de-Fos+Herault" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Grotte de Clamouse
+        <p class="st-desc">Trajet ~45 min via A750 direction Lodève. Sortie Saint-Jean-de-la-Blaquière, puis D4 vers les gorges. Le parking de la Grotte de Clamouse servira de base pour toute la matinée.</p>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Parking+Grotte+de+Clamouse+Saint-Jean-de-Fos+34150" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Parking Grotte de Clamouse
         </a>
       </div>
     </div>
@@ -484,6 +507,14 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">L'une des plus belles grottes de France : <strong>cristaux d'aragonite</strong> d'une blancheur laiteuse et <strong>concrétions de calcite</strong> en forme de fleurs et d'étoiles, formées sur des millénaires. Température intérieure 16°C constante toute l'année — prenez une veste légère ! Visite guidée 1h15 avec guide officiel. Billets déjà en poche — créneau 10h00 recommandé.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking Grotte de Clamouse</div>
+            <p class="park-text"><strong>Parking officiel gratuit sur place</strong> — grand parking bitumé bien indiqué depuis la D4. Capacité large, aucun problème en mai hors saison. Ce même parking dessert aussi le Pont du Diable (200m à pied le long de la route) : inutile de déplacer la voiture pour l'étape suivante.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+Grotte+de+Clamouse+Saint-Jean-de-Fos" target="_blank" onclick="event.stopPropagation()">📍 Voir sur la carte</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐ Parmi les plus belles de France</span>
           <span class="chip c-indoor">🏠 Souterrain — météo sans effet</span>
@@ -491,7 +522,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           <span class="chip c-tip">🧥 Veste obligatoire (16°C)</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/Grotte+de+Clamouse+Saint-Jean-de-Fos/Pont+du+Diable+Herault+Saint-Jean-de-Fos" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Pont du Diable
+          <span class="rn-ico">🧭</span> Trajet → Pont du Diable (200m à pied depuis le parking)
         </a>
       </div>
     </div>
@@ -507,6 +538,13 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Pont médiéval du XIe siècle classé UNESCO (Chemin de Compostelle). Il enjambe les gorges de l'Hérault à leur point le plus spectaculaire — eau d'un vert émeraude unique. Sous la pluie, l'atmosphère est mystérieuse et les gorges particulièrement belles. Si l'éclaircie arrive : baignade possible (eau fraîche ~15°C) et location de canoës disponible.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Même parking que la Grotte</div>
+            <p class="park-text">Le Pont du Diable est à <strong>200m à pied</strong> du parking de la Grotte de Clamouse en longeant la D4 — laissez la voiture où elle est, inutile de la déplacer.</p>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐ Pont UNESCO XIe siècle</span>
           <span class="chip c-price">Gratuit · Canoë ~15€ si éclaircie</span>
@@ -529,13 +567,21 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Classé parmi les <strong>Plus Beaux Villages de France</strong>, site UNESCO. L'<strong>Abbaye de Gellone</strong> (IXe s.) fut fondée par Guilhem, compagnon de Charlemagne — son cloître roman est remarquable. Les maisons de pierres sèches escaladant la falaise sont sublimes sous la pluie : lumière rasante, reflets sur les pavés, moins de monde qu'en été. Comptez 1h30-2h.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking Saint-Guilhem — Village piéton</div>
+            <p class="park-text">Le village est entièrement piéton, la voiture s'arrête à l'entrée. <strong>Option 1 (recommandée) :</strong> Parking payant <strong>« Les Lavagnes »</strong> à l'entrée du village (~3€/h ou ~6€ à la journée) — le plus proche, 3 min à pied de l'abbaye. <strong>Option 2 (gratuit) :</strong> Parking <strong>« Bout du Monde »</strong>, 500m à l'extérieur, gratuit mais 7–8 min à pied jusqu'au village.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+Les+Lavagnes+Saint-Guilhem-le-Desert" target="_blank" onclick="event.stopPropagation()">📍 Parking Les Lavagnes</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐ UNESCO · Plus Beau Village</span>
           <span class="chip c-price">Entrée libre · Abbaye ~5€</span>
           <span class="chip c-tip">📸 Encore plus beau sous la pluie</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Saint-Guilhem-le-Desert/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Retour → Montpellier (45 min)
+        <a class="route-next" href="https://www.google.com/maps/dir/Parking+Les+Lavagnes+Saint-Guilhem-le-Desert/Saint-Guilhem-le-Desert" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Parking Les Lavagnes (entrée village)
         </a>
       </div>
     </div>
@@ -548,6 +594,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
         <p class="st-desc">Retour par D4 et A750 (~45 min). Arrivée ~17h15. Repos avant le dîner à 19h30.</p>
+        <a class="route-next" href="https://www.google.com/maps/dir/Parking+Les+Lavagnes+Saint-Guilhem-le-Desert/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Retour → Montpellier depuis parking village (45 min)
+        </a>
       </div>
     </div>
 
@@ -626,9 +675,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           <span class="st-name">Départ depuis le logement</span>
           <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <p class="st-desc">Trajet ~35 min via A709 direction Sète.</p>
-        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Mont+Saint-Clair+Sete" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Mont Saint-Clair, Sète
+        <p class="st-desc">Trajet ~35 min via A709 direction Sète. Garez-vous directement au sommet du Mont Saint-Clair — vous descendrez à pied ensuite vers le Vieux Port, ce qui est bien plus pratique que de chercher une place en ville basse.</p>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Parking+Mont+Saint-Clair+Sete" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Parking Mont Saint-Clair, Sète
         </a>
       </div>
     </div>
@@ -644,13 +693,21 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Le point culminant de Sète (183m) avec une vue à 360° spectaculaire : <strong>Méditerranée</strong> d'un côté, <strong>Étang de Thau</strong> de l'autre avec ses tables conchylicoles, et les <strong>Pyrénées</strong> par temps clair. L'air lavé par la pluie des jours précédents rend les couleurs particulièrement intenses — lumière méditerranéenne unique. Brise marine fraîche au sommet — une veste légère peut être utile.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking gratuit au sommet</div>
+            <p class="park-text"><strong>Parking gratuit au sommet du Mont Saint-Clair</strong> (~20 places). Arrivez avant 10h en mai pour être sûr d'avoir une place — il se remplit vite le matin. <strong>Stratégie recommandée :</strong> laissez la voiture ici et descendez à pied jusqu'au Vieux Port de Sète (15 min de marche en descente très agréable). Vous remonterez en voiture après pour aller à Bouzigues, ce qui est bien plus pratique que de se garer en ville basse. <strong>Si le parking est complet :</strong> Parking payant « Place de la Révolution » en ville basse (~1,5€/h).</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+sommet+Mont+Saint+Clair+Sete" target="_blank" onclick="event.stopPropagation()">📍 Voir sur la carte</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐ Vue inoubliable</span>
           <span class="chip c-price">Gratuit</span>
           <span class="chip c-tip">📸 Couleurs intenses après la pluie</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Mont+Saint-Clair+Sete/Vieux+Port+Sete" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Vieux Port de Sète
+        <a class="route-next" href="https://www.google.com/maps/dir/Parking+Mont+Saint-Clair+Sete/Vieux+Port+Sete" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Vieux Port de Sète (15 min en descente)
         </a>
       </div>
     </div>
@@ -666,13 +723,21 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Sète, «&nbsp;l'île singulière&nbsp;» ou la Venise du Languedoc, est unique en son genre. Promenez-vous le long du <strong>Canal Royal</strong> (XVIIe s., creusé par Vauban), observez les <strong>barques de joutes</strong> languedociennes (sport traditionnel local), les <strong>poissonneries colorées</strong> du Quai Général-Durand. Ville natale de <strong>Paul Valéry</strong> et <strong>Georges Brassens</strong> (musée ~6€). Atmosphère authentique de port de pêche.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Voiture au sommet — descente à pied</div>
+            <p class="park-text">La voiture reste <strong>au parking gratuit du Mont Saint-Clair</strong>. Vous avez descendu à pied (15 min). Pour repartir vers Bouzigues, remontez à pied jusqu'au parking du sommet (~20 min en montée, ou <strong>taxi depuis le port</strong> ~8€ / 5 min si la montée fatigue). Depuis le parking, la route vers Bouzigues est directe via la D2E2.</p>
+            <a class="park-link" href="https://www.google.com/maps/dir/Vieux+Port+Sete/Parking+Mont+Saint-Clair+Sete" target="_blank" onclick="event.stopPropagation()">🧭 Retour → Parking Mont Saint-Clair</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐ La Venise du Languedoc</span>
           <span class="chip c-price">Gratuit · Musée Brassens ~6€</span>
           <span class="chip c-tip">🎵 Ville natale de Brassens</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Vieux+Port+Sete/Bouzigues+Herault" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Bouzigues (déjeuner)
+        <a class="route-next" href="https://www.google.com/maps/dir/Parking+Mont+Saint-Clair+Sete/Bouzigues+Herault" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> En voiture → Bouzigues depuis parking (15 min)
         </a>
       </div>
     </div>
@@ -688,6 +753,14 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Bouzigues, village ostréicole sur les rives de l'Étang de Thau (10 min de Sète). Déjeuner directement chez un producteur : <strong>Chez Lulu ou Chez Tonton</strong> — tables en plein air pieds sur l'étang. Huîtres de Bouzigues (les meilleures de Méditerranée), moules de l'étang, tielles sétoises (tourte aux poulpes), Picpoul de Pinet glacé. Moment unique, ambiance inoubliable. Arrivez à 12h30 pour avoir une bonne table.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking Bouzigues — Gratuit</div>
+            <p class="park-text"><strong>Parking gratuit</strong> le long de la route du port (avenue Louis Tudesq) face à l'étang — quelques dizaines de places directement devant les restaurants producteurs. Petite commune, stationnement facile en mai hors saison estivale.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+port+Bouzigues+Herault" target="_blank" onclick="event.stopPropagation()">📍 Voir sur la carte</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐ Repas incontournable !</span>
           <span class="chip c-price">~20-25 €/pers</span>
@@ -710,6 +783,14 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Marseillan, village de caractère au bord de l'étang (10 min de Bouzigues). Le célèbre vermouth français créé en 1813 : visite guidée 1h des caves et des chais où les vins (Picpoul, Clairette) vieillissent en fûts de chêne à l'air marin — secret unique au monde. Dégustation des différents vermouths incluse. Boutique avec produits exclusifs introuvables ailleurs. <strong>⚠️ Réservez : +33 4 67 77 20 15</strong></p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking Marseillan — Gratuit</div>
+            <p class="park-text"><strong>Parking gratuit Place de la République</strong> à Marseillan, à 2 min à pied des caves Noilly Prat. Grand parking, jamais saturé. Village très accessible en voiture, pas de zone piétonne contraignante.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Place+de+la+Republique+Marseillan+Herault" target="_blank" onclick="event.stopPropagation()">📍 Voir sur la carte</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐ Vermouth depuis 1813</span>
           <span class="chip c-price">~10 €/adulte · Dégustation incluse</span>
@@ -782,10 +863,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           <span class="st-name">Départ depuis le logement (tôt !)</span>
           <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <p class="st-desc">Trajet 55 min via A9 puis D981 direction Remoulins. Partez avant 9h pour profiter du Pont du Gard avant les cars de touristes — le matin, la lumière rasante sur l'aqueduc est absolument spectaculaire.</p>
+        <p class="st-desc">Trajet 55 min via A9 puis D981 direction Remoulins. Partez avant 9h pour profiter du Pont du Gard avant les cars de touristes — le matin, la lumière rasante sur l'aqueduc est absolument spectaculaire. Pour Nîmes, vous utiliserez ensuite le P+R pour éviter le stationnement difficile en centre-ville.</p>
         <div class="st-chips"><span class="chip c-tip">🕗 Arrivez avant 10h au Pont du Gard</span><span class="chip c-tip">🧴 Crème solaire · Eau 1,5L/pers</span></div>
-        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Pont+du+Gard+Vers-Pont-du-Gard" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Pont du Gard
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Parking+Pont+du+Gard+rive+gauche+Vers-Pont-du-Gard" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Parking Pont du Gard (rive gauche)
         </a>
       </div>
     </div>
@@ -801,13 +882,21 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">L'aqueduc romain à 3 niveaux le mieux conservé au monde, construit vers 50 ap. J.-C. pour acheminer l'eau de Uzès à Nîmes sur 50 km. Exploit technique : la pente n'est que de 25cm par km sur 275m de long et 49m de haut ! Le musée «&nbsp;La Mémoire de l'eau&nbsp;» retrace 2000 ans d'histoire. Balade sur les berges du Gardon — les pierres calcaires prennent des teintes miel au soleil. Comptez 2h sur place.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking officiel du site</div>
+            <p class="park-text">Deux parkings officiels payants bien balisés depuis l'A9 (sortie <strong>« Remoulins »</strong>) : <strong>P1 Rive gauche</strong> (le plus proche des arches, recommandé) et <strong>P2 Rive droite</strong> (à 5 min à pied du pont). Tarif : <strong>~10€/voiture</strong> — inclut l'accès aux berges et au musée. Payez à la borne avant de quitter le site. Arrivez tôt : le parking se remplit après 10h.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+Pont+du+Gard+rive+gauche+Vers-Pont-du-Gard" target="_blank" onclick="event.stopPropagation()">📍 Parking P1 Rive gauche</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐⭐ UNESCO · Chef-d'œuvre romain</span>
           <span class="chip c-price">~9 €/pers · Parking ~10€</span>
           <span class="chip c-tip">📸 Lumière parfaite le matin</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Pont+du+Gard+Vers-Pont-du-Gard/Arenes+de+Nimes" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Arènes de Nîmes (25 min)
+        <a class="route-next" href="https://www.google.com/maps/dir/Pont+du+Gard+Vers-Pont-du-Gard/Parking+Mas+de+Cheylon+Nimes" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → P+R Mas de Cheylon, Nîmes (25 min)
         </a>
       </div>
     </div>
@@ -823,12 +912,20 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Construit en 70 ap. J.-C., cet amphithéâtre est le <strong>mieux conservé d'Europe</strong> — plus complet que le Colisée de Rome. Capacité : 24 000 spectateurs. Ses 60 arcades sur 2 étages sont quasi-intactes. Encore utilisé aujourd'hui pour les corridas et concerts. L'audioguide inclus est très bien conçu et rend la visite vivante pour tous les âges. Comptez 1h-1h30.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Stationnement à Nîmes — 2 options</div>
+            <p class="park-text"><strong>Option 1 — P+R (recommandée) :</strong> Parking Relais <strong>« Mas de Cheylon »</strong> ou <strong>« Stèles de la Fontaine »</strong> — gratuit toute la journée. Prenez ensuite le tramway ligne 1 jusqu'à l'arrêt <strong>« Arènes »</strong> (~1,5€/pers AR). Sans stress, sans chercher de place en centre-ville.<br><br><strong>Option 2 — Centre-ville :</strong> Parking payant <strong>« Victor Hugo »</strong> (rue du Président Daladier, ~2€/h) ou <strong>« Parking des Arènes »</strong> (sous-sol, même tarif) — à 5 min à pied des arènes. Pratique mais peut être saturé en mai.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+Mas+de+Cheylon+Nimes+tramway" target="_blank" onclick="event.stopPropagation()">📍 P+R Mas de Cheylon</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐⭐ Plus complet que le Colisée !</span>
           <span class="chip c-price">~10 €/adulte · Audioguide inclus</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/Arenes+de+Nimes/Maison+Carree+Nimes" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Maison Carrée (5 min à pied)
+          <span class="rn-ico">🧭</span> À pied → Maison Carrée (3 min)
         </a>
       </div>
     </div>
@@ -844,12 +941,19 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
           </div>
         </div>
         <p class="st-desc">Construit en 4 av. J.-C., le temple romain le <strong>mieux préservé au monde</strong> — inscrit UNESCO en 2023. Sa conservation tient au fait qu'il servit de mairie, écurie puis église au fil des siècles. Court <strong>métrage immersif 3D</strong> (~25 min) sur l'histoire de Nîmes antique. Court mais saisissant — la perfection géométrique de ce bâtiment sous le soleil est remarquable.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Même parking que les Arènes</div>
+            <p class="park-text">La Maison Carrée est à <strong>3 min à pied</strong> des Arènes. Ne déplacez pas la voiture — restez au P+R ou au parking Victor Hugo, vous êtes déjà à portée de tout le centre historique de Nîmes.</p>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-star">⭐⭐ UNESCO 2023 · Le mieux préservé au monde</span>
           <span class="chip c-price">~6 €/adulte · Film 3D inclus</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/Maison+Carree+Nimes/Jardins+de+la+Fontaine+Nimes" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Jardins de la Fontaine
+          <span class="rn-ico">🧭</span> À pied → Jardins de la Fontaine (10 min)
         </a>
       </div>
     </div>
