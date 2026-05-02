@@ -8,76 +8,106 @@
 <style>
 :root{
   --storm:#1E4D8C; --sun:#B8730A; --teal:#0E7490; --green:#1E6B3C; --purple:#6D28D9;
-  --bg:#f5f6f9; --bg2:#e8eaf0; --surf:#fff; --text:#1a1c24; --t2:#535a6e; --t3:#8a92a8;
-  --bdr:#d0d5e8; --done-bg:#edf2fb; --done-t:#7090c8;
+  --bg:#f5f6f9; --bg2:#e6e9f2; --surf:#fff;
+  --text:#1a1c24; --t2:#525a6e; --t3:#8a93a8; --bdr:#cdd2e6;
+  --done-bg:#edf2fb; --done-t:#6a90c8;
   --meal-bg:#fffaf2; --warn-bg:#fffbec; --warn-bdr:#d4a017;
-  --info-bg:#eef4fd; --sun-bg:#fff8ec;
-  --sh:0 2px 14px rgba(0,0,0,0.08); --r:14px; --tr:0.22s ease;
-  --hdr:64px; --wx:58px;
+  --info-bg:#eef4fd; --sun-bg:#fff8ec; --teal-bg:#e5f6f9;
+  --sh:0 2px 14px rgba(0,0,0,0.08); --r:14px; --tr:0.2s ease;
+  --hdr:60px; --wx:56px;
 }
 .dark{
-  --bg:#0f1118; --bg2:#171b26; --surf:#1c2236; --text:#edf0f8; --t2:#9aa3bc; --t3:#565e78;
-  --bdr:#252d42; --done-bg:#151f38; --done-t:#6a8ecf;
-  --meal-bg:#1a1810; --warn-bg:#1c1c0e; --info-bg:#111d35; --sun-bg:#1a1508;
-  --sh:0 2px 14px rgba(0,0,0,0.35);
+  --bg:#0f1118; --bg2:#171b28; --surf:#1c2236; --text:#edf0f8;
+  --t2:#9aa4bc; --t3:#575f78; --bdr:#252d44;
+  --done-bg:#151f3c; --done-t:#6a8ecf;
+  --meal-bg:#1a1810; --warn-bg:#1c1c0e; --info-bg:#111e38;
+  --sun-bg:#1a1608; --teal-bg:#091820;
+  --sh:0 2px 14px rgba(0,0,0,0.38);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background var(--tr),color var(--tr);}
 
-/* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);background:var(--storm);display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-shadow:0 2px 18px rgba(30,77,140,0.5);}
+/* ── HEADER ── */
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);background:var(--storm);display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-shadow:0 2px 18px rgba(30,77,140,0.45);}
 .hdr-l{display:flex;flex-direction:column;}
 .hdr-badge{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);}
 .hdr-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:#fff;line-height:1.2;}
-.btn-ico{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.18);color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;transition:background var(--tr);}
+.btn-ico{width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.18);color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;transition:background var(--tr);}
 .btn-ico:active{background:rgba(255,255,255,.32);}
 
-/* WEATHER TABS */
+/* ── WEATHER TABS ── */
 .wx-wrap{position:fixed;top:var(--hdr);left:0;right:0;z-index:199;background:var(--surf);border-bottom:1px solid var(--bdr);box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.wx-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 4px;}
+.wx-tabs{display:flex;scrollbar-width:none;}
 .wx-tabs::-webkit-scrollbar{display:none;}
-.wx-tab{flex:1;min-width:66px;display:flex;flex-direction:column;align-items:center;padding:8px 4px 6px;border:none;background:transparent;cursor:pointer;color:var(--t3);border-bottom:3px solid transparent;transition:all var(--tr);gap:1px;}
-.wx-tab .wt-num{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
-.wx-tab .wt-ico{font-size:20px;margin:1px 0;}
-.wx-tab .wt-tmp{font-size:10px;font-weight:600;}
-.wx-tab .wt-lbl{font-size:8.5px;font-weight:500;letter-spacing:.3px;text-transform:uppercase;opacity:.7;}
-.wx-tab .wt-dot{width:5px;height:5px;border-radius:50%;background:var(--bdr);margin-top:2px;transition:background var(--tr);}
+.wx-tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 4px 5px;border:none;background:transparent;cursor:pointer;color:var(--t3);border-bottom:3px solid transparent;transition:all var(--tr);}
+.wx-tab .wt-n{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.wx-tab .wt-i{font-size:18px;margin:1px 0;}
+.wx-tab .wt-t{font-size:9.5px;font-weight:600;}
+.wx-tab .wt-d{width:5px;height:5px;border-radius:50%;background:var(--bdr);margin-top:2px;transition:background var(--tr);}
 .wx-tab.rainy.active{color:var(--storm);border-bottom-color:var(--storm);}
-.wx-tab.rainy.active .wt-dot{background:var(--storm);}
-.wx-tab.eclaircie.active{color:var(--teal);border-bottom-color:var(--teal);}
-.wx-tab.eclaircie.active .wt-dot{background:var(--teal);}
+.wx-tab.rainy.active .wt-d{background:var(--storm);}
+.wx-tab.clearing.active{color:var(--teal);border-bottom-color:var(--teal);}
+.wx-tab.clearing.active .wt-d{background:var(--teal);}
 .wx-tab.sunny.active{color:var(--sun);border-bottom-color:var(--sun);}
-.wx-tab.sunny.active .wt-dot{background:var(--sun);}
+.wx-tab.sunny.active .wt-d{background:var(--sun);}
 .wx-tab.retour.active{color:var(--green);border-bottom-color:var(--green);}
-.wx-tab.retour.active .wt-dot{background:var(--green);}
+.wx-tab.retour.active .wt-d{background:var(--green);}
 
-/* CONTENT */
+/* ── CONTENT ── */
 .content{padding-top:calc(var(--hdr) + var(--wx) + 10px);padding-bottom:40px;}
-.day{display:none;animation:pop .2s ease;}
+.day{display:none;animation:pop .18s ease;}
 .day.active{display:block;}
-@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-/* DAY HEADER */
-.day-hdr{margin:12px 14px 14px;padding:16px 17px 18px;background:var(--surf);border-radius:var(--r);box-shadow:var(--sh);}
-.dh-pill{display:inline-flex;align-items:center;gap:7px;border-radius:30px;padding:5px 13px;margin-bottom:10px;font-size:12px;font-weight:700;letter-spacing:.3px;}
+/* ── DAY HEADER ── */
+.day-hdr{margin:12px 14px 0;padding:15px 17px 16px;background:var(--surf);border-radius:var(--r);box-shadow:var(--sh);}
+.dh-pill{display:inline-flex;align-items:center;gap:7px;border-radius:30px;padding:5px 12px;margin-bottom:9px;font-size:11.5px;font-weight:700;}
 .dh-date{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
-.dh-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.2;margin-bottom:4px;}
-.dh-sub{font-size:12.5px;color:var(--t2);line-height:1.45;}
-.dh-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.tag{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.4px;}
+.dh-title{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;line-height:1.2;margin-bottom:3px;}
+.dh-sub{font-size:12.5px;color:var(--t2);line-height:1.4;}
 
-/* PROGRESS */
-.prog-wrap{margin:0 14px 12px;}
-.prog-row{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:5px;}
+/* ── ITINERARY BUTTON ── */
+.route-day-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:10px 14px 0;
+  padding:13px 16px;
+  background:var(--storm);color:#fff;
+  border-radius:12px;text-decoration:none;
+  font-size:13px;font-weight:700;letter-spacing:.3px;
+  box-shadow:0 3px 12px rgba(30,77,140,0.35);
+  transition:opacity var(--tr);
+}
+.route-day-btn:active{opacity:.82;}
+.route-day-btn.teal{background:var(--teal);box-shadow:0 3px 12px rgba(14,116,144,0.35);}
+.route-day-btn.sun{background:var(--sun);box-shadow:0 3px 12px rgba(184,115,10,0.35);}
+.route-day-btn.green{background:var(--green);box-shadow:0 3px 12px rgba(30,107,60,0.35);}
+.route-day-btn span.ico{font-size:18px;}
+
+/* ── PROGRESS ── */
+.prog-wrap{margin:12px 14px 0;}
+.prog-row{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:4px;}
 .prog-bar{height:4px;background:var(--bdr);border-radius:2px;overflow:hidden;}
 .prog-fill{height:100%;border-radius:2px;transition:width .4s ease;}
 
-/* SECTION */
+/* ── SECTION ── */
 .sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--t3);padding:0 16px;margin:18px 0 10px;}
 
-/* TIMELINE */
-.tl{padding:0 14px;position:relative;}
+/* ── ALERT ── */
+.alert{margin:12px 14px 0;padding:12px 15px;border-radius:12px;font-size:12.5px;line-height:1.55;border-left:4px solid;}
+.al-info{background:var(--info-bg);border-color:var(--storm);}
+.al-sun{background:var(--sun-bg);border-color:var(--sun);}
+.al-teal{background:var(--teal-bg);border-color:var(--teal);}
+.al-warn{background:var(--warn-bg);border-color:var(--warn-bdr);}
+.alert strong{display:block;font-size:13px;font-weight:700;margin-bottom:4px;}
+.al-info strong{color:var(--storm);}
+.dark .al-info strong{color:#7aaae8;}
+.al-sun strong{color:var(--sun);}
+.al-teal strong{color:var(--teal);}
+.al-warn strong{color:#856404;}
+
+/* ── TIMELINE ── */
+.tl{padding:0 14px;position:relative;margin-top:4px;}
 .tl::before{content:'';position:absolute;left:36px;top:0;bottom:0;width:1.5px;background:var(--bdr);}
 .step{display:flex;gap:12px;margin-bottom:10px;}
 .st-time{flex-shrink:0;width:44px;padding-top:15px;font-size:11px;font-weight:700;color:var(--t3);text-align:right;line-height:1;}
@@ -85,51 +115,50 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 .step.done .st-dot{background:var(--ac,var(--storm));box-shadow:0 0 0 2.5px var(--ac,var(--storm));}
 .st-card{flex:1;background:var(--surf);border-radius:12px;padding:13px 14px;box-shadow:var(--sh);border:1px solid var(--bdr);cursor:pointer;user-select:none;transition:all var(--tr);}
 .step.done .st-card{background:var(--done-bg);border-color:transparent;box-shadow:none;}
-.st-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.st-name{font-size:14px;font-weight:600;line-height:1.3;flex:1;}
+
+/* Step header */
+.st-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.st-name{font-size:14px;font-weight:700;line-height:1.3;flex:1;}
 .step.done .st-name{color:var(--done-t);text-decoration:line-through;text-decoration-color:var(--done-t);}
-.st-actions{display:flex;gap:5px;align-items:center;flex-shrink:0;}
-.st-chk{width:26px;height:26px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all var(--tr);background:transparent;}
+.st-acts{display:flex;gap:5px;align-items:center;flex-shrink:0;}
+.st-chk{width:26px;height:26px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:12px;transition:all var(--tr);background:transparent;flex-shrink:0;}
 .step.done .st-chk{background:var(--ac,var(--storm));border-color:var(--ac,var(--storm));color:#fff;}
-.gps{width:30px;height:30px;border-radius:9px;background:var(--bg2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:background var(--tr);}
-.gps:active{background:var(--bdr);}
+.gps-ico{width:30px;height:30px;border-radius:9px;background:var(--bg2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:background var(--tr);}
+.gps-ico:active{background:var(--bdr);}
 
-/* STEP DETAIL */
-.st-detail{margin-top:9px;display:none;}
-.st-detail.open{display:block;}
-.step.done .st-detail *{color:var(--done-t) !important;}
-.st-desc{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:7px;}
-.st-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
-.st-chip{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px;}
-.chip-indoor{background:#e8f0fe;color:#2563a8;}
-.dark .chip-indoor{background:#142040;color:#7aa8e8;}
-.chip-price{background:#fef3e2;color:#b8730a;}
-.dark .chip-price{background:#201608;color:#d4a040;}
-.chip-star{background:#fef9ec;color:#9a6f08;}
-.dark .chip-star{background:#1c1608;color:#c8a030;}
-.chip-book{background:#fde8e8;color:#c0392b;}
-.dark .chip-book{background:#200c0c;color:#d88080;}
-.chip-tip{background:#e8f5ee;color:#1e6b3c;}
-.dark .chip-tip{background:#081c10;color:#70b080;}
-.st-expand{text-align:center;margin-top:6px;font-size:11px;color:var(--t3);transition:transform .2s;}
-.st-card.open-card .st-expand{transform:rotate(180deg);}
+/* Description — always visible */
+.st-desc{font-size:12.5px;color:var(--t2);line-height:1.6;margin-bottom:8px;}
+.step.done .st-desc{color:var(--done-t);}
 
-/* ALERT BOXES */
-.alert{margin:0 14px 12px;padding:13px 15px;border-radius:12px;font-size:12.5px;line-height:1.55;border-left:4px solid;}
-.al-warn{background:var(--warn-bg);border-color:var(--warn-bdr);color:var(--t2);}
-.al-info{background:var(--info-bg);border-color:var(--storm);color:var(--t2);}
-.al-sun{background:var(--sun-bg);border-color:var(--sun);color:var(--t2);}
-.al-teal{background:#e5f6f9;border-color:var(--teal);color:var(--t2);}
-.dark .al-teal{background:#091820;}
-.alert strong{display:block;font-size:13px;font-weight:700;margin-bottom:4px;}
-.al-warn strong{color:#856404;}
-.al-info strong{color:var(--storm);}
-.dark .al-info strong{color:#7aa8e8;}
-.al-sun strong{color:var(--sun);}
-.al-teal strong{color:var(--teal);}
+/* Chips */
+.st-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.chip{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px;}
+.c-indoor{background:#e8f0fe;color:#2563a8;}
+.dark .c-indoor{background:#142040;color:#7aa8e8;}
+.c-price{background:#fef3e2;color:#b8730a;}
+.dark .c-price{background:#201608;color:#d4a040;}
+.c-star{background:#fef9ec;color:#9a6f08;}
+.dark .c-star{background:#1c1608;color:#c8a030;}
+.c-book{background:#fde8e8;color:#c0392b;}
+.dark .c-book{background:#200c0c;color:#d88080;}
+.c-tip{background:#e8f5ee;color:#1e6b3c;}
+.dark .c-tip{background:#081c10;color:#70b080;}
 
-/* PLAN A/B */
-.plan-ab{display:flex;gap:10px;padding:0 14px;margin-bottom:12px;}
+/* Route to next step button */
+.route-next{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:4px;padding:9px 12px;border-radius:10px;
+  background:var(--bg2);color:var(--t2);
+  text-decoration:none;font-size:12px;font-weight:600;
+  border:1px solid var(--bdr);
+  transition:all var(--tr);
+}
+.route-next:active{background:var(--bdr);}
+.route-next .rn-ico{font-size:14px;}
+.step.done .route-next{opacity:.5;}
+
+/* ── PLAN A/B ── */
+.plan-ab{display:flex;gap:10px;padding:0 14px;margin-top:12px;}
 .plan{flex:1;padding:12px 13px;border-radius:12px;border:1px solid var(--bdr);}
 .plan.pa{background:#f0faf4;border-left:4px solid var(--green);}
 .plan.pb{background:#f3f0ff;border-left:4px solid var(--purple);}
@@ -140,29 +169,29 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 .plan.pb .plan-title{color:var(--purple);}
 .plan-body{font-size:12px;color:var(--t2);line-height:1.5;}
 
-/* MEALS */
+/* ── MEALS ── */
 .meals{padding:0 14px;display:flex;flex-direction:column;gap:10px;}
 .meal{background:var(--meal-bg);border:1px solid var(--bdr);border-radius:12px;padding:14px;box-shadow:var(--sh);}
-.meal-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.meal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;}
 .meal-info{flex:1;}
 .meal-badge{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
 .meal-name{font-size:15px;font-weight:700;}
 .meal-addr{font-size:12px;color:var(--t2);margin-top:2px;}
-.meal-price-tag{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;align-self:flex-start;}
-.meal-note{font-size:12px;color:var(--t3);font-style:italic;margin-top:4px;padding-top:6px;border-top:1px solid var(--bdr);}
-.meal-gps-btn{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:12px;font-weight:700;padding:7px 16px;border-radius:22px;color:#fff;margin-top:10px;}
+.meal-ptag{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;align-self:flex-start;}
+.meal-note{font-size:12px;color:var(--t3);font-style:italic;margin-top:5px;padding-top:6px;border-top:1px solid var(--bdr);}
+.meal-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.meal-gps-btn{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:12px;font-weight:700;padding:8px 16px;border-radius:22px;color:#fff;transition:opacity var(--tr);}
 .meal-gps-btn:active{opacity:.8;}
+.meal-route-btn{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:12px;font-weight:600;padding:8px 14px;border-radius:22px;color:var(--t2);background:var(--bg2);border:1px solid var(--bdr);transition:all var(--tr);}
+.meal-route-btn:active{background:var(--bdr);}
 
-/* TIPS */
+/* ── TIPS ── */
 .tips{padding:0 14px;}
 .tip{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bdr);font-size:13px;color:var(--t2);line-height:1.5;}
 .tip:last-child{border:none;}
 .tip-ic{font-size:16px;flex-shrink:0;margin-top:1px;}
 
-.bsafe{height:env(safe-area-inset-bottom,16px);}
-
-/* HELPERS */
-.mt8{margin-top:8px;}
+.bsafe{height:env(safe-area-inset-bottom,20px);}
 </style>
 </head>
 <body>
@@ -178,51 +207,49 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 <div class="wx-wrap">
   <div class="wx-tabs">
     <button class="wx-tab rainy active" onclick="goDay(0)" id="tab0">
-      <span class="wt-num">Lun. 4</span><span class="wt-ico">☔</span>
-      <span class="wt-tmp">18°C</span><span class="wt-lbl">Montpellier</span><span class="wt-dot"></span>
+      <span class="wt-n">Lun. 4</span><span class="wt-i">☔</span><span class="wt-t">18°C · MPL</span><span class="wt-d"></span>
     </button>
     <button class="wx-tab rainy" onclick="goDay(1)" id="tab1">
-      <span class="wt-num">Mar. 5</span><span class="wt-ico">🌧️</span>
-      <span class="wt-tmp">19°C</span><span class="wt-lbl">Gorges</span><span class="wt-dot"></span>
+      <span class="wt-n">Mar. 5</span><span class="wt-i">🌧️</span><span class="wt-t">17°C · Gorges</span><span class="wt-d"></span>
     </button>
-    <button class="wx-tab eclaircie" onclick="goDay(2)" id="tab2">
-      <span class="wt-num">Mer. 6</span><span class="wt-ico">🌤️</span>
-      <span class="wt-tmp">22°C</span><span class="wt-lbl">Sète</span><span class="wt-dot"></span>
+    <button class="wx-tab clearing" onclick="goDay(2)" id="tab2">
+      <span class="wt-n">Mer. 6</span><span class="wt-i">🌤️</span><span class="wt-t">21°C · Sète</span><span class="wt-d"></span>
     </button>
     <button class="wx-tab sunny" onclick="goDay(3)" id="tab3">
-      <span class="wt-num">Jeu. 7</span><span class="wt-ico">☀️</span>
-      <span class="wt-tmp">22°C</span><span class="wt-lbl">Nîmes</span><span class="wt-dot"></span>
+      <span class="wt-n">Jeu. 7</span><span class="wt-i">☀️</span><span class="wt-t">24°C · Nîmes</span><span class="wt-d"></span>
     </button>
     <button class="wx-tab retour" onclick="goDay(4)" id="tab4">
-      <span class="wt-num">Ven. 8</span><span class="wt-ico">🌦️</span>
-      <span class="wt-tmp">22°C</span><span class="wt-lbl">Retour</span><span class="wt-dot"></span>
+      <span class="wt-n">Ven. 8</span><span class="wt-i">🌦️</span><span class="wt-t">22°C · MPL</span><span class="wt-d"></span>
     </button>
   </div>
 </div>
 
 <div class="content">
 
-<!-- ══ JOUR 1 · LUNDI · MONTPELLIER PLUIE ══ -->
+<!-- ══════════════════════════════════════════
+     JOUR 1 — LUNDI — MONTPELLIER ☔
+══════════════════════════════════════════ -->
 <div class="day active" id="day0" style="--ac:var(--storm)">
+
   <div class="day-hdr" style="border-left:5px solid var(--storm)">
-    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)"><span>☔</span><span>Pluie forte · 22mm · 18°C</span></div>
+    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)">☔ Pluie forte · 22mm · 18°C à Montpellier</div>
     <div class="dh-date" style="color:var(--storm)">Lundi 4 mai 2026 · Arrivée</div>
     <div class="dh-title">Montpellier — Monuments & Écusson</div>
     <div class="dh-sub">Place de la Comédie · Peyrou · Quartier médiéval · Passages couverts</div>
-    <div class="dh-tags">
-      <span class="tag" style="background:#dde9f8;color:var(--storm)">🏠 Abrité prioritaire</span>
-      <span class="tag" style="background:#e8f5ee;color:var(--green)">✅ Check-in 17h</span>
-    </div>
   </div>
 
+  <a class="route-day-btn" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier/Quartier+Antigone+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank">
+    <span class="ico">🗺️</span> Itinéraire complet de la journée
+  </a>
+
   <div class="prog-wrap">
-    <div class="prog-row"><span>Progression du jour</span><span id="p0-lbl">0 / 8</span></div>
+    <div class="prog-row"><span>Progression</span><span id="p0-lbl">0 / 7</span></div>
     <div class="prog-bar"><div class="prog-fill" id="p0" style="background:var(--storm);width:0%"></div></div>
   </div>
 
   <div class="alert al-info">
     <strong>☔ Journée la plus pluvieuse — programme intérieur intelligent</strong>
-    Les monuments emblématiques de Montpellier sont visitables même sous la pluie : l'Écusson, les passages couverts, la cathédrale, la faculté de médecine. Entre chaque lieu, les trajets à pied sont courts (5-10 min max). Parapluies et imperméables recommandés.
+    Les monuments emblématiques de Montpellier sont tous visitables sous la pluie : Écusson, passages couverts, cathédrale. Les trajets entre chaque lieu sont courts (5–10 min à pied max). Parapluies recommandés.
   </div>
 
   <div class="sec">Programme de la journée</div>
@@ -230,229 +257,203 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
     <div class="step" data-d="0" data-i="0">
       <div class="st-time">10h57</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Arrivée — Gare Montpellier Sud-de-France</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">🚄 Arrivée — Gare Montpellier Sud-de-France</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Récupération de la voiture de location directement dans la gare. Garez-la immédiatement au <strong>Parking Antigone</strong> (5 min à pied du logement, ~2€/h) et explorez Montpellier entièrement à pied — la ville est très compacte.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-tip">🚗 Garez au Parking Antigone</span>
-            <span class="st-chip chip-tip">🚶 Ville 100% piétonne ensuite</span>
-          </div>
+        <p class="st-desc">Récupération de la voiture de location dans la gare. Vous disposez d'un parking au logement (101 Place du Parnasse) — posez-y la voiture et explorez Montpellier entièrement à pied, la ville est très compacte.</p>
+        <div class="st-chips">
+          <span class="chip c-tip">🚗 Voiture au logement dès l'arrivée</span>
+          <span class="chip c-tip">🚶 Ville 100% piétonne ensuite</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Promenade du Peyrou
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="1">
       <div class="st-time">11h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Promenade du Peyrou & Arc de Triomphe ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Grande esplanade royale créée au XVIIe siècle pour honorer Louis XIV, dont la statue équestre trône au centre. L'<strong>Arc de Triomphe</strong> (1691) fut inspiré de celui de Paris et présente les victoires du Roi-Soleil. L'<strong>Aqueduc Saint-Clément</strong> (1753, 2 niveaux d'arches) achemine l'eau depuis 14 km. Par temps clair, vue panoramique sur les Cévennes et parfois les Pyrénées.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Vue panoramique</span>
-            <span class="st-chip chip-price">Gratuit</span>
-            <span class="st-chip chip-tip">📸 Belles photos même sous les nuages</span>
-          </div>
+        <p class="st-desc">Grande esplanade royale du XVIIe siècle avec la statue de Louis XIV au centre. L'<strong>Arc de Triomphe</strong> (1691) présente les victoires du Roi-Soleil. L'<strong>Aqueduc Saint-Clément</strong> (1753, 14 km de long, 2 niveaux d'arches) est le symbole architectural de Montpellier. Vue panoramique sur les Cévennes et les Pyrénées par temps clair — même sous les nuages, le site est impressionnant.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Vue panoramique</span>
+          <span class="chip c-price">Gratuit</span>
+          <span class="chip c-tip">📸 Beau même sous les nuages</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Place de la Comédie
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="2">
       <div class="st-time">12h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Place de la Comédie & Esplanade Charles-de-Gaulle ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">La <strong>Place de la Comédie</strong>, surnommée « l'Œuf » pour sa forme ovale, est le cœur vivant de Montpellier depuis 1755. Elle accueille la <strong>Fontaine des Trois Grâces</strong> (XIXe s.) et l'<strong>Opéra Comédie</strong> (style Second Empire). Les tramways Mosson signés Christian Lacroix traversent la place avec leurs couleurs éclatantes. L'<strong>Esplanade Charles-de-Gaulle</strong>, grand boulevard planté de platanes, abrite guinguettes, kiosques et la statue de la Victoire. Point de départ idéal pour toute visite de Montpellier.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Cœur de la ville</span>
-            <span class="st-chip chip-price">Gratuit</span>
-            <span class="st-chip chip-indoor">🏠 Opéra & galeries à l'abri</span>
-          </div>
+        <p class="st-desc">La <strong>Place de la Comédie</strong> («&nbsp;l'Œuf&nbsp;») est le cœur battant de Montpellier depuis 1755 : Fontaine des Trois Grâces, Opéra Comédie style Second Empire, tramways colorés signés Christian Lacroix. L'<strong>Esplanade Charles-de-Gaulle</strong> est le grand boulevard planté de platanes centenaires avec ses guinguettes et kiosques. Point de départ idéal de toute visite. Les galeries couvertes alentour offrent un abri parfait sous la pluie.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Cœur de la ville</span>
+          <span class="chip c-price">Gratuit</span>
+          <span class="chip c-indoor">🏠 Galeries couvertes</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Le Petit Jardin (déjeuner)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="3">
       <div class="st-time">13h15</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">🍽 Déjeuner — Le Petit Jardin</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+20+rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+20+rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">20 rue Jean-Jacques Rousseau, en plein cœur de l'Écusson. Cuisine du marché dans une maison de ville avec jardin intérieur secret et galerie couverte. L'une des meilleures adresses de Montpellier, ouverte le lundi — rare ! La salle intérieure voûtée est tout aussi charmante par temps de pluie. Formule déjeuner ~25€. <strong>Réservez impérativement : +33 4 67 60 78 78</strong></p>
-          <div class="st-meta">
-            <span class="st-chip chip-indoor">🏠 Salle intérieure couverte</span>
-            <span class="st-chip chip-price">~25 € / pers</span>
-            <span class="st-chip chip-book">📞 Réservation obligatoire</span>
-          </div>
+        <p class="st-desc">20 rue Jean-Jacques Rousseau. L'une des meilleures adresses de Montpellier : cuisine du marché dans une maison de ville avec galerie couverte. La salle voûtée intérieure est très chaleureuse par temps de pluie. Formule déjeuner ~25€ — l'une des rares bonnes tables ouvertes le lundi. <strong>Réservez : +33 4 67 60 78 78</strong></p>
+        <div class="st-chips">
+          <span class="chip c-price">~25 €/pers</span>
+          <span class="chip c-indoor">🏠 Salle intérieure couverte</span>
+          <span class="chip c-book">📞 Réservation obligatoire</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/20+Rue+Jean+Jacques+Rousseau+Montpellier/Place+de+la+Canourgue+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Quartier de l'Écusson
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="4">
       <div class="st-time">14h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Quartier de l'Écusson — Cœur médiéval ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Ecusson+historique+Montpellier+Place+de+la+Canourgue" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Place+de+la+Canourgue+Montpellier+ecusson" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Le cœur médiéval de Montpellier enfermé dans ses anciens remparts (en forme d'écusson, d'où le nom). Incontournables à ne pas manquer : <strong>Place de la Canourgue</strong> (XVe s., la plus ancienne place de la ville, avec ses platanes centenaires), <strong>Hôtel de Varenne</strong> (musée du Vieux Montpellier, entrée libre), les ruelles de l'<strong>Ancien Courrier</strong> et de la <strong>Loge</strong> avec leurs passages couverts et cours intérieures cachées. Le <strong>passage de l'Argenterie</strong> est parfait sous la pluie. Nombreux hôtels particuliers du XVIIe-XVIIIe siècle à portails sculptés. La pluie transforme ces ruelles pavées en véritable décor de film médiéval.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Cœur historique</span>
-            <span class="st-chip chip-price">Gratuit</span>
-            <span class="st-chip chip-indoor">🏠 Passages couverts nombreux</span>
-            <span class="st-chip chip-tip">📸 Reflets sur les pavés sous la pluie !</span>
-          </div>
+        <p class="st-desc">Le cœur médiéval de Montpellier enfermé dans ses anciens remparts (en forme d'écusson). À ne pas rater : <strong>Place de la Canourgue</strong> (XVe s., la plus ancienne place de la ville), <strong>Hôtel de Varenne</strong> (musée du Vieux Montpellier, entrée libre), ruelles de l'<strong>Ancien Courrier</strong> avec leurs passages couverts et cours intérieures cachées. La pluie transforme ces ruelles pavées en décor de film — reflets uniques sur les pierres sèches. Nombreux hôtels particuliers XVIIe-XVIIIe à portails sculptés.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Cœur historique</span>
+          <span class="chip c-price">Gratuit</span>
+          <span class="chip c-indoor">🏠 Passages couverts</span>
+          <span class="chip c-tip">📸 Reflets magnifiques sous la pluie</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Cathédrale Saint-Pierre
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="5">
       <div class="st-time">15h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Cathédrale Saint-Pierre & Faculté de Médecine</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Cathedrale+Saint+Pierre+Montpellier+faculte+medecine" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Cathedrale+Saint+Pierre+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">La <strong>Cathédrale Saint-Pierre</strong> (XIVe s.) est la seule église de Montpellier à avoir survécu aux guerres de religion. Ses deux tours-porches monumentales (17m) lui donnent un aspect de forteresse. Intérieur gothique saisissant. Juste à côté, la <strong>Faculté de Médecine de Montpellier</strong> est l'une des plus anciennes au monde (fondée en 1220 — avant Paris !). L'entrée libre permet de découvrir ses couloirs richement décorés, son musée anatomique Atger et son jardin botanique (le plus vieux de France, 1593). Entièrement à l'abri.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-indoor">🏠 Entièrement couvert</span>
-            <span class="st-chip chip-price">Entrée libre</span>
-            <span class="st-chip chip-star">⭐ Fondée en 1220</span>
-          </div>
+        <p class="st-desc">La <strong>Cathédrale Saint-Pierre</strong> (XIVe s.) est la seule église de Montpellier à avoir survécu aux guerres de religion. Ses deux tours-porches monumentales (17m) lui donnent un aspect de forteresse. La <strong>Faculté de Médecine</strong> fondée en 1220 (avant Paris !) propose une entrée libre dans ses couloirs richement décorés. À côté, le <strong>Jardin des Plantes</strong> est le plus vieux jardin botanique de France (1593). Entièrement à l'abri.</p>
+        <div class="st-chips">
+          <span class="chip c-indoor">🏠 Entièrement couvert</span>
+          <span class="chip c-price">Entrée libre</span>
+          <span class="chip c-star">⭐ Faculté fondée en 1220</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Cathedrale+Saint+Pierre+Montpellier/Quartier+Antigone+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Quartier Antigone
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="6">
       <div class="st-time">16h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Quartier Antigone — Architecture Ricardo Bofill</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Quartier+Antigone+Montpellier+architecture" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">Quartier Antigone & Check-in 17h ✅</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Conçu dans les années 1980 par l'architecte catalan Ricardo Bofill, ce quartier néoclassique est une « Rome à ciel ouvert » : colonnes, portiques, places en hémicycle, fontaines. La <strong>Place du Nombre d'Or</strong>, la <strong>Place de Thessalie</strong> et l'<strong>Hôtel de Région</strong> sont les pièces maîtresses. En chemin vers votre logement au 101 Place du Parnasse — à 5 min à pied. Gratuit et très accessible.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Architecture unique en France</span>
-            <span class="st-chip chip-price">Gratuit</span>
-            <span class="st-chip chip-tip">🏠 En chemin vers le logement</span>
-          </div>
+        <p class="st-desc">En chemin vers votre logement, découvrez le quartier <strong>Antigone</strong> conçu par Ricardo Bofill : colonnes, portiques, places en hémicycle — une «&nbsp;Rome à ciel ouvert&nbsp;» des années 1980. <strong>Check-in à partir de 17h</strong> au 101 Place du Parnasse. Vous avez un parking sur place — rangez la voiture pour toute la semaine, vous n'en aurez besoin que pour les excursions.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Architecture unique en France</span>
+          <span class="chip c-price">Gratuit</span>
+          <span class="chip c-book">✅ Check-out vendredi avant 11h</span>
         </div>
-        <div class="st-expand">▾</div>
-      </div>
-    </div>
-
-    <div class="step" data-d="0" data-i="7">
-      <div class="st-time">17h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top">
-          <span class="st-name">✅ Check-in — 101 Place du Parnasse</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
-            <div class="st-chk">✓</div>
-          </div>
-        </div>
-        <div class="st-detail">
-          <p class="st-desc">Accessible à partir de 17h. Installez-vous, déposez les bagages. Le logement est idéalement situé dans le quartier Antigone, à 10 min à pied de la Place de la Comédie. Dîner à 19h30 au Cellier Morel — à 15 min à pied dans l'Écusson.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-book">⚠️ Check-out vendredi avant 11h</span>
-          </div>
-        </div>
-        <div class="st-expand">▾</div>
       </div>
     </div>
 
   </div>
 
-  <div class="sec">Repas</div>
+  <div class="sec">Dîner</div>
   <div class="meals">
-    <div class="meal" style="border-left:4px solid var(--sun)">
-      <div class="meal-hdr">
-        <div class="meal-info">
-          <div class="meal-badge" style="color:var(--sun)">☀️ Déjeuner</div>
-          <div class="meal-name">Le Petit Jardin</div>
-          <div class="meal-addr">20 rue Jean-Jacques Rousseau, Montpellier</div>
-        </div>
-        <div class="meal-price-tag" style="background:#fef3e2;color:var(--sun)">~25 €/pers</div>
-      </div>
-      <div class="meal-note">Cuisine du marché, jardin secret couvert, salle voûtée. Ouvert lundi. ⚠️ Réservez : +33 4 67 60 78 78</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=Restaurant+Petit+Jardin+Montpellier" target="_blank" style="background:var(--storm)">📍 Itinéraire</a>
-    </div>
     <div class="meal" style="border-left:4px solid var(--storm)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
-          <div class="meal-badge" style="color:var(--storm)">🌙 Dîner — Parfait par temps de pluie</div>
-          <div class="meal-name">Cellier Morel</div>
-          <div class="meal-addr">27 rue de l'Aiguillerie, Montpellier</div>
+          <div class="meal-badge" style="color:var(--storm)">🌙 Dîner — Atmosphère cave médiévale</div>
+          <div class="meal-name">La Canourgue</div>
+          <div class="meal-addr">Place de la Canourgue, Montpellier</div>
         </div>
-        <div class="meal-price-tag" style="background:#dde9f8;color:var(--storm)">~45-60 €/pers</div>
+        <div class="meal-ptag" style="background:#dde9f8;color:var(--storm)">~30 €/pers</div>
       </div>
-      <div class="meal-note">Cave voûtée du XIIIe siècle — gastronomique, belle carte des vins du Languedoc. Ambiance unique sous les arches médiévales.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=Cellier+Morel+27+rue+Aiguillerie+Montpellier" target="_blank" style="background:var(--storm)">📍 Itinéraire</a>
+      <div class="meal-note">Bistronomie dans un cadre historique au cœur de l'Écusson. Cuisine du terroir languedocien, belle carte des vins en verre. Idéal par temps de pluie. Alternative : <strong>Le Comptoir de l'Arc</strong> (rue de l'Arc, ~28€) également très recommandé.</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurant+La+Canourgue+Montpellier" target="_blank" style="background:var(--storm)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Place+de+la+Canourgue+Montpellier" target="_blank">🧭 Itinéraire depuis logement</a>
+      </div>
     </div>
   </div>
   <div class="bsafe"></div>
 </div>
 
-<!-- ══ JOUR 2 · MARDI · GORGES ══ -->
+
+<!-- ══════════════════════════════════════════
+     JOUR 2 — MARDI — GORGES 🌧️
+══════════════════════════════════════════ -->
 <div class="day" id="day1" style="--ac:var(--storm)">
+
   <div class="day-hdr" style="border-left:5px solid var(--storm)">
-    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)"><span>🌧️</span><span>Pluie probable · 68% · 19°C</span></div>
+    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)">🌧️ Pluie probable · 68% · 17°C dans les Gorges</div>
     <div class="dh-date" style="color:var(--storm)">Mardi 5 mai 2026</div>
     <div class="dh-title">Gorges de l'Hérault & Saint-Guilhem</div>
-    <div class="dh-sub">45 min (~40 km) · Billets Grotte déjà réservés ✅</div>
-    <div class="dh-tags">
-      <span class="tag" style="background:#fde8e8;color:#c0392b">🎫 Billets Clamouse pris</span>
-      <span class="tag" style="background:#dde9f8;color:var(--storm)">🏠 Grotte souterraine</span>
-    </div>
+    <div class="dh-sub">45 min (~40 km) · Billets Grotte déjà réservés ✅ · Souterrain = peu importe la météo</div>
   </div>
+
+  <a class="route-day-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Grotte+de+Clamouse+Saint-Jean-de-Fos/Pont+du+Diable+Herault/Saint-Guilhem-le-Desert+Abbaye+Gellone/101+Place+du+Parnasse+Montpellier" target="_blank">
+    <span class="ico">🗺️</span> Itinéraire complet de la journée
+  </a>
+
   <div class="prog-wrap">
-    <div class="prog-row"><span>Progression du jour</span><span id="p1-lbl">0 / 5</span></div>
+    <div class="prog-row"><span>Progression</span><span id="p1-lbl">0 / 5</span></div>
     <div class="prog-bar"><div class="prog-fill" id="p1" style="background:var(--storm);width:0%"></div></div>
   </div>
+
   <div class="alert al-info">
     <strong>✅ Grotte de Clamouse déjà réservée — aucun souci météo !</strong>
-    La grotte est entièrement souterraine et fonctionne par tous les temps. Saint-Guilhem sous la pluie est magnifique — lumière rasante et reflets sur les pierres uniques. Trajet A750, sortie Saint-Jean-de-la-Blaquière.
+    La grotte est entièrement souterraine (16°C constant). Les Gorges de l'Hérault (vallée encaissée) sont plus fraîches que Montpellier. Veste légère obligatoire pour la grotte. Saint-Guilhem sous la pluie est magnifique — lumière rasante et pierres mouillées.
   </div>
 
   <div class="sec">Programme de la journée</div>
@@ -460,92 +461,93 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
     <div class="step" data-d="1" data-i="0">
       <div class="st-time">09h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top"><span class="st-name">Départ de Montpellier</span>
-          <div class="st-actions"><div class="st-chk">✓</div></div></div>
-        <div class="st-detail">
-          <p class="st-desc">Trajet ~45 min via A750 direction Lodève. Sortie Saint-Jean-de-la-Blaquière puis D4 vers les gorges de l'Hérault. Parking gratuit à proximité de la grotte.</p>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">Départ depuis le logement</span>
+          <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Trajet ~45 min via A750 direction Lodève. Sortie Saint-Jean-de-la-Blaquière, puis D4 vers les gorges.</p>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Grotte+de+Clamouse+Saint-Jean-de-Fos+Herault" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Grotte de Clamouse
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="1" data-i="1">
       <div class="st-time">09h45</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Grotte de Clamouse ★★ — Visite guidée</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Grotte+de+Clamouse+Saint-Jean-de-Fos+Herault" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Grotte+de+Clamouse+Saint-Jean-de-Fos" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">L'une des plus belles grottes de France grâce à ses extraordinaires <strong>cristaux d'aragonite</strong> d'une blancheur laiteuse et ses <strong>concrétions de calcite</strong> en forme de fleurs et d'étoiles — formées sur des millénaires par l'eau remontant du fond. La grotte reste à 16°C constante toute l'année (prenez une veste légère !). Visite guidée 1h15 avec guide officiel. Billets déjà en poche ! Comptez le créneau de 10h00 recommandé.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐ Parmi les plus belles de France</span>
-            <span class="st-chip chip-indoor">🏠 Souterrain — météo sans effet</span>
-            <span class="st-chip chip-price">~16 €/adulte · Billets pris ✅</span>
-            <span class="st-chip chip-tip">🧥 Veste légère obligatoire (16°C)</span>
-          </div>
+        <p class="st-desc">L'une des plus belles grottes de France : <strong>cristaux d'aragonite</strong> d'une blancheur laiteuse et <strong>concrétions de calcite</strong> en forme de fleurs et d'étoiles, formées sur des millénaires. Température intérieure 16°C constante toute l'année — prenez une veste légère ! Visite guidée 1h15 avec guide officiel. Billets déjà en poche — créneau 10h00 recommandé.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐ Parmi les plus belles de France</span>
+          <span class="chip c-indoor">🏠 Souterrain — météo sans effet</span>
+          <span class="chip c-price">~16 €/adulte · Billets pris ✅</span>
+          <span class="chip c-tip">🧥 Veste obligatoire (16°C)</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Grotte+de+Clamouse+Saint-Jean-de-Fos/Pont+du+Diable+Herault+Saint-Jean-de-Fos" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Pont du Diable
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="1" data-i="2">
       <div class="st-time">11h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Pont du Diable & Gorges de l'Hérault ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Pont+du+Diable+Saint-Jean-de-Fos+gorges+Herault" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Pont+du+Diable+Saint-Jean-de-Fos+gorges+Herault" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Le <strong>Pont du Diable</strong> est un pont médiéval du XIe siècle classé au Patrimoine Mondial UNESCO (Chemin de Saint-Jacques-de-Compostelle). Il enjambe les gorges de l'Hérault à leur point le plus étroit et le plus spectaculaire. L'eau est cristalline et d'un vert émeraude unique — baignade possible si l'éclaircie arrive (eau fraîche en mai, ~15°C). Location de <strong>canoës</strong> juste en face de la grotte (~15€/1h30). Sous la pluie, les gorges ont une ambiance mystérieuse.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Pont UNESCO XIe siècle</span>
-            <span class="st-chip chip-price">Gratuit · Canoë ~15€</span>
-            <span class="st-chip chip-tip">🏊 Baignade si éclaircie</span>
-          </div>
+        <p class="st-desc">Pont médiéval du XIe siècle classé UNESCO (Chemin de Compostelle). Il enjambe les gorges de l'Hérault à leur point le plus spectaculaire — eau d'un vert émeraude unique. Sous la pluie, l'atmosphère est mystérieuse et les gorges particulièrement belles. Si l'éclaircie arrive : baignade possible (eau fraîche ~15°C) et location de canoës disponible.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Pont UNESCO XIe siècle</span>
+          <span class="chip c-price">Gratuit · Canoë ~15€ si éclaircie</span>
+          <span class="chip c-tip">📸 Gorges magnifiques sous la pluie</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Pont+du+Diable+Saint-Jean-de-Fos/Saint-Guilhem-le-Desert" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Saint-Guilhem-le-Désert
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="1" data-i="3">
       <div class="st-time">14h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Saint-Guilhem-le-Désert ★★ — Village médiéval UNESCO</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Saint-Guilhem-le-Desert+abbaye+gellone+village" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">Saint-Guilhem-le-Désert ★★ — UNESCO</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Saint-Guilhem-le-Desert+abbaye+gellone" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Classé parmi les <strong>Plus Beaux Villages de France</strong> et inscrit au Patrimoine Mondial UNESCO (Chemin de Compostelle). L'<strong>Abbaye de Gellone</strong> (IXe s.) fut fondée par Guilhem, comte d'Orange et compagnon de Charlemagne, après sa victoire sur les Sarrasins — il y conservait une relique de la Vraie Croix. Son cloître roman à arcades est l'un des plus beaux du Languedoc. Le village aux maisons de pierres sèches escaladant la falaise est magnifique sous la pluie : lumière rasante, reflets sur les pavés, moins de monde qu'en été. Comptez 1h30-2h de visite libre.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐ UNESCO · Plus Beau Village de France</span>
-            <span class="st-chip chip-price">Entrée libre · Abbaye ~5€</span>
-            <span class="st-chip chip-tip">📸 Encore plus beau sous la pluie</span>
-          </div>
+        <p class="st-desc">Classé parmi les <strong>Plus Beaux Villages de France</strong>, site UNESCO. L'<strong>Abbaye de Gellone</strong> (IXe s.) fut fondée par Guilhem, compagnon de Charlemagne — son cloître roman est remarquable. Les maisons de pierres sèches escaladant la falaise sont sublimes sous la pluie : lumière rasante, reflets sur les pavés, moins de monde qu'en été. Comptez 1h30-2h.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐ UNESCO · Plus Beau Village</span>
+          <span class="chip c-price">Entrée libre · Abbaye ~5€</span>
+          <span class="chip c-tip">📸 Encore plus beau sous la pluie</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Saint-Guilhem-le-Desert/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Retour → Montpellier (45 min)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="1" data-i="4">
       <div class="st-time">16h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top"><span class="st-name">Retour Montpellier (45 min)</span>
-          <div class="st-actions"><div class="st-chk">✓</div></div></div>
-        <div class="st-detail">
-          <p class="st-desc">Retour par D4 et A750. Arrivée ~17h15. Repos et dîner au Bistro Urbain à 19h30.</p>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">Retour Montpellier & repos</span>
+          <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Retour par D4 et A750 (~45 min). Arrivée ~17h15. Repos avant le dîner à 19h30.</p>
       </div>
     </div>
 
@@ -554,52 +556,64 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
   <div class="sec">Repas</div>
   <div class="meals">
     <div class="meal" style="border-left:4px solid var(--storm)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
           <div class="meal-badge" style="color:var(--storm)">☀️ Déjeuner</div>
           <div class="meal-name">Restaurants du village</div>
           <div class="meal-addr">Place médiévale, Saint-Guilhem-le-Désert</div>
         </div>
-        <div class="meal-price-tag" style="background:#dde9f8;color:var(--storm)">~20-25 €/pers</div>
+        <div class="meal-ptag" style="background:#dde9f8;color:var(--storm)">~20 €/pers</div>
       </div>
-      <div class="meal-note">Plusieurs salles intérieures et terrasses couvertes. Cuisine du terroir languedocien. Le Guilhaume d'Orange et La Maison des Abbés sont de bonnes adresses.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+Saint-Guilhem-le-Desert" target="_blank" style="background:var(--storm)">📍 Itinéraire</a>
+      <div class="meal-note">Plusieurs salles intérieures et terrasses couvertes. Cuisine du terroir : fromages des Cévennes, charcuteries artisanales, plats mijotés. Le Guilhaume d'Orange est une valeur sûre.</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+Saint-Guilhem-le-Desert" target="_blank" style="background:var(--storm)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/Pont+du+Diable+Herault/Saint-Guilhem-le-Desert" target="_blank">🧭 Depuis Pont du Diable</a>
+      </div>
     </div>
     <div class="meal" style="border-left:4px solid var(--storm)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
           <div class="meal-badge" style="color:var(--storm)">🌙 Dîner</div>
           <div class="meal-name">Le Bistro Urbain</div>
           <div class="meal-addr">5 rue Alexandre Cabanel, Montpellier</div>
         </div>
-        <div class="meal-price-tag" style="background:#dde9f8;color:var(--storm)">~35 €/pers</div>
+        <div class="meal-ptag" style="background:#dde9f8;color:var(--storm)">~35 €/pers</div>
       </div>
-      <div class="meal-note">Bistronomique créatif, menus surprises. Ouvert mardi soir. Réservez : +33 6 60 94 96 16</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=Bistro+Urbain+5+rue+Alexandre+Cabanel+Montpellier" target="_blank" style="background:var(--storm)">📍 Itinéraire</a>
+      <div class="meal-note">Bistronomique créatif, menus surprises du marché. Ouvert mardi soir. Réservez : +33 6 60 94 96 16</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=Bistro+Urbain+Montpellier" target="_blank" style="background:var(--storm)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/5+rue+Alexandre+Cabanel+Montpellier" target="_blank">🧭 Depuis le logement</a>
+      </div>
     </div>
   </div>
   <div class="bsafe"></div>
 </div>
 
-<!-- ══ JOUR 3 · MERCREDI · SÈTE ÉCLAIRCIE ══ -->
+
+<!-- ══════════════════════════════════════════
+     JOUR 3 — MERCREDI — SÈTE 🌤️
+══════════════════════════════════════════ -->
 <div class="day" id="day2" style="--ac:var(--teal)">
+
   <div class="day-hdr" style="border-left:5px solid var(--teal)">
-    <div class="dh-pill" style="background:#e0f4f8;color:var(--teal)"><span>🌤️</span><span>Éclaircie · 22°C · Amélioration</span></div>
+    <div class="dh-pill" style="background:#e0f4f8;color:var(--teal)">🌤️ Éclaircie · Brise marine · 21°C à Sète</div>
     <div class="dh-date" style="color:var(--teal)">Mercredi 6 mai 2026</div>
     <div class="dh-title">Sète & Bouzigues</div>
-    <div class="dh-sub">35 min (~30 km) · La Venise du Languedoc · Huîtres & Vermouth</div>
-    <div class="dh-tags">
-      <span class="tag" style="background:#e0f4f8;color:var(--teal)">🌊 Mer & Étang de Thau</span>
-      <span class="tag" style="background:#fef3e2;color:var(--sun)">🦪 Repas incontournable</span>
-    </div>
+    <div class="dh-sub">35 min (~30 km) · La Venise du Languedoc · Huîtres sur l'étang</div>
   </div>
+
+  <a class="route-day-btn teal" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Mont+Saint-Clair+Sete/Vieux+Port+Sete/Bouzigues+Herault+etang+de+Thau/Maison+Noilly+Prat+Marseillan/101+Place+du+Parnasse+Montpellier" target="_blank">
+    <span class="ico">🗺️</span> Itinéraire complet de la journée
+  </a>
+
   <div class="prog-wrap">
-    <div class="prog-row"><span>Progression du jour</span><span id="p2-lbl">0 / 5</span></div>
+    <div class="prog-row"><span>Progression</span><span id="p2-lbl">0 / 5</span></div>
     <div class="prog-bar"><div class="prog-fill" id="p2" style="background:var(--teal);width:0%"></div></div>
   </div>
+
   <div class="alert al-teal">
     <strong>🌤️ Nette amélioration — profitez de l'éclaircie !</strong>
-    Sète et Bouzigues sont à seulement 35 min. Le déjeuner chez un producteur d'huîtres à Bouzigues est le repas incontournable de tout séjour en Languedoc. Réservez Noilly Prat dès maintenant : +33 4 67 77 20 15
+    La côte est souvent plus fraîche et venteuse que Montpellier. Brise marine agréable sur le Mont Saint-Clair. Le déjeuner chez un producteur à Bouzigues est le repas incontournable du séjour. Réservez Noilly Prat : +33 4 67 77 20 15
   </div>
 
   <div class="sec">Programme de la journée</div>
@@ -607,146 +621,155 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
     <div class="step" data-d="2" data-i="0">
       <div class="st-time">09h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top"><span class="st-name">Départ de Montpellier</span>
-          <div class="st-actions"><div class="st-chk">✓</div></div></div>
-        <div class="st-detail">
-          <p class="st-desc">Trajet ~35 min via A709 direction Sète. Parking au pied du Mont Saint-Clair ou en ville haute.</p>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">Départ depuis le logement</span>
+          <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Trajet ~35 min via A709 direction Sète.</p>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Mont+Saint-Clair+Sete" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Mont Saint-Clair, Sète
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="2" data-i="1">
       <div class="st-time">09h35</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Mont Saint-Clair — Panorama 360° ★★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Mont+Saint+Clair+Sete+panorama+belvedere" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Mont+Saint+Clair+Sete+belvedere+panorama" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Le point culminant de Sète (183m) offre une vue à 360° absolument spectaculaire : la <strong>Méditerranée</strong> d'un côté avec ses plages et la presqu'île de Sète, <strong>l'Étang de Thau</strong> de l'autre avec ses tables conchylicoles, et les <strong>Pyrénées</strong> par temps clair. Montée en voiture avec parking au sommet (gratuit). Particulièrement belle avec l'éclaircie après deux jours nuageux — l'air est lavé par la pluie, les couleurs sont intenses. Comptez 30 min.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐ Vue inoubliable</span>
-            <span class="st-chip chip-price">Gratuit · Parking au sommet</span>
-            <span class="st-chip chip-tip">📸 Meilleure lumière après la pluie</span>
-          </div>
+        <p class="st-desc">Le point culminant de Sète (183m) avec une vue à 360° spectaculaire : <strong>Méditerranée</strong> d'un côté, <strong>Étang de Thau</strong> de l'autre avec ses tables conchylicoles, et les <strong>Pyrénées</strong> par temps clair. L'air lavé par la pluie des jours précédents rend les couleurs particulièrement intenses — lumière méditerranéenne unique. Brise marine fraîche au sommet — une veste légère peut être utile.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐ Vue inoubliable</span>
+          <span class="chip c-price">Gratuit</span>
+          <span class="chip c-tip">📸 Couleurs intenses après la pluie</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Mont+Saint-Clair+Sete/Vieux+Port+Sete" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Vieux Port de Sète
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="2" data-i="2">
       <div class="st-time">11h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Sète — Canaux, Vieux Port & Quartiers</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Vieux+Port+Sete+canal+royal" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">Sète — Canaux & Vieux Port ★</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Vieux+Port+Sete+canal+royal+poissonnerie" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Sète, surnommée <strong>« l'île singulière »</strong> ou « la Venise du Languedoc », est une ville unique construite sur un promontoire entre mer et étang. Promenez-vous le long du <strong>Canal Royal</strong> (XVIIe s., creusé par Vauban pour relier la Méditerranée à l'Atlantique via le Canal du Midi). Observez les <strong>barques de joutes</strong> languedociennes — un sport traditionnel où des joueurs s'affrontent avec des lances sur l'eau. Les <strong>poissonneries du Quai Général-Durand</strong> regorgent de produits frais. Ville natale de <strong>Paul Valéry</strong> et <strong>Georges Brassens</strong>. Ambiance authentique de port de pêche méditerranéen.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ La Venise du Languedoc</span>
-            <span class="st-chip chip-price">Gratuit · Musée Brassens ~6€</span>
-            <span class="st-chip chip-tip">🎵 Ville natale de Brassens</span>
-          </div>
+        <p class="st-desc">Sète, «&nbsp;l'île singulière&nbsp;» ou la Venise du Languedoc, est unique en son genre. Promenez-vous le long du <strong>Canal Royal</strong> (XVIIe s., creusé par Vauban), observez les <strong>barques de joutes</strong> languedociennes (sport traditionnel local), les <strong>poissonneries colorées</strong> du Quai Général-Durand. Ville natale de <strong>Paul Valéry</strong> et <strong>Georges Brassens</strong> (musée ~6€). Atmosphère authentique de port de pêche.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ La Venise du Languedoc</span>
+          <span class="chip c-price">Gratuit · Musée Brassens ~6€</span>
+          <span class="chip c-tip">🎵 Ville natale de Brassens</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Vieux+Port+Sete/Bouzigues+Herault" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Bouzigues (déjeuner)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="2" data-i="3">
-      <div class="st-time">15h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-time">12h30</div><div class="st-dot"></div>
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Maison Noilly Prat — Marseillan ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Maison+Noilly+Prat+Marseillan+caves+vermouth" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">🦪 Déjeuner à Bouzigues — LE repas du séjour !</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Bouzigues+huitres+producteur+etang+de+Thau" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc"><strong>Marseillan</strong>, beau village de caractère au bord de l'étang (10 min de Bouzigues). La <strong>Maison Noilly Prat</strong> est le lieu de fabrication du célèbre vermouth français, créé en 1813 par Joseph Noilly. Visite guidée 1h des chais et caves : le secret réside dans le vieillissement des vins de Picpoul et Clairette en fûts de chêne à l'air marin de l'étang — unique au monde. Dégustation incluse des différents vermouths (Original, Extra Dry, Ambré). ~10€/adulte. Boutique avec produits exclusifs introuvables ailleurs. <strong>⚠️ Réservez : +33 4 67 77 20 15 ou noillyprat.com</strong></p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Vermouth créé en 1813</span>
-            <span class="st-chip chip-price">~10 €/adulte · Dégustation incluse</span>
-            <span class="st-chip chip-book">📞 Réservation obligatoire</span>
-            <span class="st-chip chip-tip">🛍 Boutique exclusive</span>
-          </div>
+        <p class="st-desc">Bouzigues, village ostréicole sur les rives de l'Étang de Thau (10 min de Sète). Déjeuner directement chez un producteur : <strong>Chez Lulu ou Chez Tonton</strong> — tables en plein air pieds sur l'étang. Huîtres de Bouzigues (les meilleures de Méditerranée), moules de l'étang, tielles sétoises (tourte aux poulpes), Picpoul de Pinet glacé. Moment unique, ambiance inoubliable. Arrivez à 12h30 pour avoir une bonne table.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐ Repas incontournable !</span>
+          <span class="chip c-price">~20-25 €/pers</span>
+          <span class="chip c-tip">🌊 Pieds sur l'étang</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Bouzigues+Herault/Maison+Noilly+Prat+Marseillan" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Noilly Prat, Marseillan
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="2" data-i="4">
-      <div class="st-time">17h15</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top"><span class="st-name">Retour Montpellier (45 min)</span>
-          <div class="st-actions"><div class="st-chk">✓</div></div></div>
-        <div class="st-detail">
-          <p class="st-desc">Retour via A9. Arrivée ~18h. Repos avant le dîner à Montpellier.</p>
+      <div class="st-time">15h00</div><div class="st-dot"></div>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">Maison Noilly Prat — Marseillan ★</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Maison+Noilly+Prat+Marseillan+caves+vermouth" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="st-chk">✓</div>
+          </div>
         </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Marseillan, village de caractère au bord de l'étang (10 min de Bouzigues). Le célèbre vermouth français créé en 1813 : visite guidée 1h des caves et des chais où les vins (Picpoul, Clairette) vieillissent en fûts de chêne à l'air marin — secret unique au monde. Dégustation des différents vermouths incluse. Boutique avec produits exclusifs introuvables ailleurs. <strong>⚠️ Réservez : +33 4 67 77 20 15</strong></p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ Vermouth depuis 1813</span>
+          <span class="chip c-price">~10 €/adulte · Dégustation incluse</span>
+          <span class="chip c-book">📞 Réservation obligatoire</span>
+          <span class="chip c-tip">🛍 Boutique exclusive</span>
+        </div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Maison+Noilly+Prat+Marseillan/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Retour → Montpellier (45 min)
+        </a>
       </div>
     </div>
 
   </div>
 
-  <div class="sec">Repas</div>
+  <div class="sec">Dîner</div>
   <div class="meals">
     <div class="meal" style="border-left:4px solid var(--teal)">
-      <div class="meal-hdr">
-        <div class="meal-info">
-          <div class="meal-badge" style="color:var(--teal)">🦪 Déjeuner — LE repas incontournable !</div>
-          <div class="meal-name">Chez Lulu ou Chez Tonton — Producteur</div>
-          <div class="meal-addr">Bord de l'Étang de Thau, Bouzigues</div>
-        </div>
-        <div class="meal-price-tag" style="background:#e0f4f8;color:var(--teal)">~20-25 €/pers</div>
-      </div>
-      <div class="meal-note">Huîtres de Bouzigues (les meilleures de Méditerranée), moules de l'étang, tielles sétoises (tourte aux poulpes), Picpoul de Pinet glacé. Tables en plein air pieds sur l'étang. Ambiance unique — arrivez à 12h30 pour avoir une table.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=Bouzigues+huitres+etang+de+Thau+producteur" target="_blank" style="background:var(--teal)">📍 Itinéraire</a>
-    </div>
-    <div class="meal" style="border-left:4px solid var(--teal)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
           <div class="meal-badge" style="color:var(--teal)">🌙 Dîner</div>
-          <div class="meal-name">La Grand'Ourse ou Tamarillos</div>
-          <div class="meal-addr">Place de la Chapelle-Neuve, Montpellier</div>
+          <div class="meal-name">La Grand'Ourse</div>
+          <div class="meal-addr">Impasse Perrier, Montpellier</div>
         </div>
-        <div class="meal-price-tag" style="background:#e0f4f8;color:var(--teal)">~35-45 €/pers</div>
+        <div class="meal-ptag" style="background:#e0f4f8;color:var(--teal)">~30 €/pers</div>
       </div>
-      <div class="meal-note">Deux excellentes tables bistronomiques du centre historique. Belle soirée pour fêter l'éclaircie !</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=La+Granourse+Montpellier+restaurant" target="_blank" style="background:var(--teal)">📍 Itinéraire</a>
+      <div class="meal-note">Table bistronomique attachante dans une ruelle du centre. Cuisine de saison, menu du marché. Alternative : <strong>Tamarillos</strong> (Place de la Chapelle-Neuve, même gamme de prix, également excellent).</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=La+Granourse+Montpellier" target="_blank" style="background:var(--teal)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Impasse+Perrier+Montpellier" target="_blank">🧭 Depuis le logement</a>
+      </div>
     </div>
   </div>
   <div class="bsafe"></div>
 </div>
 
-<!-- ══ JOUR 4 · JEUDI · NÎMES SOLEIL ══ -->
+
+<!-- ══════════════════════════════════════════
+     JOUR 4 — JEUDI — NÎMES ☀️
+══════════════════════════════════════════ -->
 <div class="day" id="day3" style="--ac:var(--sun)">
+
   <div class="day-hdr" style="border-left:5px solid var(--sun)">
-    <div class="dh-pill" style="background:#fff3e0;color:var(--sun)"><span>☀️</span><span>Beau temps · 22°C · Meilleure journée !</span></div>
+    <div class="dh-pill" style="background:#fff3e0;color:var(--sun)">☀️ Grand soleil · 24°C à Nîmes · Vent nul</div>
     <div class="dh-date" style="color:var(--sun)">Jeudi 7 mai 2026</div>
     <div class="dh-title">Pont du Gard & Nîmes Antique</div>
-    <div class="dh-sub">55 min depuis Montpellier (~60 km) · Partez tôt ! · Dîner étoilé le soir</div>
-    <div class="dh-tags">
-      <span class="tag" style="background:#fff3e0;color:var(--sun)">☀️ Plein air toute la journée</span>
-      <span class="tag" style="background:#fde8e8;color:#c0392b">🌟 Dîner Michelin le soir</span>
-    </div>
+    <div class="dh-sub">55 min (~60 km) · Partez tôt ! · La meilleure journée de la semaine</div>
   </div>
+
+  <a class="route-day-btn sun" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Pont+du+Gard+Vers-Pont-du-Gard/Arenes+de+Nimes/Maison+Carree+Nimes/Jardins+de+la+Fontaine+Nimes/101+Place+du+Parnasse+Montpellier" target="_blank">
+    <span class="ico">🗺️</span> Itinéraire complet de la journée
+  </a>
+
   <div class="prog-wrap">
-    <div class="prog-row"><span>Progression du jour</span><span id="p3-lbl">0 / 6</span></div>
+    <div class="prog-row"><span>Progression</span><span id="p3-lbl">0 / 6</span></div>
     <div class="prog-bar"><div class="prog-fill" id="p3" style="background:var(--sun);width:0%"></div></div>
   </div>
+
   <div class="alert al-sun">
-    <strong>☀️ La meilleure journée de la semaine — réservée exprès pour ça !</strong>
-    Monuments romains en plein soleil, terrasse à Nîmes pour déjeuner, dîner étoilé Michelin en terrasse au bord du Lez le soir. La journée parfaite pour clôturer ce séjour. Partez à 8h30 au plus tard.
+    <strong>☀️ La meilleure journée — réservée exprès pour les sites en plein air !</strong>
+    Nîmes est connue pour être l'une des villes les plus ensoleillées de France. 24°C attendus avec un vent nul — conditions parfaites. Emportez eau et crème solaire. Terrasse au soleil pour déjeuner enfin !
   </div>
 
   <div class="sec">Programme de la journée</div>
@@ -754,177 +777,186 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
     <div class="step" data-d="3" data-i="0">
       <div class="st-time">08h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
-        <div class="st-top"><span class="st-name">Départ de Montpellier (tôt !)</span>
-          <div class="st-actions"><div class="st-chk">✓</div></div></div>
-        <div class="st-detail">
-          <p class="st-desc">Trajet 55 min via A9 puis D981 direction Remoulins/Pont du Gard. Partez avant 9h pour profiter du site avant l'arrivée des cars de touristes — le matin, la lumière rasante sur l'aqueduc est exceptionnelle.</p>
-          <div class="st-meta"><span class="st-chip chip-tip">🕗 Arrivez avant 10h au Pont du Gard</span></div>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">Départ depuis le logement (tôt !)</span>
+          <div class="st-acts"><div class="st-chk">✓</div></div>
         </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Trajet 55 min via A9 puis D981 direction Remoulins. Partez avant 9h pour profiter du Pont du Gard avant les cars de touristes — le matin, la lumière rasante sur l'aqueduc est absolument spectaculaire.</p>
+        <div class="st-chips"><span class="chip c-tip">🕗 Arrivez avant 10h au Pont du Gard</span><span class="chip c-tip">🧴 Crème solaire · Eau 1,5L/pers</span></div>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Pont+du+Gard+Vers-Pont-du-Gard" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Pont du Gard
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="3" data-i="1">
       <div class="st-time">09h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Pont du Gard ★★★ (UNESCO)</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Pont+du+Gard+aqueduc+romain+UNESCO" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Pont+du+Gard+aqueduc+romain+UNESCO" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">L'aqueduc romain à 3 niveaux d'arches le mieux conservé au monde, construit vers 50 ap. J.-C. pour acheminer l'eau depuis Uzès jusqu'à Nîmes sur 50 km. Sa hauteur atteint 49m et sa longueur 275m. <strong>Exploit technique exceptionnel</strong> : la pente de l'aqueduc n'est que de 25cm par kilomètre ! Le musée interactif « La Mémoire de l'eau » retrace 2000 ans d'histoire en 1h. Balade sur les berges du Gardon au pied de l'ouvrage — les pierres calcaires prennent des teintes miel au soleil. ~9€/pers + parking ~10€. Comptez 2h.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐⭐ UNESCO · Chef-d'œuvre romain</span>
-            <span class="st-chip chip-price">~9 €/pers + parking</span>
-            <span class="st-chip chip-tip">📸 Lumière parfaite le matin</span>
-          </div>
+        <p class="st-desc">L'aqueduc romain à 3 niveaux le mieux conservé au monde, construit vers 50 ap. J.-C. pour acheminer l'eau de Uzès à Nîmes sur 50 km. Exploit technique : la pente n'est que de 25cm par km sur 275m de long et 49m de haut ! Le musée «&nbsp;La Mémoire de l'eau&nbsp;» retrace 2000 ans d'histoire. Balade sur les berges du Gardon — les pierres calcaires prennent des teintes miel au soleil. Comptez 2h sur place.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐⭐ UNESCO · Chef-d'œuvre romain</span>
+          <span class="chip c-price">~9 €/pers · Parking ~10€</span>
+          <span class="chip c-tip">📸 Lumière parfaite le matin</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Pont+du+Gard+Vers-Pont-du-Gard/Arenes+de+Nimes" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Arènes de Nîmes (25 min)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="3" data-i="2">
       <div class="st-time">13h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Arènes de Nîmes ★★★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Arenes+de+Nimes+amphitheatre+romain+UNESCO" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Arenes+de+Nimes+amphitheatre+romain" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Construit en 70 ap. J.-C., cet amphithéâtre est le <strong>mieux conservé d'Europe</strong> — encore plus complet que le Colisée de Rome qui a subi bien davantage de destructions et de pillages. Il pouvait accueillir 24 000 spectateurs pour les combats de gladiateurs. Ses 60 arcades sur 2 étages sont quasi-intactes. Toujours utilisé aujourd'hui pour les corridas et les concerts de musique. L'audioguide (inclus dans le billet) est très bien fait et rend la visite vivante. ~10€/adulte. Comptez 1h-1h30.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐⭐ Plus complet que le Colisée !</span>
-            <span class="st-chip chip-price">~10 €/adulte · Audioguide inclus</span>
-            <span class="st-chip chip-tip">🎧 Audioguide très bien fait</span>
-          </div>
+        <p class="st-desc">Construit en 70 ap. J.-C., cet amphithéâtre est le <strong>mieux conservé d'Europe</strong> — plus complet que le Colisée de Rome. Capacité : 24 000 spectateurs. Ses 60 arcades sur 2 étages sont quasi-intactes. Encore utilisé aujourd'hui pour les corridas et concerts. L'audioguide inclus est très bien conçu et rend la visite vivante pour tous les âges. Comptez 1h-1h30.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐⭐ Plus complet que le Colisée !</span>
+          <span class="chip c-price">~10 €/adulte · Audioguide inclus</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Arenes+de+Nimes/Maison+Carree+Nimes" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Maison Carrée (5 min à pied)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="3" data-i="3">
       <div class="st-time">15h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Maison Carrée — Temple romain (UNESCO 2023)</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Maison+Carree+Nimes+temple+romain+UNESCO" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Maison+Carree+Nimes+temple+romain" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Construit en 4 av. J.-C., ce temple romain est le <strong>mieux préservé au monde</strong> — inscrit au Patrimoine Mondial UNESCO en 2023. Il fut consacré aux petits-fils d'Auguste, Caïus et Lucius César. Sa parfaite conservation tient au fait qu'il fut utilisé comme mairie, écurie, puis église au fil des siècles. À l'intérieur, un court <strong>métrage immersif 3D</strong> sur l'histoire de Nîmes romaine (~25 min) transporte les visiteurs 2000 ans en arrière. ~6€/adulte.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐ UNESCO 2023 · Le mieux préservé au monde</span>
-            <span class="st-chip chip-price">~6 €/adulte · Film 3D inclus</span>
-          </div>
+        <p class="st-desc">Construit en 4 av. J.-C., le temple romain le <strong>mieux préservé au monde</strong> — inscrit UNESCO en 2023. Sa conservation tient au fait qu'il servit de mairie, écurie puis église au fil des siècles. Court <strong>métrage immersif 3D</strong> (~25 min) sur l'histoire de Nîmes antique. Court mais saisissant — la perfection géométrique de ce bâtiment sous le soleil est remarquable.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐⭐ UNESCO 2023 · Le mieux préservé au monde</span>
+          <span class="chip c-price">~6 €/adulte · Film 3D inclus</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Maison+Carree+Nimes/Jardins+de+la+Fontaine+Nimes" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Jardins de la Fontaine
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="3" data-i="4">
       <div class="st-time">16h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Jardins de la Fontaine & Tour Magne ★</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Jardins+de+la+Fontaine+Nimes+Tour+Magne+romaine" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Jardins+de+la+Fontaine+Nimes+Tour+Magne" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Les <strong>Jardins de la Fontaine</strong> (1738-1755) sont les <strong>premiers jardins publics de France</strong> — une merveille à la française avec cascades, bassins en demi-lune, balustrades et terrasses ombragées. Au sommet se dresse la <strong>Tour Magne</strong> (IIe s. av. J.-C.), vestige de la première enceinte romaine de Nîmes, avec une vue panoramique sur la ville et la garrigue. ~3€/adulte pour la tour, jardins gratuits. Idyllique au soleil de fin d'après-midi. Très accessible pour les 60 ans.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐ Premiers jardins publics de France</span>
-            <span class="st-chip chip-price">Jardins gratuits · Tour ~3€</span>
-            <span class="st-chip chip-tip">♿ Très accessible</span>
-          </div>
+        <p class="st-desc">Les <strong>premiers jardins publics de France</strong> (1738-1755) : cascades, bassins en demi-lune, balustrades et terrasses ombragées — idylliques au soleil de fin d'après-midi. La <strong>Tour Magne</strong> romaine au sommet (IIe s. av. J.-C.) offre une vue panoramique sur Nîmes et la garrigue. Très accessible pour tous les âges, beaucoup de bancs à l'ombre.</p>
+        <div class="st-chips">
+          <span class="chip c-star">⭐ 1ers jardins publics de France</span>
+          <span class="chip c-price">Jardins gratuits · Tour ~3€</span>
+          <span class="chip c-tip">♿ Très accessible</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Jardins+de+la+Fontaine+Nimes/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Retour → Montpellier (45 min)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="3" data-i="5">
-      <div class="st-time">20h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-time">19h30</div><div class="st-dot"></div>
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">🍽 Dîner étoilé ★★ — La Réserve Rimbaud</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=La+Reserve+Rimbaud+820+avenue+Saint+Maur+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">🌙 Dîner — La Diligence</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=La+Diligence+restaurant+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">820 avenue de Saint-Maur, Montpellier. Restaurant <strong>étoilé Michelin</strong> avec une terrasse romantique au bord du Lez — les pieds au-dessus de l'eau pour un dîner dans un cadre idyllique. La cuisine joue avec les produits du Languedoc dans une partition créative et précise. Le cadre sous les étoiles après cette grande journée vaut tous les sacrifices. ~65-90€/pers. <strong>⚠️ RÉSERVATION INDISPENSABLE plusieurs semaines à l'avance : +33 4 67 72 52 53</strong></p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">⭐⭐ Guide Michelin</span>
-            <span class="st-chip chip-price">~65-90 €/pers</span>
-            <span class="st-chip chip-book">📞 Réservation indispensable !</span>
-            <span class="st-chip chip-tip">🌊 Terrasse bord du Lez</span>
-          </div>
+        <p class="st-desc">2 Place Pétrarque, Montpellier. Cadre exceptionnel dans un hôtel particulier du XVIe siècle. Cuisine du terroir languedocien de qualité à prix raisonnables : menu ~30-35€. La grande soirée du séjour après cette journée exceptionnelle. Réservez : +33 4 67 66 12 21</p>
+        <div class="st-chips">
+          <span class="chip c-price">~30-35 €/pers</span>
+          <span class="chip c-star">⭐ Hôtel particulier XVIe</span>
+          <span class="chip c-book">📞 Réservez à l'avance</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Place+Petrarque+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet depuis le logement
+        </a>
       </div>
     </div>
 
   </div>
 
-  <div class="sec">Déjeuner</div>
+  <div class="sec">Déjeuner à Nîmes</div>
   <div class="meals">
     <div class="meal" style="border-left:4px solid var(--sun)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
           <div class="meal-badge" style="color:var(--sun)">☀️ Déjeuner en terrasse !</div>
-          <div class="meal-name">Brasserie — Place aux Herbes, Nîmes</div>
-          <div class="meal-addr">Place aux Herbes ou Esplanade Charles-de-Gaulle, Nîmes</div>
+          <div class="meal-name">Brasseries Place aux Herbes</div>
+          <div class="meal-addr">Place aux Herbes ou Esplanade, Nîmes</div>
         </div>
-        <div class="meal-price-tag" style="background:#fff3e0;color:var(--sun)">~20-30 €/pers</div>
+        <div class="meal-ptag" style="background:#fff3e0;color:var(--sun)">~20-25 €/pers</div>
       </div>
-      <div class="meal-note">Enfin une vraie terrasse au soleil ! Cuisine sudiste et provençale. Nombreux choix autour des arènes.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+terrasse+Place+aux+Herbes+Nimes" target="_blank" style="background:var(--sun)">📍 Itinéraire</a>
+      <div class="meal-note">Première vraie terrasse au soleil du voyage ! Nombreuses brasseries autour des arènes. Cuisine sudiste et provençale. Pichets de rosé du Languedoc bienvenus.</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+terrasse+Place+aux+Herbes+Nimes" target="_blank" style="background:var(--sun)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/Arenes+de+Nimes/Place+aux+Herbes+Nimes" target="_blank">🧭 Depuis les Arènes</a>
+      </div>
     </div>
   </div>
   <div class="bsafe"></div>
 </div>
 
-<!-- ══ JOUR 5 · VENDREDI · RETOUR ══ -->
+
+<!-- ══════════════════════════════════════════
+     JOUR 5 — VENDREDI — RETOUR 🌦️
+══════════════════════════════════════════ -->
 <div class="day" id="day4" style="--ac:var(--green)">
+
   <div class="day-hdr" style="border-left:5px solid var(--green)">
-    <div class="dh-pill" style="background:#e8f5ee;color:var(--green)"><span>🌦️</span><span>Risque faible · 24% · 22°C</span></div>
+    <div class="dh-pill" style="background:#e8f5ee;color:var(--green)">🌦️ Risque faible · 24% · 22°C à Montpellier</div>
     <div class="dh-date" style="color:var(--green)">Vendredi 8 mai 2026 🇫🇷 Jour Férié</div>
-    <div class="dh-title">Montpellier matinal & Retour</div>
-    <div class="dh-sub">Check-out avant 11h · Train 18h50 · Plan A ☀️ ou Plan B 🌧️</div>
-    <div class="dh-tags">
-      <span class="tag" style="background:#fde8e8;color:#c0392b">⚠️ Check-out avant 11h</span>
-      <span class="tag" style="background:#e8f5ee;color:var(--green)">🚄 Train 18h50</span>
-    </div>
-  </div>
-  <div class="prog-wrap">
-    <div class="prog-row"><span>Progression du jour</span><span id="p4-lbl">0 / 4</span></div>
-    <div class="prog-bar"><div class="prog-fill" id="p4" style="background:var(--green);width:0%"></div></div>
-  </div>
-  <div class="alert al-warn">
-    <strong>⚠️ 8 mai = Jour Férié · Check-out avant 11h impératif</strong>
-    Risque de pluie seulement 24% — bonne chance pour la plage ! Mais si la pluie est là, les alternatives couvertes sont nombreuses. Retour de voiture : prévoir 30 min de marge. Taxi/Uber vers gare ~15 min.
+    <div class="dh-title">Montpellier & Retour</div>
+    <div class="dh-sub">Check-out avant 11h · Plan A ☀️ plage · Plan B 🌧️ couvert · Train 18h50</div>
   </div>
 
-  <div class="sec">Choisissez votre plan selon la météo du matin</div>
+  <a class="route-day-btn green" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Plage+Palavas-les-Flots/Gare+Montpellier+Sud+de+France" target="_blank">
+    <span class="ico">🗺️</span> Itinéraire Plan A — Plage de Palavas
+  </a>
+
+  <div class="prog-wrap">
+    <div class="prog-row"><span>Progression</span><span id="p4-lbl">0 / 4</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="p4" style="background:var(--green);width:0%"></div></div>
+  </div>
+
+  <div class="alert al-warn">
+    <strong>⚠️ 8 mai = Jour Férié · Check-out avant 11h impératif</strong>
+    Risque de pluie faible (24%) — bonne chance pour la plage ! Consultez la météo au réveil pour choisir Plan A ou B. Retour voiture : prévoir 30 min. Train 18h50 de Montpellier Sud-de-France.
+  </div>
+
+  <div class="sec">Choisissez selon la météo du matin</div>
   <div class="plan-ab">
     <div class="plan pa">
-      <div class="plan-title">☀️ Plan A — Si beau (76% chance)</div>
-      <div class="plan-body">Plage de Palavas-les-Flots (15 min). Longue plage de sable, mer Méditerranée, tranquille en mai. Dernier bain de soleil bien mérité après 4 jours intenses !</div>
+      <div class="plan-title">☀️ Plan A — 76% de chance !</div>
+      <div class="plan-body">Plage de Palavas-les-Flots (15 min). Sable fin, Méditerranée, tranquille en mai. Dernier bain de soleil bien mérité après cette belle semaine !</div>
     </div>
     <div class="plan pb">
       <div class="plan-title">🌧️ Plan B — Si pluie</div>
-      <div class="plan-body">Musée Fabre (si pas encore visité) ou Aquarium Mare Nostrum ou halles du Marché du Lez. Montpellier a de quoi faire même les jours de pluie !</div>
+      <div class="plan-body">Musée Fabre (si pas encore visité, l'un des plus riches de France ~9€) ou Aquarium Mare Nostrum (4500 animaux, ~14€) ou Marché du Lez (halles couvertes).</div>
     </div>
   </div>
 
@@ -933,119 +965,122 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
     <div class="step" data-d="4" data-i="0">
       <div class="st-time">09h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Derniers achats & balade dans l'Écusson</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Place+de+la+Comedie+Montpellier+marche" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">Derniers achats — souvenirs languedociens</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=epicerie+fine+Montpellier+ecusson+vins" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Dernières emplettes languedociennes : <strong>Picpoul de Pinet</strong> (blanc sec, accord parfait avec les fruits de mer), <strong>Faugères ou Saint-Chinian</strong> (grands rouges du Languedoc), <strong>fleur de sel de Camargue</strong>, <strong>tapenade</strong> et olives des marchés, <strong>Noilly Prat</strong> rapporté de Marseillan (si vous en avez). Épiceries fines rue de l'Ancien Courrier et Place de la Comédie.</p>
-          <div class="st-meta">
-            <span class="st-chip chip-tip">🍷 Picpoul de Pinet à rapporter</span>
-            <span class="st-chip chip-tip">🧂 Fleur de sel de Camargue</span>
-            <span class="st-chip chip-tip">🥃 Noilly Prat de Marseillan</span>
-          </div>
+        <p class="st-desc">Dernières emplettes : <strong>Picpoul de Pinet</strong> (blanc sec, accord parfait avec les huîtres), <strong>Faugères ou Saint-Chinian</strong> (grands rouges puissants), <strong>fleur de sel de Camargue</strong>, <strong>tapenade et olives</strong>, <strong>Noilly Prat</strong> rapporté de Marseillan. Épiceries fines rue de l'Ancien Courrier ou Place de la Comédie.</p>
+        <div class="st-chips">
+          <span class="chip c-tip">🍷 Picpoul de Pinet — le blanc local</span>
+          <span class="chip c-tip">🧂 Fleur de sel de Camargue</span>
+          <span class="chip c-tip">🥃 Noilly Prat de Marseillan</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Retour au logement (check-out)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="4" data-i="1">
       <div class="st-time">10h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">⚠️ Check-out — AVANT 11h IMPÉRATIVEMENT</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">⚠️ CHECK-OUT — Avant 11h IMPÉRATIVEMENT</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Libérez le logement avant 11h00. 101 Place du Parnasse, Montpellier. Chargez la voiture de vos bagages avant de partir vers la plage ou l'activité Plan B.</p>
-          <div class="st-meta"><span class="st-chip chip-book">⚠️ 11h00 maximum</span></div>
-        </div>
-        <div class="st-expand">▾</div>
+        <p class="st-desc">Libérez le logement avant 11h00. 101 Place du Parnasse. Chargez la voiture de tous vos bagages avant de partir vers la plage ou l'activité Plan B.</p>
+        <div class="st-chips"><span class="chip c-book">⚠️ 11h00 maximum</span></div>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Plage+Palavas-les-Flots" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Plage de Palavas (Plan A)
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="4" data-i="2">
       <div class="st-time">11h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">☀️ Plage de Palavas / 🌧️ Aquarium ou Musée Fabre</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Plage+de+Palavas-les-Flots+Herault" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">☀️ Plage Palavas / 🌧️ Musée Fabre ou Aquarium</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Plage+Palavas-les-Flots" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc"><strong>Plan A ☀️ :</strong> Plage de Palavas-les-Flots (15 min). Longue plage de sable fin, mer Méditerranée à 22°C en mai. Parking gratuit hors saison. Baignade possible. <br><br><strong>Plan B 🌧️ :</strong> Musée Fabre (si pas encore visité — l'un des plus riches de France, ~9€) OU Aquarium Mare Nostrum (4500 animaux marins, ~14€, ouvert 7j/7) OU Marché du Lez (halles food couvertes, ambiance branchée).</p>
-          <div class="st-meta">
-            <span class="st-chip chip-star">☀️ Plage à 15 min</span>
-            <span class="st-chip chip-indoor">🏠 Options couvertes si pluie</span>
-          </div>
+        <p class="st-desc"><strong>Plan A ☀️ :</strong> Plage de Palavas-les-Flots (15 min), longue plage de sable fin, Méditerranée, tranquille en mai. Baignade et détente — vous l'avez bien mérité !<br><br><strong>Plan B 🌧️ :</strong> Musée Fabre (~9€/adulte, l'un des plus riches hors Paris), Aquarium Mare Nostrum (~14€, 4500 animaux), ou Marché du Lez (halles food couvertes et artisans).</p>
+        <div class="st-chips">
+          <span class="chip c-star">☀️ Plage à 15 min</span>
+          <span class="chip c-indoor">🏠 Alternatives couvertes si pluie</span>
         </div>
-        <div class="st-expand">▾</div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Plage+Palavas-les-Flots/Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Trajet → Gare Montpellier Sud-de-France
+        </a>
       </div>
     </div>
 
     <div class="step" data-d="4" data-i="3">
       <div class="st-time">17h00</div><div class="st-dot"></div>
-      <div class="st-card" onclick="tap(this)">
+      <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">🚄 Direction Gare — Train 18h50</span>
-          <div class="st-actions">
-            <a class="gps" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France+TGV" target="_blank" onclick="event.stopPropagation()">📍</a>
+          <span class="st-name">🚄 Direction Gare — Train 18h50 pour Paris</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=Gare+Montpellier+Sud+de+France" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <div class="st-detail">
-          <p class="st-desc">Retour de la voiture de location (prévoir 30 min de marge pour les formalités). Taxi ou Uber depuis le centre jusqu'à la gare Montpellier Sud-de-France (~15 min, ~15€). Prévoyez large — le train part à 18h50 et arrive Paris Gare de Lyon. Bon retour !</p>
-          <div class="st-meta">
-            <span class="st-chip chip-book">🚗 Retour voiture : +30 min de marge</span>
-            <span class="st-chip chip-tip">🚕 Taxi/Uber ~15 min depuis centre</span>
-          </div>
+        <p class="st-desc">Retour de la voiture de location (prévoir 30 min de marge pour les formalités). Taxi ou Uber depuis Palavas ou le centre jusqu'à la gare (~15 min, ~15€). Train départ 18h50 → Paris Gare de Lyon. Bon retour !</p>
+        <div class="st-chips">
+          <span class="chip c-book">🚗 Retour voiture : +30 min de marge</span>
+          <span class="chip c-tip">🚕 Taxi/Uber depuis Palavas ~25 min</span>
         </div>
-        <div class="st-expand">▾</div>
       </div>
     </div>
 
   </div>
 
-  <div class="sec">Repas</div>
+  <div class="sec">Déjeuner</div>
   <div class="meals">
     <div class="meal" style="border-left:4px solid var(--green)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
-          <div class="meal-badge" style="color:var(--green)">☀️ Plan A — Déjeuner Plage</div>
+          <div class="meal-badge" style="color:var(--green)">☀️ Plan A — Déjeuner bord de mer</div>
           <div class="meal-name">Le Phare ou La Méditerranée</div>
           <div class="meal-addr">Bord de mer, Palavas-les-Flots</div>
         </div>
-        <div class="meal-price-tag" style="background:#e8f5ee;color:var(--green)">~20-30 €/pers</div>
+        <div class="meal-ptag" style="background:#e8f5ee;color:var(--green)">~25 €/pers</div>
       </div>
-      <div class="meal-note">Poissons grillés, tellines, bourride. Ouverts le jour férié du 8 mai.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+bord+de+mer+Palavas-les-Flots" target="_blank" style="background:var(--green)">📍 Itinéraire</a>
+      <div class="meal-note">Poissons grillés, tellines, bourride. Ouverts le jour férié du 8 mai. Terrasse les pieds dans le sable.</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=restaurants+bord+de+mer+Palavas-les-Flots" target="_blank" style="background:var(--green)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/Plage+Palavas-les-Flots/restaurants+Palavas" target="_blank">🧭 Sur place</a>
+      </div>
     </div>
     <div class="meal" style="border-left:4px solid var(--purple)">
-      <div class="meal-hdr">
+      <div class="meal-top">
         <div class="meal-info">
           <div class="meal-badge" style="color:var(--purple)">🌧️ Plan B — Si pluie</div>
           <div class="meal-name">Marché du Lez — Food Hall</div>
           <div class="meal-addr">Route de Carnon, Montpellier</div>
         </div>
-        <div class="meal-price-tag" style="background:#f3f0ff;color:var(--purple)">~15-25 €/pers</div>
+        <div class="meal-ptag" style="background:#f3f0ff;color:var(--purple)">~15-20 €/pers</div>
       </div>
-      <div class="meal-note">Food court couvert branché, plusieurs enseignes artisanales. Ouvert même le jour férié.</div>
-      <a class="meal-gps-btn" href="https://maps.google.com/?q=Marche+du+Lez+Montpellier+food" target="_blank" style="background:var(--purple)">📍 Itinéraire</a>
+      <div class="meal-note">Food court couvert branché avec plusieurs enseignes artisanales. Ouvert même le jour férié. Très convivial.</div>
+      <div class="meal-btns">
+        <a class="meal-gps-btn" href="https://maps.google.com/?q=Marche+du+Lez+Montpellier" target="_blank" style="background:var(--purple)">📍 Localiser</a>
+        <a class="meal-route-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Marche+du+Lez+Montpellier" target="_blank">🧭 Depuis le logement</a>
+      </div>
     </div>
   </div>
 
-  <div class="sec">Souvenirs à rapporter</div>
+  <div class="sec">Souvenirs à rapporter 🛍</div>
   <div class="tips">
-    <div class="tip"><span class="tip-ic">🍷</span><span><strong>Picpoul de Pinet</strong> — blanc sec parfait avec les huîtres et fruits de mer</span></div>
+    <div class="tip"><span class="tip-ic">🍷</span><span><strong>Picpoul de Pinet</strong> — blanc sec parfait avec les fruits de mer</span></div>
     <div class="tip"><span class="tip-ic">🍷</span><span><strong>Faugères ou Saint-Chinian</strong> — grands rouges puissants du Languedoc</span></div>
     <div class="tip"><span class="tip-ic">🧂</span><span><strong>Fleur de sel de Camargue</strong> — disponible dans toutes les épiceries fines</span></div>
     <div class="tip"><span class="tip-ic">🫙</span><span><strong>Tapenade & olives</strong> des marchés de Montpellier</span></div>
@@ -1057,7 +1092,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 </div><!-- .content -->
 
 <script>
-const K = 'p4v2_';
+const K = 'p4v3_';
 
 function goDay(n) {
   document.querySelectorAll('.day').forEach(d => d.classList.remove('active'));
@@ -1067,26 +1102,19 @@ function goDay(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function tap(card) {
+function checkStep(card) {
   const step = card.closest('.step');
   const d = step.dataset.d, i = step.dataset.i;
-  const detail = card.querySelector('.st-detail');
-
+  step.classList.toggle('done');
   if (step.classList.contains('done')) {
-    // Uncheck: toggle detail visibility
-    step.classList.remove('done');
-    localStorage.removeItem(K + d + '_' + i);
-    if (detail) { detail.classList.toggle('open'); card.classList.toggle('open-card'); }
-  } else {
-    // First tap: mark done
-    step.classList.add('done');
-    if (detail) { detail.classList.remove('open'); card.classList.remove('open-card'); }
     localStorage.setItem(K + d + '_' + i, '1');
+  } else {
+    localStorage.removeItem(K + d + '_' + i);
   }
-  refreshProgress(+d);
+  refreshProg(+d);
 }
 
-function refreshProgress(d) {
+function refreshProg(d) {
   const all = document.querySelectorAll(`[data-d="${d}"]`);
   const done = document.querySelectorAll(`[data-d="${d}"].done`);
   const pct = all.length ? done.length / all.length * 100 : 0;
@@ -1094,11 +1122,8 @@ function refreshProgress(d) {
   const lbl = document.getElementById('p' + d + '-lbl');
   if (fill) fill.style.width = pct + '%';
   if (lbl) lbl.textContent = done.length + ' / ' + all.length;
-  const tab = document.getElementById('tab' + d);
-  if (tab) {
-    const dot = tab.querySelector('.wt-dot');
-    if (dot) dot.style.opacity = done.length > 0 ? '1' : '0.35';
-  }
+  const dot = document.querySelector('#tab' + d + ' .wt-d');
+  if (dot) dot.style.opacity = done.length > 0 ? '1' : '0.35';
 }
 
 function loadState() {
@@ -1106,7 +1131,7 @@ function loadState() {
     if (localStorage.getItem(K + s.dataset.d + '_' + s.dataset.i))
       s.classList.add('done');
   });
-  [0,1,2,3,4].forEach(refreshProgress);
+  [0,1,2,3,4].forEach(refreshProg);
 }
 
 function toggleDark() {
@@ -1116,7 +1141,6 @@ function toggleDark() {
   document.getElementById('darkBtn').textContent = on ? '☀️' : '🌙';
 }
 
-// Init
 if (localStorage.getItem(K + 'dark')) {
   document.body.classList.add('dark');
   document.getElementById('darkBtn').textContent = '☀️';
