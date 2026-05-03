@@ -230,16 +230,16 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 <div class="wx-wrap">
   <div class="wx-tabs">
     <button class="wx-tab rainy active" onclick="goDay(0)" id="tab0">
-      <span class="wt-n">Lun. 4</span><span class="wt-i">☔</span><span class="wt-t">18°C · MPL</span><span class="wt-d"></span>
+      <span class="wt-n">Lun. 4</span><span class="wt-i">☔</span><span class="wt-t">16°C · MPL</span><span class="wt-d"></span>
     </button>
-    <button class="wx-tab rainy" onclick="goDay(1)" id="tab1">
-      <span class="wt-n">Mar. 5</span><span class="wt-i">🌧️</span><span class="wt-t">17°C · Gorges</span><span class="wt-d"></span>
+    <button class="wx-tab clearing" onclick="goDay(1)" id="tab1">
+      <span class="wt-n">Mar. 5</span><span class="wt-i">🌤️</span><span class="wt-t">20°C · Gorges</span><span class="wt-d"></span>
     </button>
-    <button class="wx-tab clearing" onclick="goDay(2)" id="tab2">
-      <span class="wt-n">Mer. 6</span><span class="wt-i">🌤️</span><span class="wt-t">21°C · Sète</span><span class="wt-d"></span>
+    <button class="wx-tab rainy" onclick="goDay(2)" id="tab2">
+      <span class="wt-n">Mer. 6</span><span class="wt-i">🌧️</span><span class="wt-t">21°C · Sète</span><span class="wt-d"></span>
     </button>
     <button class="wx-tab sunny" onclick="goDay(3)" id="tab3">
-      <span class="wt-n">Jeu. 7</span><span class="wt-i">☀️</span><span class="wt-t">24°C · Nîmes</span><span class="wt-d"></span>
+      <span class="wt-n">Jeu. 7</span><span class="wt-i">☀️</span><span class="wt-t">21°C · Nîmes</span><span class="wt-d"></span>
     </button>
     <button class="wx-tab retour" onclick="goDay(4)" id="tab4">
       <span class="wt-n">Ven. 8</span><span class="wt-i">🌦️</span><span class="wt-t">22°C · MPL</span><span class="wt-d"></span>
@@ -255,13 +255,13 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 <div class="day active" id="day0" style="--ac:var(--storm)">
 
   <div class="day-hdr" style="border-left:5px solid var(--storm)">
-    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)">☔ Pluie forte · 22mm · 18°C à Montpellier</div>
+    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)">☔ Pluie forte · 75% · 16°C à Montpellier</div>
     <div class="dh-date" style="color:var(--storm)">Lundi 4 mai 2026 · Arrivée</div>
-    <div class="dh-title">Montpellier — Monuments & Écusson</div>
-    <div class="dh-sub">Place de la Comédie · Peyrou · Quartier médiéval · Passages couverts</div>
+    <div class="dh-title">Montpellier — Peyrou, Comédie & Écusson</div>
+    <div class="dh-sub">Check-in 13h · Voiture récupérée à 11h15 · Déjeuner à 13h30</div>
   </div>
 
-  <a class="route-day-btn" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier/Quartier+Antigone+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank">
+  <a class="route-day-btn" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/101+Place+du+Parnasse+Montpellier/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier" target="_blank">
     <span class="ico">🗺️</span> Itinéraire complet de la journée
   </a>
 
@@ -271,8 +271,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
   </div>
 
   <div class="alert al-info">
-    <strong>☔ Journée la plus pluvieuse — programme intérieur intelligent</strong>
-    Les monuments emblématiques de Montpellier sont tous visitables sous la pluie : Écusson, passages couverts, cathédrale. Les trajets entre chaque lieu sont courts (5–10 min à pied max). Parapluies recommandés.
+    <strong>☔ Pluie forte confirmée · 75% · 16°C — nouveau programme adapté !</strong>
+    Check-in avancé à 13h : vous pouvez déposer la voiture et les bagages dès 11h30 avant d'explorer à pied. Déjeuner à 13h30 après le check-in. Toutes les visites du matin sont à l'abri ou très courtes — parapluies indispensables.
   </div>
 
   <div class="sec">Programme de la journée</div>
@@ -288,19 +288,47 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">Récupération de la voiture de location dans la gare. Vous disposez d'un parking au logement (101 Place du Parnasse) — posez-y la voiture et explorez Montpellier entièrement à pied, la ville est très compacte.</p>
+        <p class="st-desc">Arrivée à Montpellier Sud-de-France. Récupération des bagages, direction l'agence de location de voiture dans la gare.</p>
         <div class="st-chips">
-          <span class="chip c-tip">🚗 Voiture au logement dès l'arrivée</span>
-          <span class="chip c-tip">🚶 Ville 100% piétonne ensuite</span>
+          <span class="chip c-tip">🧳 Agence de location dans la gare</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Promenade du Peyrou
+        <a class="route-next" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/agence+location+voiture+Gare+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> Repérer l'agence de location
         </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="1">
-      <div class="st-time">11h30</div><div class="st-dot"></div>
+      <div class="st-time">11h15</div><div class="st-dot"></div>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">🚗 Récupération de la voiture & dépôt au logement</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="st-chk">✓</div>
+          </div>
+        </div>
+        <p class="st-desc">Voiture récupérée à 11h15. Trajet direct vers le logement (101 Place du Parnasse, ~10 min depuis la gare). Déposez immédiatement la voiture dans le <strong>parking du logement</strong> — vous n'en aurez plus besoin aujourd'hui. Sonnez à la réception pour déposer les bagages même si la chambre n'est pas encore prête : ils les garderont pour vous jusqu'au check-in à 13h.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking du logement — 101 Place du Parnasse</div>
+            <p class="park-text">Votre logement dispose d'un parking en sous-sol accessible directement. Garez-y la voiture pour toute la journée. Elle n'en ressortira que pour les excursions des jours suivants. Profitez de ce trajet pour déposer les bagages à la réception avant le check-in officiel de 13h.</p>
+            <a class="park-link" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍 Localiser le logement</a>
+          </div>
+        </div>
+        <div class="st-chips">
+          <span class="chip c-tip">🧳 Dépôt bagages possible avant 13h</span>
+          <span class="chip c-tip">🚶 Explorez à pied depuis ici</span>
+        </div>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Promenade du Peyrou (~15 min)
+        </a>
+      </div>
+    </div>
+
+    <div class="step" data-d="0" data-i="2">
+      <div class="st-time">11h45</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Promenade du Peyrou & Arc de Triomphe ★</span>
@@ -309,20 +337,20 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">Grande esplanade royale du XVIIe siècle avec la statue de Louis XIV au centre. L'<strong>Arc de Triomphe</strong> (1691) présente les victoires du Roi-Soleil. L'<strong>Aqueduc Saint-Clément</strong> (1753, 14 km de long, 2 niveaux d'arches) est le symbole architectural de Montpellier. Vue panoramique sur les Cévennes et les Pyrénées par temps clair — même sous les nuages, le site est impressionnant.</p>
+        <p class="st-desc">Grande esplanade royale du XVIIe siècle avec la statue de Louis XIV au centre. L'<strong>Arc de Triomphe</strong> (1691) présente les victoires du Roi-Soleil. L'<strong>Aqueduc Saint-Clément</strong> (1753, 14 km de long, 2 niveaux d'arches) est le symbole architectural de Montpellier. Vue panoramique sur les Cévennes — même sous les nuages, le site est impressionnant et très photogénique.</p>
         <div class="st-chips">
           <span class="chip c-star">⭐ Vue panoramique</span>
           <span class="chip c-price">Gratuit</span>
-          <span class="chip c-tip">📸 Beau même sous les nuages</span>
+          <span class="chip c-tip">☂️ Courte marche — parapluie conseillé</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Place de la Comédie
+          <span class="rn-ico">🧭</span> À pied → Place de la Comédie (~10 min)
         </a>
       </div>
     </div>
 
-    <div class="step" data-d="0" data-i="2">
-      <div class="st-time">12h00</div><div class="st-dot"></div>
+    <div class="step" data-d="0" data-i="3">
+      <div class="st-time">12h15</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Place de la Comédie & Esplanade Charles-de-Gaulle ★</span>
@@ -331,20 +359,41 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">La <strong>Place de la Comédie</strong> («&nbsp;l'Œuf&nbsp;») est le cœur battant de Montpellier depuis 1755 : Fontaine des Trois Grâces, Opéra Comédie style Second Empire, tramways colorés signés Christian Lacroix. L'<strong>Esplanade Charles-de-Gaulle</strong> est le grand boulevard planté de platanes centenaires avec ses guinguettes et kiosques. Point de départ idéal de toute visite. Les galeries couvertes alentour offrent un abri parfait sous la pluie.</p>
+        <p class="st-desc">La <strong>Place de la Comédie</strong> («&nbsp;l'Œuf&nbsp;») est le cœur de Montpellier depuis 1755 : Fontaine des Trois Grâces, Opéra Comédie style Second Empire, tramways colorés signés Christian Lacroix. L'<strong>Esplanade Charles-de-Gaulle</strong> est le grand boulevard planté de platanes centenaires. Les galeries couvertes alentour offrent un abri parfait sous la pluie. Profitez-en pour un café sous les arcades avant le check-in.</p>
         <div class="st-chips">
-          <span class="chip c-star">⭐ Cœur de la ville</span>
+          <span class="chip c-star">⭐ Cœur vivant de la ville</span>
           <span class="chip c-price">Gratuit</span>
-          <span class="chip c-indoor">🏠 Galeries couvertes</span>
+          <span class="chip c-indoor">🏠 Galeries et arcades couvertes</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Le Petit Jardin (déjeuner)
+        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Retour logement pour check-in (~12 min)
         </a>
       </div>
     </div>
 
-    <div class="step" data-d="0" data-i="3">
-      <div class="st-time">13h15</div><div class="st-dot"></div>
+    <div class="step" data-d="0" data-i="4">
+      <div class="st-time">13h00</div><div class="st-dot"></div>
+      <div class="st-card" onclick="checkStep(this)">
+        <div class="st-top">
+          <span class="st-name">✅ Check-in — 101 Place du Parnasse</span>
+          <div class="st-acts">
+            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <div class="st-chk">✓</div>
+          </div>
+        </div>
+        <p class="st-desc">Check-in à partir de 13h au 101 Place du Parnasse. Installez-vous, rafraîchissez-vous après le voyage. La voiture est déjà dans le parking du logement. Déjeuner à 13h30 — 5 min à pied depuis l'appartement.</p>
+        <div class="st-chips">
+          <span class="chip c-book">✅ Check-out vendredi avant 11h</span>
+          <span class="chip c-tip">🚗 Voiture déjà garée — pas à bouger</span>
+        </div>
+        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Le Petit Jardin, déjeuner (~5 min)
+        </a>
+      </div>
+    </div>
+
+    <div class="step" data-d="0" data-i="5">
+      <div class="st-time">13h30</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">🍽 Déjeuner — Le Petit Jardin</span>
@@ -353,79 +402,38 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">20 rue Jean-Jacques Rousseau. L'une des meilleures adresses de Montpellier : cuisine du marché dans une maison de ville avec galerie couverte. La salle voûtée intérieure est très chaleureuse par temps de pluie. Formule déjeuner ~25€ — l'une des rares bonnes tables ouvertes le lundi. <strong>Réservez : +33 4 67 60 78 78</strong></p>
+        <p class="st-desc">20 rue Jean-Jacques Rousseau, en plein cœur de l'Écusson. L'une des meilleures adresses de Montpellier : cuisine du marché dans une maison de ville avec galerie couverte et salle voûtée — parfaite par temps de pluie. Formule déjeuner ~25€. L'une des rares bonnes tables ouvertes le lundi. <strong>Réservez le créneau 13h30 : +33 4 67 60 78 78</strong></p>
         <div class="st-chips">
           <span class="chip c-price">~25 €/pers</span>
-          <span class="chip c-indoor">🏠 Salle intérieure couverte</span>
-          <span class="chip c-book">📞 Réservation obligatoire</span>
+          <span class="chip c-indoor">🏠 Salle voûtée couverte</span>
+          <span class="chip c-book">📞 Réservez le créneau 13h30</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/20+Rue+Jean+Jacques+Rousseau+Montpellier/Place+de+la+Canourgue+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Quartier de l'Écusson
-        </a>
-      </div>
-    </div>
-
-    <div class="step" data-d="0" data-i="4">
-      <div class="st-time">14h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="checkStep(this)">
-        <div class="st-top">
-          <span class="st-name">Quartier de l'Écusson — Cœur médiéval ★</span>
-          <div class="st-acts">
-            <a class="gps-ico" href="https://maps.google.com/?q=Place+de+la+Canourgue+Montpellier+ecusson" target="_blank" onclick="event.stopPropagation()">📍</a>
-            <div class="st-chk">✓</div>
-          </div>
-        </div>
-        <p class="st-desc">Le cœur médiéval de Montpellier enfermé dans ses anciens remparts (en forme d'écusson). À ne pas rater : <strong>Place de la Canourgue</strong> (XVe s., la plus ancienne place de la ville), <strong>Hôtel de Varenne</strong> (musée du Vieux Montpellier, entrée libre), ruelles de l'<strong>Ancien Courrier</strong> avec leurs passages couverts et cours intérieures cachées. La pluie transforme ces ruelles pavées en décor de film — reflets uniques sur les pierres sèches. Nombreux hôtels particuliers XVIIe-XVIIIe à portails sculptés.</p>
-        <div class="st-chips">
-          <span class="chip c-star">⭐ Cœur historique</span>
-          <span class="chip c-price">Gratuit</span>
-          <span class="chip c-indoor">🏠 Passages couverts</span>
-          <span class="chip c-tip">📸 Reflets magnifiques sous la pluie</span>
-        </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Cathédrale Saint-Pierre
-        </a>
-      </div>
-    </div>
-
-    <div class="step" data-d="0" data-i="5">
-      <div class="st-time">15h30</div><div class="st-dot"></div>
-      <div class="st-card" onclick="checkStep(this)">
-        <div class="st-top">
-          <span class="st-name">Cathédrale Saint-Pierre & Faculté de Médecine</span>
-          <div class="st-acts">
-            <a class="gps-ico" href="https://maps.google.com/?q=Cathedrale+Saint+Pierre+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
-            <div class="st-chk">✓</div>
-          </div>
-        </div>
-        <p class="st-desc">La <strong>Cathédrale Saint-Pierre</strong> (XIVe s.) est la seule église de Montpellier à avoir survécu aux guerres de religion. Ses deux tours-porches monumentales (17m) lui donnent un aspect de forteresse. La <strong>Faculté de Médecine</strong> fondée en 1220 (avant Paris !) propose une entrée libre dans ses couloirs richement décorés. À côté, le <strong>Jardin des Plantes</strong> est le plus vieux jardin botanique de France (1593). Entièrement à l'abri.</p>
-        <div class="st-chips">
-          <span class="chip c-indoor">🏠 Entièrement couvert</span>
-          <span class="chip c-price">Entrée libre</span>
-          <span class="chip c-star">⭐ Faculté fondée en 1220</span>
-        </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Cathedrale+Saint+Pierre+Montpellier/Quartier+Antigone+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> Trajet → Quartier Antigone
+          <span class="rn-ico">🧭</span> À pied → Quartier de l'Écusson (~3 min)
         </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="6">
-      <div class="st-time">16h30</div><div class="st-dot"></div>
+      <div class="st-time">15h00</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">Quartier Antigone & Check-in 17h ✅</span>
+          <span class="st-name">Quartier de l'Écusson & Cathédrale Saint-Pierre ★</span>
           <div class="st-acts">
-            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <a class="gps-ico" href="https://maps.google.com/?q=Place+de+la+Canourgue+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">En chemin vers votre logement, découvrez le quartier <strong>Antigone</strong> conçu par Ricardo Bofill : colonnes, portiques, places en hémicycle — une «&nbsp;Rome à ciel ouvert&nbsp;» des années 1980. <strong>Check-in à partir de 17h</strong> au 101 Place du Parnasse. Vous avez un parking sur place — rangez la voiture pour toute la semaine, vous n'en aurez besoin que pour les excursions.</p>
+        <p class="st-desc">Le cœur médiéval de Montpellier avec ses ruelles pavées. Incontournables : <strong>Place de la Canourgue</strong> (XVe s., la plus ancienne place de la ville), <strong>Hôtel de Varenne</strong> (musée du Vieux Montpellier, entrée libre), passages couverts de l'<strong>Ancien Courrier</strong>. Puis la <strong>Cathédrale Saint-Pierre</strong> (XIVe s.) et la <strong>Faculté de Médecine</strong> (fondée en 1220, entrée libre). La pluie transforme ces ruelles pavées en décor magnifique — reflets sur les pierres, lumière douce et atmosphère intime.</p>
         <div class="st-chips">
-          <span class="chip c-star">⭐ Architecture unique en France</span>
+          <span class="chip c-star">⭐ Cœur historique de Montpellier</span>
           <span class="chip c-price">Gratuit</span>
-          <span class="chip c-book">✅ Check-out vendredi avant 11h</span>
+          <span class="chip c-indoor">🏠 Passages couverts + cathédrale</span>
+          <span class="chip c-tip">📸 Reflets magnifiques sous la pluie</span>
         </div>
+        <a class="route-next" href="https://www.google.com/maps/dir/Cathedrale+Saint+Pierre+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Retour logement via Antigone (~15 min)
+        </a>
       </div>
     </div>
 
@@ -454,29 +462,29 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
 
 
 <!-- ══════════════════════════════════════════
-     JOUR 2 — MARDI — GORGES 🌧️
+     JOUR 2 — MARDI — GORGES 🌤️
 ══════════════════════════════════════════ -->
-<div class="day" id="day1" style="--ac:var(--storm)">
+<div class="day" id="day1" style="--ac:var(--teal)">
 
-  <div class="day-hdr" style="border-left:5px solid var(--storm)">
-    <div class="dh-pill" style="background:#dde9f8;color:var(--storm)">🌧️ Pluie probable · 68% · 17°C dans les Gorges</div>
-    <div class="dh-date" style="color:var(--storm)">Mardi 5 mai 2026</div>
+  <div class="day-hdr" style="border-left:5px solid var(--teal)">
+    <div class="dh-pill" style="background:#e0f4f8;color:var(--teal)">🌤️ Risque faible · 35% · 20°C dans les Gorges</div>
+    <div class="dh-date" style="color:var(--teal)">Mardi 5 mai 2026</div>
     <div class="dh-title">Gorges de l'Hérault & Saint-Guilhem</div>
-    <div class="dh-sub">45 min (~40 km) · Billets Grotte déjà réservés ✅ · Souterrain = peu importe la météo</div>
+    <div class="dh-sub">45 min (~40 km) · Billets Grotte déjà réservés ✅ · Météo bien meilleure qu'attendu !</div>
   </div>
 
-  <a class="route-day-btn" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Grotte+de+Clamouse+Saint-Jean-de-Fos/Pont+du+Diable+Herault/Saint-Guilhem-le-Desert+Abbaye+Gellone/101+Place+du+Parnasse+Montpellier" target="_blank">
+  <a class="route-day-btn teal" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Parking+Grotte+de+Clamouse+Saint-Jean-de-Fos+34150/Pont+du+Diable+Herault/Parking+Les+Lavagnes+Saint-Guilhem-le-Desert/101+Place+du+Parnasse+Montpellier" target="_blank">
     <span class="ico">🗺️</span> Itinéraire complet de la journée
   </a>
 
   <div class="prog-wrap">
     <div class="prog-row"><span>Progression</span><span id="p1-lbl">0 / 5</span></div>
-    <div class="prog-bar"><div class="prog-fill" id="p1" style="background:var(--storm);width:0%"></div></div>
+    <div class="prog-bar"><div class="prog-fill" id="p1" style="background:var(--teal);width:0%"></div></div>
   </div>
 
-  <div class="alert al-info">
-    <strong>✅ Grotte de Clamouse déjà réservée — aucun souci météo !</strong>
-    La grotte est entièrement souterraine (16°C constant). Les Gorges de l'Hérault (vallée encaissée) sont plus fraîches que Montpellier. Veste légère obligatoire pour la grotte. Saint-Guilhem sous la pluie est magnifique — lumière rasante et pierres mouillées.
+  <div class="alert al-teal">
+    <strong>🌤️ Bonne nouvelle — météo bien meilleure qu'annoncée !</strong>
+    Seulement 35% de risque de pluie (contre 68% prévu initialement). Possibilité d'éclaircies dans les gorges. La Grotte de Clamouse est souterraine (16°C constant) — 100% garantie quelle que soit la météo. Veste légère et parapluie compacts suffisent.
   </div>
 
   <div class="sec">Programme de la journée</div>
