@@ -261,7 +261,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
     <div class="dh-sub">Check-in 13h · Voiture récupérée à 11h15 · Déjeuner à 13h30</div>
   </div>
 
-  <a class="route-day-btn" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/101+Place+du+Parnasse+Montpellier/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier/Place+de+la+Canourgue+Montpellier/Cathedrale+Saint+Pierre+Montpellier" target="_blank">
+  <a class="route-day-btn" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Parking+Triangle+Montpellier/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank">
     <span class="ico">🗺️</span> Itinéraire complet de la journée
   </a>
 
@@ -302,33 +302,34 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
       <div class="st-time">11h15</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">🚗 Récupération de la voiture & dépôt au logement</span>
+          <span class="st-name">🚗 Récupération voiture & parking provisoire</span>
           <div class="st-acts">
-            <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
+            <a class="gps-ico" href="https://maps.google.com/?q=Parking+du+Triangle+Montpellier+rue+de+la+Loge" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">Voiture récupérée à 11h15. Trajet direct vers le logement (101 Place du Parnasse, ~10 min depuis la gare). Déposez immédiatement la voiture dans le <strong>parking du logement</strong> — vous n'en aurez plus besoin aujourd'hui. Sonnez à la réception pour déposer les bagages même si la chambre n'est pas encore prête : ils les garderont pour vous jusqu'au check-in à 13h.</p>
+        <p class="st-desc">Voiture récupérée à 11h15. Le logement n'étant accessible qu'à partir de 13h, garez-vous dans un parking public pour visiter à pied. À 12h45, vous reprenez la voiture pour rejoindre le logement, déposer les bagages et faire le check-in à 13h.</p>
         <div class="park-box">
           <span class="park-icon">🅿️</span>
           <div class="park-body">
-            <div class="park-title">Parking du logement — 101 Place du Parnasse</div>
-            <p class="park-text">Votre logement dispose d'un parking en sous-sol accessible directement. Garez-y la voiture pour toute la journée. Elle n'en ressortira que pour les excursions des jours suivants. Profitez de ce trajet pour déposer les bagages à la réception avant le check-in officiel de 13h.</p>
-            <a class="park-link" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍 Localiser le logement</a>
+            <div class="park-title">Parking Triangle — Parking provisoire recommandé</div>
+            <p class="park-text"><strong>Parking du Triangle</strong>, rue du Palais des Guilhem (sous le centre commercial Triangle, à 10 min à pied du Peyrou et 5 min de la Place de la Comédie) — idéalement placé pour vos deux visites du matin. Ouvert 24h/24. Tarif : <strong>~2€/h</strong>, soit environ <strong>3-4€ pour 1h30</strong> de stationnement.<br><br>💡 <strong>Pour les bagages :</strong> appelez le logement à l'avance pour demander si vous pouvez les déposer avant 13h (souvent possible). Sinon, la gare dispose d'une <strong>consigne automatique</strong> (~5€/bagage) — laissez-les avant de prendre la voiture.</p>
+            <a class="park-link" href="https://maps.google.com/?q=Parking+Triangle+Montpellier+Centre+Commercial" target="_blank" onclick="event.stopPropagation()">📍 Parking du Triangle</a>
           </div>
         </div>
         <div class="st-chips">
-          <span class="chip c-tip">🧳 Dépôt bagages possible avant 13h</span>
-          <span class="chip c-tip">🚶 Explorez à pied depuis ici</span>
+          <span class="chip c-price">~3-4 € pour 1h30</span>
+          <span class="chip c-tip">🧳 Appeler le logement pour les bagages</span>
+          <span class="chip c-tip">🚶 10 min à pied du Peyrou</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/Promenade+du+Peyrou+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> À pied → Promenade du Peyrou (~15 min)
+        <a class="route-next" href="https://www.google.com/maps/dir/Gare+Montpellier+Sud+de+France/Parking+Triangle+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> En voiture → Parking du Triangle (8 min)
         </a>
       </div>
     </div>
 
     <div class="step" data-d="0" data-i="2">
-      <div class="st-time">11h45</div><div class="st-dot"></div>
+      <div class="st-time">11h30</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
           <span class="st-name">Promenade du Peyrou & Arc de Triomphe ★</span>
@@ -341,7 +342,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
         <div class="st-chips">
           <span class="chip c-star">⭐ Vue panoramique</span>
           <span class="chip c-price">Gratuit</span>
-          <span class="chip c-tip">☂️ Courte marche — parapluie conseillé</span>
+          <span class="chip c-tip">☂️ Parapluie conseillé — 10 min à pied du parking</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/Promenade+du+Peyrou+Montpellier/Place+de+la+Comedie+Montpellier" target="_blank" onclick="event.stopPropagation()">
           <span class="rn-ico">🧭</span> À pied → Place de la Comédie (~10 min)
@@ -359,14 +360,15 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">La <strong>Place de la Comédie</strong> («&nbsp;l'Œuf&nbsp;») est le cœur de Montpellier depuis 1755 : Fontaine des Trois Grâces, Opéra Comédie style Second Empire, tramways colorés signés Christian Lacroix. L'<strong>Esplanade Charles-de-Gaulle</strong> est le grand boulevard planté de platanes centenaires. Les galeries couvertes alentour offrent un abri parfait sous la pluie. Profitez-en pour un café sous les arcades avant le check-in.</p>
+        <p class="st-desc">La <strong>Place de la Comédie</strong> («&nbsp;l'Œuf&nbsp;») est le cœur de Montpellier depuis 1755 : Fontaine des Trois Grâces, Opéra Comédie style Second Empire, tramways colorés signés Christian Lacroix. L'<strong>Esplanade Charles-de-Gaulle</strong> est le grand boulevard planté de platanes centenaires. Les galeries et arcades couvertes offrent un abri parfait sous la pluie. Profitez-en pour un café avant de reprendre la voiture.</p>
         <div class="st-chips">
           <span class="chip c-star">⭐ Cœur vivant de la ville</span>
           <span class="chip c-price">Gratuit</span>
           <span class="chip c-indoor">🏠 Galeries et arcades couvertes</span>
+          <span class="chip c-tip">🚗 Retour parking à 12h45 pour aller au logement</span>
         </div>
-        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">
-          <span class="rn-ico">🧭</span> À pied → Retour logement pour check-in (~12 min)
+        <a class="route-next" href="https://www.google.com/maps/dir/Place+de+la+Comedie+Montpellier/Parking+Triangle+Montpellier" target="_blank" onclick="event.stopPropagation()">
+          <span class="rn-ico">🧭</span> À pied → Retour Parking du Triangle (5 min)
         </a>
       </div>
     </div>
@@ -375,16 +377,24 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hdr);backgro
       <div class="st-time">13h00</div><div class="st-dot"></div>
       <div class="st-card" onclick="checkStep(this)">
         <div class="st-top">
-          <span class="st-name">✅ Check-in — 101 Place du Parnasse</span>
+          <span class="st-name">🚗 Voiture → Logement & Check-in ✅</span>
           <div class="st-acts">
             <a class="gps-ico" href="https://maps.google.com/?q=101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">📍</a>
             <div class="st-chk">✓</div>
           </div>
         </div>
-        <p class="st-desc">Check-in à partir de 13h au 101 Place du Parnasse. Installez-vous, rafraîchissez-vous après le voyage. La voiture est déjà dans le parking du logement. Déjeuner à 13h30 — 5 min à pied depuis l'appartement.</p>
+        <p class="st-desc">Reprenez la voiture au Parking du Triangle et rejoignez le logement (~5 min en voiture). Check-in à partir de 13h au 101 Place du Parnasse. Déposez la voiture dans le parking du logement — elle n'en ressortira que pour les excursions des jours suivants. Déjeuner à 13h30, 5 min à pied.</p>
+        <div class="park-box">
+          <span class="park-icon">🅿️</span>
+          <div class="park-body">
+            <div class="park-title">Parking du logement — à partir de 13h</div>
+            <p class="park-text">Dès le check-in, garez la voiture dans le <strong>parking du logement</strong> (101 Place du Parnasse). Elle y restera pour toute la semaine — vous n'en aurez besoin que pour les excursions des jours 2, 3 et 4.</p>
+            <a class="park-link" href="https://www.google.com/maps/dir/Parking+Triangle+Montpellier/101+Place+du+Parnasse+Montpellier" target="_blank" onclick="event.stopPropagation()">🧭 En voiture → Logement (5 min)</a>
+          </div>
+        </div>
         <div class="st-chips">
           <span class="chip c-book">✅ Check-out vendredi avant 11h</span>
-          <span class="chip c-tip">🚗 Voiture déjà garée — pas à bouger</span>
+          <span class="chip c-tip">🚗 Voiture garée pour toute la semaine</span>
         </div>
         <a class="route-next" href="https://www.google.com/maps/dir/101+Place+du+Parnasse+Montpellier/20+Rue+Jean+Jacques+Rousseau+Montpellier" target="_blank" onclick="event.stopPropagation()">
           <span class="rn-ico">🧭</span> À pied → Le Petit Jardin, déjeuner (~5 min)
