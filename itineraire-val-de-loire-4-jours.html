@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Val de Loire — 27&#8209;30 août — Saint-Martin-le-Beau &amp; ses châteaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tuffeau:#EFE8D9; --tuffeau-2:#E4D9C2; --paper:#FAF6EC;
+  --ardoise:#232E35; --ardoise-2:#324049;
+  --ink:#22282A; --ink-soft:#4B5450;
+  --or:#A8752B; --or-soft:#C79A4E;
+  --lie:#722C3C; --lierre:#4C5D3F; --cher:#4F707A; --savane:#8A6A3A;
+  --line:rgba(34,40,42,0.14); --card:#ffffff;
+  --shadow:0 6px 20px rgba(35,46,53,0.10); --radius:14px;
+}
+:root[data-theme="dark"]{
+  --tuffeau:#1B2328; --tuffeau-2:#212B31; --paper:#171F23;
+  --ink:#EDE7D8; --ink-soft:#B9C0BE; --card:#212B31;
+  --line:rgba(237,231,216,0.14); --shadow:0 6px 24px rgba(0,0,0,0.35);
+  --or:#D6A75B; --or-soft:#E4BE7E; --savane:#D6A75B;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;transition:background .3s ease,color .3s ease;}
+h1,h2,h3,.disp{font-family:'Cormorant Garamond',serif;font-weight:600;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+.hero{position:relative;background:linear-gradient(180deg,var(--ardoise) 0%, var(--ardoise-2) 100%);color:var(--tuffeau);padding:56px 20px 64px;overflow:hidden;}
+:root[data-theme="dark"] .hero{background:linear-gradient(180deg,#0F1417 0%, #16201F 100%);}
+.hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.hero .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--or-soft);margin-bottom:14px;}
+.hero h1{font-size:clamp(30px,6.6vw,48px);line-height:1.08;margin:0 0 14px;font-weight:700;}
+.hero p.lede{font-size:17px;line-height:1.55;color:#D9D2C0;max-width:52ch;margin:0 0 22px;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13.5px;color:#C9C2AE;font-family:'IBM Plex Mono',monospace;}
+.hero-meta span{white-space:nowrap;}
+.hero-river{position:absolute;bottom:-2px;left:0;width:100%;height:70px;z-index:1;opacity:.55;}
+
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;background:var(--tuffeau);border-bottom:1px solid var(--line);padding:0 14px;}
+.tabs{display:flex;overflow-x:auto;gap:2px;flex:1;-webkit-overflow-scrolling:touch;}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.03em;background:none;border:none;color:var(--ink-soft);padding:14px 14px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .2s;}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--or);font-weight:600;}
+.theme-btn{background:var(--ardoise);color:var(--tuffeau);border:none;border-radius:20px;padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;margin-left:8px;flex-shrink:0;}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+
+section.block{padding:40px 0;border-bottom:1px solid var(--line);}
+.block h2{font-size:28px;margin:0 0 6px;}
+.block .sub{color:var(--ink-soft);font-size:14.5px;margin:0 0 24px;max-width:56ch;line-height:1.5;}
+
+.why-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:8px;}
+@media(min-width:600px){.why-grid{grid-template-columns:1fr 1fr;}}
+.why-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
+.why-card .k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--or);margin-bottom:6px;}
+.why-card p{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink-soft);}
+
+.address-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;}
+.address-card .k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--cher);margin-bottom:4px;}
+.address-card .addr{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;}
+
+.ticket-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px;}
+@media(min-width:600px){.ticket-grid{grid-template-columns:1fr 1fr;}}
+.ticket-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;}
+.ticket-card .tk{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:20px;border:1px solid var(--or);color:var(--or);align-self:flex-start;}
+.ticket-card.pass .tk{border-color:var(--lierre);color:var(--lierre);}
+.ticket-card h4{margin:0;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;}
+.ticket-card p{margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+.ticket-card .price{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);}
+.ticket-card a.buy{
+  margin-top:4px;align-self:flex-start;text-decoration:none;
+  background:var(--ardoise);color:var(--tuffeau);font-family:'IBM Plex Mono',monospace;
+  font-size:12px;padding:7px 14px;border-radius:20px;
+}
+:root[data-theme="dark"] .ticket-card a.buy{background:var(--or);color:#1B2328;}
+
+.day{display:none;}
+.day.active{display:block;}
+.day-head{padding:32px 0 6px;}
+.day-head .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--or);letter-spacing:.1em;text-transform:uppercase;}
+.day-head h2{font-size:30px;margin:6px 0 8px;}
+.day-head .route{font-size:14px;color:var(--ink-soft);margin-bottom:6px;}
+.weather{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);background:var(--tuffeau-2);border-radius:20px;padding:6px 14px;margin-bottom:12px;}
+.weather .ico{font-size:16px;}
+.day-stats{display:flex;gap:18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);margin-bottom:10px;flex-wrap:wrap;}
+
+.timeline{position:relative;padding:10px 0 30px 0;}
+.river-track{position:absolute;left:29px;top:0;bottom:0;width:3px;z-index:0;background:var(--cher);opacity:.4;}
+
+.stop{position:relative;padding-left:66px;margin-bottom:26px;}
+.stop:last-child{margin-bottom:0;}
+.stop .dot{position:absolute;left:20px;top:4px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:3px solid var(--or);z-index:1;}
+.stop.pepite .dot{border-color:var(--lierre);}
+.stop.gastro .dot{border-color:var(--lie);}
+.stop.pratique .dot{border-color:var(--cher);}
+.stop.savane .dot{border-color:var(--savane);}
+
+.stop .time{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--or);font-weight:500;margin-bottom:4px;}
+.stop.pepite .time{color:var(--lierre);}
+.stop.gastro .time{color:var(--lie);}
+.stop.pratique .time{color:var(--cher);}
+.stop.savane .time{color:var(--savane);}
+
+.stop-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
+.stop-card h3{font-size:20px;margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:20px;border:1px solid var(--or);color:var(--or);font-weight:500;}
+.stop.pepite .badge{border-color:var(--lierre);color:var(--lierre);}
+.stop.gastro .badge{border-color:var(--lie);color:var(--lie);}
+.stop.pratique .badge{border-color:var(--cher);color:var(--cher);}
+.stop.savane .badge{border-color:var(--savane);color:var(--savane);}
+
+.drone{
+  font-size:11px;font-family:'IBM Plex Mono',monospace;
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--tuffeau-2);border-radius:20px;padding:3px 9px;cursor:help;
+}
+
+.maps-btn{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-decoration:none;background:var(--ardoise);color:var(--tuffeau);border-radius:20px;padding:5px 11px;white-space:nowrap;flex-shrink:0;}
+:root[data-theme="dark"] .maps-btn{background:var(--or);color:#1B2328;}
+.maps-btn:hover{opacity:.85;}
+
+.stop-card p{margin:8px 0;font-size:14.5px;line-height:1.55;color:var(--ink-soft);}
+.stop-card .tip{margin-top:10px;font-size:13px;line-height:1.5;background:var(--tuffeau-2);border-left:3px solid var(--or);padding:8px 12px;border-radius:6px;color:var(--ink);}
+.stop.pepite .tip{border-left-color:var(--lierre);}
+.stop.gastro .tip{border-left-color:var(--lie);}
+.stop.pratique .tip{border-left-color:var(--cher);}
+.stop.savane .tip{border-left-color:var(--savane);}
+
+.meta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
+
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 0;font-size:12.5px;color:var(--ink-soft);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:2.5px solid var(--or);}
+.legend i.p{border-color:var(--lierre);}
+.legend i.g{border-color:var(--lie);}
+.legend i.pr{border-color:var(--cher);}
+.legend i.s{border-color:var(--savane);}
+
+.practical-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+@media(min-width:600px){.practical-grid{grid-template-columns:1fr 1fr;}}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
+.pcard h3{font-size:17px;margin:0 0 8px;font-family:'Cormorant Garamond',serif;}
+.pcard ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+
+footer{padding:30px 20px 50px;text-align:center;color:var(--ink-soft);font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Itinéraire sur mesure — 27 → 30 août</div>
+    <h1>Le Val de Loire, château après château</h1>
+    <p class="lede">Cormeilles-en-Parisis → Saint-Martin-le-Beau. Trois jours de châteaux au fil du Cher et de la Loire depuis le gîte, puis une dernière journée au ZooParc de Beauval avant le retour.</p>
+    <div class="hero-meta">
+      <span>📍 Base : Saint-Martin-le-Beau (3 nuits)</span>
+      <span>🚗 ~235 km / 2h35 à l'aller</span>
+      <span>🗓️ Jeu 27 → Dim 30 août</span>
+    </div>
+  </div>
+  <svg class="hero-river" viewBox="0 0 800 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C120,10 220,60 340,35 C460,10 560,55 680,30 C740,18 780,32 800,25 L800,70 L0,70 Z" fill="#4F707A" opacity="0.5"/>
+    <path d="M0,50 C140,25 240,65 360,45 C480,25 580,60 700,40 C750,30 790,42 800,38 L800,70 L0,70 Z" fill="#4F707A" opacity="0.35"/>
+  </svg>
+</div>
+
+<div class="topbar">
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-target="overview">Vue d'ensemble</button>
+    <button class="tab-btn" data-target="j1">Jeu 27</button>
+    <button class="tab-btn" data-target="j2">Ven 28</button>
+    <button class="tab-btn" data-target="j3">Sam 29</button>
+    <button class="tab-btn" data-target="j4">Dim 30</button>
+  </div>
+  <button class="theme-btn" id="themeBtn">🌙 Sombre</button>
+</div>
+
+<div class="wrap">
+
+<div class="day active" id="overview">
+  <section class="block">
+    <h2>Le fil du séjour</h2>
+    <p class="sub">Un gîte à Saint-Martin-le-Beau comme camp de base pour les trois nuits du séjour — vous y déposez les bagages en arrivant le premier jour — et un programme entièrement bâti autour des châteaux avant une dernière journée au ZooParc de Beauval.</p>
+
+    <div class="address-card">
+      <div>
+        <div class="k">Hébergement — les 3 nuits du séjour (27, 28 et 29 août)</div>
+        <div class="addr">2 Rue Traversière, Saint-Martin-le-Beau, 37270</div>
+      </div>
+      <div class="meta-row" style="margin-top:0;"><span>🚗 ~17 min d'Amboise</span><span>🚗 ~15 min de Chenonceau</span></div>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="k">Un village au bord du Cher</div>
+        <p>Saint-Martin-le-Beau est très proche de Chenonceau et de Bléré, à environ 17 minutes d'Amboise : un point de chute tranquille pour les trois nuits, avec un léger détour quotidien vers les sites du programme.</p>
+      </div>
+      <div class="why-card">
+        <div class="k">Huit châteaux en trois jours</div>
+        <p>Amboise, Clos Lucé, Chenonceau, Azay-le-Rideau, Villandry, Chambord, Cheverny et Blois — le programme reste resserré sur les monuments eux-mêmes.</p>
+      </div>
+      <div class="why-card">
+        <div class="k">Budget repas maîtrisé</div>
+        <p>Toutes les adresses proposées visent un budget de 25 €/personne maximum, hors dégustation de vin.</p>
+      </div>
+      <div class="why-card">
+        <div class="k">Un dernier jour différent</div>
+        <p>Le dimanche 30 août, changement de rythme : départ du gîte vers le ZooParc de Beauval pour la journée, avant le retour vers Cormeilles-en-Parisis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Billetterie — pass et billets à acheter à l'avance</h2>
+    <p class="sub">Deux pass officiels de l'Office de Tourisme Blois Chambord couvrent 6 des 8 châteaux du programme. Villandry et Azay-le-Rideau n'entrent dans aucun pass régional : billets à l'unité sur leurs sites officiels.</p>
+    <div class="ticket-grid">
+      <div class="ticket-card pass">
+        <span class="tk">Pass T16</span>
+        <h4>Amboise + Clos Lucé + Chenonceau</h4>
+        <p>Couvre les trois sites du jeudi et du vendredi. Billets non datés, valables toute la saison.</p>
+        <span class="price">💶 53 €/adulte (au lieu de 56,30 € à l'unité)</span>
+        <a class="buy" target="_blank" rel="noopener" href="https://www.bloischambord.com/organiser-son-sejour/pass-chateaux/tous-les-pass-chateaux-de-la-loire/t16-amboise-clos-luce-chenonceau-2026/">Acheter le pass T16 →</a>
+      </div>
+      <div class="ticket-card pass">
+        <span class="tk">Pass T01</span>
+        <h4>Blois + Chambord + Cheverny</h4>
+        <p>Couvre exactement la journée du samedi. Billets non datés, ni échangeables ni remboursables.</p>
+        <span class="price">💶 48,50 €/adulte (au lieu de 52,50 € à l'unité)</span>
+        <a class="buy" target="_blank" rel="noopener" href="https://www.bloischambord.com/organiser-son-sejour/pass-chateaux/tous-les-pass-chateaux-de-la-loire/pass-a-blois-chambord-cheverny/">Acheter le pass T01 →</a>
+      </div>
+      <div class="ticket-card">
+        <span class="tk">Billet à l'unité</span>
+        <h4>Château et jardins de Villandry</h4>
+        <p>Non inclus dans les pass régionaux — à réserver directement sur la billetterie officielle du château.</p>
+        <span class="price">💶 ~14 €/adulte</span>
+        <a class="buy" target="_blank" rel="noopener" href="https://chateauvillandry.tickeasy.com/fr-FR">Réserver à Villandry →</a>
+      </div>
+      <div class="ticket-card">
+        <span class="tk">Billet à l'unité</span>
+        <h4>Château d'Azay-le-Rideau</h4>
+        <p>Monument national (Centre des monuments nationaux) — non inclus dans les pass régionaux non plus.</p>
+        <span class="price">💶 16 €/adulte (avril-septembre)</span>
+        <a class="buy" target="_blank" rel="noopener" href="https://www.azay-le-rideau.fr/">Réserver à Azay-le-Rideau →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="border-bottom:none;">
+    <h2>Comment lire le programme</h2>
+    <p class="sub">Chaque étape porte un bouton <strong>🧭 Itinéraire</strong> qui ouvre Google Maps avec le trajet depuis l'étape précédente. Le sous-titre de chaque journée affiche la météo prévue, mise à jour automatiquement à l'ouverture de la page (disponible à partir d'environ 16 jours avant chaque date). Un badge <strong>🚁</strong> indique si le survol en drone (catégorie ouverte C0) est envisageable sur les sites extérieurs — rien n'est affiché pour les visites strictement intérieures.</p>
+    <div class="legend">
+      <span><i></i> Incontournable</span>
+      <span><i class="p"></i> Pépite / insolite</span>
+      <span><i class="g"></i> Table (≤25€/pers)</span>
+      <span><i class="pr"></i> Pratique (route, parking)</span>
+      <span><i class="s"></i> Zoo / journée nature</span>
+      <span>🚁❌ Survol non autorisé</span>
+      <span>🚁✅ Survol envisageable</span>
+    </div>
+  </section>
+</div>
+
+<!-- JOUR 1 -->
+<div class="day" id="j1">
+  <div class="day-head">
+    <div class="eyebrow">Jeudi 27 août — arrivée</div>
+    <h2>Le gîte, puis Amboise, la ville de Léonard</h2>
+    <div class="weather" data-weather="j1" data-date="2026-08-27">⏳ Chargement de la météo…</div>
+    <div class="route">Cormeilles-en-Parisis → Saint-Martin-le-Beau (dépôt bagages) → Amboise (visites) → Saint-Martin-le-Beau (nuit)</div>
+    <div class="day-stats"><span>🚗 235 km · 2h35 jusqu'au gîte</span><span>🚶 après-midi 100% piéton à Amboise</span></div>
+  </div>
+
+  <div class="timeline">
+    <div class="river-track"></div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">08:45</div>
+      <div class="stop-card">
+        <h3>Départ de Cormeilles-en-Parisis <span class="badge">route</span></h3>
+        <p>Direction A115 → A13 → A10 vers Saint-Martin-le-Beau : on dépose les bagages au gîte avant toute chose, pour rouler léger le reste de la journée. Comptez large en cas de trafic estival.</p>
+        <div class="meta-row"><span>⏱ ~2h35</span><span>📏 ~235 km</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">11:20</div>
+      <div class="stop-card">
+        <h3>Arrivée au gîte — dépôt des bagages <span class="badge">arrivée</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Cormeilles-en-Parisis&destination=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>2 Rue Traversière, Saint-Martin-le-Beau. On y laisse tout ce qui n'est pas nécessaire pour l'après-midi, direction Amboise juste après.</p>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">12:15</div>
+      <div class="stop-card">
+        <h3>Déjeuner — Bistrot l'Amboisie <span class="badge">table ≤25€</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&destination=Bistrot+l%27Amboisie+Amboise&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Cuisine maison et de saison, formule entrée/plat/dessert autour de 20 €. Une valeur sûre et abordable en plein centre.</p>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">14:00</div>
+      <div class="stop-card">
+        <h3>Château Royal d'Amboise <span class="badge">incontournable</span><span class="drone" title="Amboise est en agglomération : le survol de l'espace public y est interdit, et le château a déjà fait saisir des drones de touristes.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Bistrot+l%27Amboisie+Amboise&destination=Ch%C3%A2teau+Royal+d%27Amboise&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>Terrasses dominant la Loire, jardins Renaissance et chapelle Saint-Hubert, où repose selon la tradition Léonard de Vinci.</p>
+        <div class="tip">💡 Prenez l'audioguide : le château a été largement démantelé au XIXe siècle, il aide à se représenter son étendue d'origine.</div>
+        <div class="meta-row"><span>⏱ 1h30</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">16:00</div>
+      <div class="stop-card">
+        <h3>Château du Clos Lucé <span class="badge">pépite</span><span class="drone" title="Propriété privée en zone urbaine d'Amboise : drones interdits par le règlement du site.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+Royal+d%27Amboise&destination=Ch%C3%A2teau+du+Clos+Luc%C3%A9+Amboise&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>10 minutes à pied du château royal : dernière demeure de Léonard de Vinci, avec un parc grandeur nature reconstituant ses machines. Souvent sous-estimé, il est pourtant très riche.</p>
+        <div class="meta-row"><span>⏱ 1h30</span></div>
+      </div>
+    </div>
+
+    <div class="stop pepite">
+      <div class="dot"></div>
+      <div class="time">17:45</div>
+      <div class="stop-card">
+        <h3>Flânerie dans le quartier troglodytique <span class="badge">pépite</span><span class="drone" title="Rues et places d'Amboise : survol de l'espace public en agglomération interdit.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+du+Clos+Luc%C3%A9+Amboise&destination=Rue+Rabelais+Amboise&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>Retour vers le centre par la rue Rabelais et ses maisons adossées à la roche, puis l'Île d'Or pour la vue sur le château à la lumière du soir.</p>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">19:30</div>
+      <div class="stop-card">
+        <h3>Dîner — La Fourchette <span class="badge">table ≤25€</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Rue+Rabelais+Amboise&destination=La+Fourchette+Amboise+restaurant&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>Adresse tournée vers le bio et les produits locaux, ambiance simple et décontractée, addition raisonnable.</p>
+      </div>
+    </div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">20:45</div>
+      <div class="stop-card">
+        <h3>Route vers le gîte <span class="badge">route</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=La+Fourchette+Amboise+restaurant&destination=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Direction Saint-Martin-le-Beau, 2 Rue Traversière, pour la première nuit.</p>
+        <div class="meta-row"><span>⏱ ~17 min</span><span>📏 ~17 km</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOUR 2 -->
+<div class="day" id="j2">
+  <div class="day-head">
+    <div class="eyebrow">Vendredi 28 août</div>
+    <h2>Chenonceau, Azay-le-Rideau, Villandry &amp; Vouvray</h2>
+    <div class="weather" data-weather="j2" data-date="2026-08-28">⏳ Chargement de la météo…</div>
+    <div class="route">Saint-Martin-le-Beau → Chenonceaux → Azay-le-Rideau → Villandry → Vouvray → Saint-Martin-le-Beau</div>
+    <div class="day-stats"><span>🚗 ~170 km dans la journée</span><span>🚶 jardins à pied</span></div>
+  </div>
+
+  <div class="timeline">
+    <div class="river-track"></div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">08:50</div>
+      <div class="stop-card">
+        <h3>Départ du gîte <span class="badge">route</span></h3>
+        <p>Chenonceau est tout proche de Saint-Martin-le-Beau. Arriver avant l'ouverture reste la seule vraie parade à l'affluence sur le site le plus visité de la région après Versailles.</p>
+        <div class="meta-row"><span>⏱ ~15 min</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">09:15</div>
+      <div class="stop-card">
+        <h3>Château de Chenonceau <span class="badge">incontournable</span><span class="drone" title="Protocole spécifique : toute demande de survol à moins de 1000 m d'altitude est soumise à l'avis du domaine, en raison des vibrations possibles sur la structure enjambant le Cher.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&destination=Ch%C3%A2teau+de+Chenonceau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Le « château des Dames », bâti à cheval sur le Cher : galerie de Catherine de Médicis, jardins de Diane de Poitiers, labyrinthe et ferme du XVIe siècle.</p>
+        <div class="tip">💡 Château non climatisé en été : brumisateurs disponibles, mais la visite matinale reste bien plus confortable.</div>
+        <div class="meta-row"><span>⏱ 2h15</span><span>🅿️ grand parking sur site</span></div>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">11:45</div>
+      <div class="stop-card">
+        <h3>Déjeuner à Chenonceaux village <span class="badge">table ≤25€</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+de+Chenonceau&destination=Chenonceaux+village&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>Petite crêperie ou auberge de village, loin de la cohue du château — comptez 15-20 € pour une formule complète.</p>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">13:15</div>
+      <div class="stop-card">
+        <h3>Château d'Azay-le-Rideau <span class="badge">incontournable</span><span class="drone" title="Monument national classé, régulièrement survolé uniquement sous autorisation professionnelle et hors heures d'ouverture : pas de vol libre en visite.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Chenonceaux+village&destination=Ch%C3%A2teau+d%27Azay-le-Rideau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>L'un des plus purs joyaux Renaissance de la Loire, posé sur pilotis au milieu de son miroir d'eau — souvent considéré comme le plus élégant et le moins écrasant des grands châteaux du parcours.</p>
+        <div class="meta-row"><span>⏱ 1h30</span><span>🚗 45 min depuis Chenonceaux</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">15:30</div>
+      <div class="stop-card">
+        <h3>Château et jardins de Villandry <span class="badge">incontournable</span><span class="drone" title="Le règlement de visite du domaine interdit explicitement les drones aux visiteurs.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+d%27Azay-le-Rideau&destination=Ch%C3%A2teau+de+Villandry&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Le plus beau potager ornemental de la Renaissance française : six jardins à thème, dont le fameux potager en damier de légumes et de fleurs.</p>
+        <div class="meta-row"><span>⏱ 1h30</span><span>🚗 20 min depuis Azay-le-Rideau</span></div>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">17:30</div>
+      <div class="stop-card">
+        <h3>Dégustation dans une cave troglodytique à Vouvray <span class="badge">table</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+de+Villandry&destination=Vouvray+cave+troglodytique&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Direction Vouvray : dégustation de chenin blanc dans une cave creusée à même le coteau. Une planche de charcuterie/fromages locaux accompagne souvent la dégustation pour ~15-20 €.</p>
+        <div class="meta-row"><span>⏱ 1h</span><span>🚗 30 min depuis Villandry</span></div>
+      </div>
+    </div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">19:15</div>
+      <div class="stop-card">
+        <h3>Route vers le gîte <span class="badge">route</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Vouvray+cave+troglodytique&destination=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Retour à Saint-Martin-le-Beau pour la seconde nuit.</p>
+        <div class="meta-row"><span>⏱ ~35 min</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOUR 3 -->
+<div class="day" id="j3">
+  <div class="day-head">
+    <div class="eyebrow">Samedi 29 août</div>
+    <h2>Chambord, Cheverny et le vieux Blois</h2>
+    <div class="weather" data-weather="j3" data-date="2026-08-29">⏳ Chargement de la météo…</div>
+    <div class="route">Saint-Martin-le-Beau → Chambord → Cheverny → Blois → Saint-Martin-le-Beau</div>
+    <div class="day-stats"><span>🚗 ~190 km dans la journée</span><span>🚶 Blois à pied l'après-midi</span></div>
+  </div>
+
+  <div class="timeline">
+    <div class="river-track"></div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">08:10</div>
+      <div class="stop-card">
+        <h3>Départ du gîte <span class="badge">route</span></h3>
+        <p>Direction Chambord : la journée la plus chargée en kilomètres du séjour, mais on repasse dormir au gîte ce soir.</p>
+        <div class="meta-row"><span>⏱ ~55 min</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">09:10</div>
+      <div class="stop-card">
+        <h3>Château de Chambord <span class="badge">incontournable</span><span class="drone" title="Zone réglementée R96 permanente : tout survol en dessous de 430 m est interdit — la plus stricte du Val de Loire.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&destination=Ch%C3%A2teau+de+Chambord&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Le géant de François Ier : escalier à double révolution attribué à Léonard de Vinci, forêt de cheminées sur les toits-terrasses, domaine de 5 440 hectares clos de murs.</p>
+        <div class="tip">💡 Montez directement sur les terrasses avant la foule, puis redescendez visiter les appartements.</div>
+        <div class="meta-row"><span>⏱ 2h</span><span>🅿️ parking payant à l'entrée du domaine</span></div>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">12:00</div>
+      <div class="stop-card">
+        <h3>Déjeuner sur le domaine de Chambord <span class="badge">table ≤25€</span></h3>
+        <p>Snack ou brasserie simple aux abords du château, pratique pour ne pas perdre de temps avant Cheverny.</p>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">13:15</div>
+      <div class="stop-card">
+        <h3>Château de Cheverny <span class="badge">incontournable</span><span class="drone" title="Domaine privé toujours habité : le règlement de visite protège la sécurité et l'image du château, drones exclus.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+de+Chambord&destination=Ch%C3%A2teau+de+Cheverny&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Toujours habité par la même famille depuis sa construction, avec un mobilier et des tapisseries d'époque intacts. Sa meute de chiens de chasse a inspiré Hergé pour le "Moulinsart" de Tintin.</p>
+        <div class="meta-row"><span>⏱ 1h30</span><span>🚗 25 min depuis Chambord</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="dot"></div>
+      <div class="time">15:00</div>
+      <div class="stop-card">
+        <h3>Blois à pied — château royal et vieille ville <span class="badge">incontournable</span><span class="drone" title="Blois est en agglomération : survol de l'espace public interdit sans autorisation spécifique.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+de+Cheverny&destination=Ch%C3%A2teau+Royal+de+Blois&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Château royal de Blois et son escalier à loggias de François Ier, puis à pied dans les ruelles Renaissance à colombages jusqu'au jardin de l'Évêché, vue dégagée sur la Loire.</p>
+        <div class="meta-row"><span>⏱ jusqu'à 19h</span><span>🅿️ parking Château (centre-ville piéton ensuite)</span></div>
+      </div>
+    </div>
+
+    <div class="stop gastro">
+      <div class="dot"></div>
+      <div class="time">19:15</div>
+      <div class="stop-card">
+        <h3>Dîner — Le Comptoir de Mamie Bigoude <span class="badge">table ≤25€</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Ch%C3%A2teau+Royal+de+Blois&destination=Le+Comptoir+de+Mamie+Bigoude+Blois&travelmode=walking">🧭 Itinéraire</a></h3>
+        <p>Crêperie bien notée juste en face du château royal, formule galette/crêpe/cidre autour de 15-20 €.</p>
+      </div>
+    </div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">20:45</div>
+      <div class="stop-card">
+        <h3>Retour au gîte <span class="badge">route</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Le+Comptoir+de+Mamie+Bigoude+Blois&destination=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Retour à Saint-Martin-le-Beau pour la troisième et dernière nuit.</p>
+        <div class="meta-row"><span>⏱ ~50 min depuis Blois</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOUR 4 -->
+<div class="day" id="j4">
+  <div class="day-head">
+    <div class="eyebrow">Dimanche 30 août — retour</div>
+    <h2>ZooParc de Beauval, puis retour</h2>
+    <div class="weather" data-weather="j4" data-date="2026-08-30">⏳ Chargement de la météo…</div>
+    <div class="route">Saint-Martin-le-Beau → ZooParc de Beauval (Saint-Aignan) → Cormeilles-en-Parisis</div>
+    <div class="day-stats"><span>🚗 ~310 km dans la journée</span><span>🐼 journée complète au zoo</span></div>
+  </div>
+
+  <div class="timeline">
+    <div class="river-track"></div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">08:45</div>
+      <div class="stop-card">
+        <h3>Départ du gîte <span class="badge">route</span></h3>
+        <p>Petit-déjeuner puis on quitte le gîte, bagages dans le coffre, direction le ZooParc de Beauval à Saint-Aignan-sur-Cher.</p>
+        <div class="meta-row"><span>⏱ ~30 min</span><span>📏 ~30 km</span></div>
+      </div>
+    </div>
+
+    <div class="stop savane">
+      <div class="dot"></div>
+      <div class="time">09:15</div>
+      <div class="stop-card">
+        <h3>ZooParc de Beauval — journée complète <span class="badge">incontournable</span><span class="drone" title="Drones formellement interdits pour la sécurité et la tranquillité des animaux, y compris hors des heures d'ouverture.">🚁❌</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=2+Rue+Traversi%C3%A8re+Saint-Martin-le-Beau&destination=ZooParc+de+Beauval&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>L'un des plus beaux zoos au monde : pandas géants, koalas, lamantins, singes dorés (nouveauté 2026), dôme équatorial, et deux spectacles à ne pas manquer, "Les Maîtres des Airs" et "L'Odyssée des Lions de Mer". Comptez la journée entière pour couvrir les 45 hectares du parc.</p>
+        <div class="tip">💡 Réservez un billet daté en ligne à l'avance (37 €/adulte au lieu de 44 € au guichet) et arrivez à l'ouverture pour profiter des animaux avant la chaleur de l'après-midi. Parking gratuit.</div>
+        <div class="meta-row"><span>⏱ journée complète</span><span>🅿️ parking gratuit sur place</span></div>
+      </div>
+    </div>
+
+    <div class="stop pratique">
+      <div class="dot"></div>
+      <div class="time">18:30</div>
+      <div class="stop-card">
+        <h3>Retour vers Cormeilles-en-Parisis <span class="badge">route</span><a class="maps-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=ZooParc+de+Beauval&destination=Cormeilles-en-Parisis&travelmode=driving">🧭 Itinéraire</a></h3>
+        <p>Direction A85 → A10, via Tours puis Paris. Prévoir une pause sur l'aire de repos à mi-parcours et un peu de trafic dominical en fin de trajet.</p>
+        <div class="meta-row"><span>⏱ ~2h30</span><span>📏 ~250 km</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" style="border-bottom:none;padding-top:10px;">
+    <h2>Informations pratiques</h2>
+    <div class="practical-grid">
+      <div class="pcard">
+        <h3>Billetterie</h3>
+        <ul>
+          <li>Pass T16 et T01 à acheter en ligne dès que possible (voir la vue d'ensemble) — non échangeables, non remboursables.</li>
+          <li>Villandry et Azay-le-Rideau : billets à l'unité, hors pass.</li>
+          <li>Beauval : billet daté obligatoire en ligne, à réserver dès que la date est fixée — les créneaux d'entrée se remplissent vite fin août.</li>
+        </ul>
+      </div>
+      <div class="pcard">
+        <h3>À prévoir</h3>
+        <ul>
+          <li>Chaussures confortables : chaque journée comporte 4 à 6 km de marche, et Beauval se parcourt sur 45 hectares.</li>
+          <li>Eau et chapeau — les châteaux ne sont pas climatisés en été, et Beauval se visite en grande partie en extérieur.</li>
+          <li>Bagages à garder dans le coffre le dimanche jusqu'au retour, puisque vous quittez le gîte le matin.</li>
+        </ul>
+      </div>
+      <div class="pcard">
+        <h3>Drones</h3>
+        <ul>
+          <li>Aucun des sites du programme n'autorise le survol en visite libre — zones réglementées (Chambord), protocoles spécifiques (Chenonceau), règlements de visite (Villandry, Cheverny, Azay-le-Rideau, Beauval) ou simple interdiction de survol de l'espace public en agglomération (Amboise, Blois).</li>
+          <li>Le détail est indiqué sur chaque étape concernée (icône 🚁).</li>
+        </ul>
+      </div>
+      <div class="pcard">
+        <h3>Vérifier avant de partir</h3>
+        <ul>
+          <li>Horaires et tarifs exacts sur les sites officiels — susceptibles d'évoluer d'ici fin août.</li>
+          <li>Horaires de fermeture de Beauval fin août (autour de 19h en cette période).</li>
+          <li>La météo affichée en haut de chaque journée se met à jour automatiquement à l'ouverture de la page.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+</div>
+
+<footer>Itinéraire conçu pour un couple en voiture — Val de Loire, 27-30 août · document exportable, à personnaliser librement</footer>
+
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+const days = document.querySelectorAll('.day');
+tabs.forEach(function(btn){
+  btn.addEventListener('click', function(){
+    tabs.forEach(function(b){ b.classList.remove('active'); });
+    days.forEach(function(d){ d.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+const themeBtn = document.getElementById('themeBtn');
+let dark = false;
+themeBtn.addEventListener('click', function(){
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? '☀️ Clair' : '🌙 Sombre';
+});
+
+// Météo dynamique via Open-Meteo (gratuit, sans clé) pour Saint-Martin-le-Beau
+const LAT = 47.3567, LON = 0.9103;
+function wmoToEmoji(code){
+  if(code===0) return ['☀️','Ciel dégagé'];
+  if([1,2].indexOf(code) !== -1) return ['🌤️','Partiellement nuageux'];
+  if(code===3) return ['☁️','Couvert'];
+  if([45,48].indexOf(code) !== -1) return ['🌫️','Brouillard'];
+  if([51,53,55,56,57].indexOf(code) !== -1) return ['🌦️','Bruine'];
+  if([61,63,65,66,67].indexOf(code) !== -1) return ['🌧️','Pluie'];
+  if([71,73,75,77].indexOf(code) !== -1) return ['❄️','Neige'];
+  if([80,81,82].indexOf(code) !== -1) return ['🌦️','Averses'];
+  if([85,86].indexOf(code) !== -1) return ['🌨️','Averses de neige'];
+  if([95,96,99].indexOf(code) !== -1) return ['⛈️','Orages'];
+  return ['🌡️','Prévision indisponible'];
+}
+function fallbackMessage(){
+  return "📅 Prévisions pas encore disponibles pour cette date (à partir de ~16 jours avant) — repassez sur ce fichier à l'approche du séjour.";
+}
+function loadWeather(){
+  const els = document.querySelectorAll('[data-weather]');
+  if(!els.length) return;
+  const dates = Array.prototype.map.call(els, function(e){ return e.dataset.date; });
+  const start = dates[0], end = dates[dates.length-1];
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON + "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FParis&start_date=" + start + "&end_date=" + end;
+  fetch(url).then(function(res){
+    if(!res.ok) throw new Error('out of range');
+    return res.json();
+  }).then(function(data){
+    els.forEach(function(el){
+      const idx = data.daily.time.indexOf(el.dataset.date);
+      if(idx === -1 || data.daily.temperature_2m_max[idx] == null){
+        el.innerHTML = fallbackMessage();
+        return;
+      }
+      const pair = wmoToEmoji(data.daily.weathercode[idx]);
+      const ico = pair[0], label = pair[1];
+      const tmax = Math.round(data.daily.temperature_2m_max[idx]);
+      const tmin = Math.round(data.daily.temperature_2m_min[idx]);
+      const rain = data.daily.precipitation_probability_max[idx];
+      el.innerHTML = '<span class="ico">' + ico + '</span> ' + label + ' · ' + tmin + '°–' + tmax + '°C · 💧 ' + rain + '% de pluie';
+    });
+  }).catch(function(){
+    els.forEach(function(el){ el.innerHTML = fallbackMessage(); });
+  });
+}
+loadWeather();
+</script>
+
+</body>
+</html>
