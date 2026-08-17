@@ -77,6 +77,14 @@ section.block{padding:40px 0;border-bottom:1px solid var(--line);}
 }
 :root[data-theme="dark"] .ticket-card a.buy{background:var(--or);color:#1B2328;}
 
+.jobseeker-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.jobseeker-table th,.jobseeker-table td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);}
+.jobseeker-table th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);background:var(--tuffeau-2);}
+.jobseeker-table tr:last-child td{border-bottom:none;}
+.jobseeker-table td.free{color:var(--lierre);font-weight:700;}
+.jobseeker-table td.none{color:var(--ink-soft);font-style:italic;}
+.jobseeker-table .note{font-size:12px;color:var(--ink-soft);margin-top:8px;}
+
 .day{display:none;}
 .day.active{display:block;}
 .day-head{padding:32px 0 6px;}
@@ -246,6 +254,24 @@ footer{padding:30px 20px 50px;text-align:center;color:var(--ink-soft);font-size:
         <a class="buy" target="_blank" rel="noopener" href="https://www.azay-le-rideau.fr/">Réserver à Azay-le-Rideau →</a>
       </div>
     </div>
+  </section>
+
+  <section class="block">
+    <h2>Tarif demandeur d'emploi</h2>
+    <p class="sub">Vérifié site par site sur la billetterie officielle de chaque château. Un justificatif France Travail daté de moins de 2 à 6 mois selon les sites est demandé au guichet — l'achat en ligne à l'avance n'est pas toujours possible sur ce tarif, prévoyez de passer à la billetterie sur place.</p>
+    <table class="jobseeker-table">
+      <tr><th>Site</th><th>Plein tarif</th><th>Tarif demandeur d'emploi</th></tr>
+      <tr><td>Château du Clos Lucé</td><td>20,00 €</td><td>15,00 €</td></tr>
+      <tr><td>Château de Chenonceau</td><td>19,00 €</td><td>16,00 €</td></tr>
+      <tr><td>Château de Chambord</td><td>21,00 €</td><td>18,50 €</td></tr>
+      <tr><td>Château Royal de Blois</td><td>16,00 €</td><td>12,00 €</td></tr>
+      <tr><td>Château Royal d'Amboise</td><td>17,30 €</td><td>15,30 € <span style="font-size:11px;">(-2€)</span></td></tr>
+      <tr><td>Château d'Azay-le-Rideau</td><td>11,50 €</td><td class="free">Gratuit</td></tr>
+      <tr><td>Château de Cheverny</td><td>15,00 €</td><td>~11,50 € <span style="font-size:11px;">(à confirmer sur place)</span></td></tr>
+      <tr><td>Château et jardins de Villandry</td><td>14,00 €</td><td class="none">Aucun tarif réduit</td></tr>
+      <tr><td>ZooParc de Beauval</td><td>34,00 €</td><td class="none">Aucun tarif réduit</td></tr>
+    </table>
+    <p class="note">🏆 La meilleure nouvelle du lot : Azay-le-Rideau est un monument national, et le Centre des monuments nationaux offre la <strong>gratuité totale</strong> aux demandeurs d'emploi sur présentation d'une attestation de moins de 6 mois. Pour Cheverny, le tarif réduit existe mais la catégorie « demandeur d'emploi » n'est pas toujours listée explicitement dans le barème public — à faire confirmer au guichet.</p>
   </section>
 
   <section class="block" style="border-bottom:none;">
@@ -647,23 +673,38 @@ function wmoToEmoji(code){
   if([95,96,99].indexOf(code) !== -1) return ['⛈️','Orages'];
   return ['🌡️','Prévision indisponible'];
 }
-function fallbackMessage(){
-  return "📅 Prévisions pas encore disponibles pour cette date (à partir de ~16 jours avant) — repassez sur ce fichier à l'approche du séjour.";
+function tooFarMessage(){
+  return "📅 Prévisions pas encore disponibles pour cette date (au-delà de ~16 jours) — repassez sur ce fichier à l'approche du séjour.";
+}
+function errorMessage(){
+  return '⚠️ Météo momentanément indisponible (connexion internet requise). <a href="#" class="retry-weather" style="text-decoration:underline;">🔄 Réessayer</a>';
+}
+function attachRetryHandlers(){
+  const links = document.querySelectorAll('.retry-weather');
+  links.forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      const els = document.querySelectorAll('[data-weather]');
+      els.forEach(function(el){ el.innerHTML = '⏳ Chargement de la météo…'; });
+      loadWeather();
+    });
+  });
 }
 function loadWeather(){
   const els = document.querySelectorAll('[data-weather]');
   if(!els.length) return;
-  const dates = Array.prototype.map.call(els, function(e){ return e.dataset.date; });
-  const start = dates[0], end = dates[dates.length-1];
-  const url = "https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON + "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FParis&start_date=" + start + "&end_date=" + end;
+  // forecast_days=16 : on récupère toute la fenêtre disponible plutôt que de fixer
+  // un start_date/end_date, ce qui évite tout souci de bornes de dates avec l'API.
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON + "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FParis&forecast_days=16";
   fetch(url).then(function(res){
-    if(!res.ok) throw new Error('out of range');
+    if(!res.ok) throw new Error('HTTP ' + res.status);
     return res.json();
   }).then(function(data){
+    if(!data || !data.daily || !data.daily.time){ throw new Error('malformed response'); }
     els.forEach(function(el){
       const idx = data.daily.time.indexOf(el.dataset.date);
       if(idx === -1 || data.daily.temperature_2m_max[idx] == null){
-        el.innerHTML = fallbackMessage();
+        el.innerHTML = tooFarMessage();
         return;
       }
       const pair = wmoToEmoji(data.daily.weathercode[idx]);
@@ -673,8 +714,10 @@ function loadWeather(){
       const rain = data.daily.precipitation_probability_max[idx];
       el.innerHTML = '<span class="ico">' + ico + '</span> ' + label + ' · ' + tmin + '°–' + tmax + '°C · 💧 ' + rain + '% de pluie';
     });
-  }).catch(function(){
-    els.forEach(function(el){ el.innerHTML = fallbackMessage(); });
+  }).catch(function(err){
+    console.error('Météo : échec du chargement —', err);
+    els.forEach(function(el){ el.innerHTML = errorMessage(); });
+    attachRetryHandlers();
   });
 }
 loadWeather();
